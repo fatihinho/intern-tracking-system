@@ -8,7 +8,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "Users")
-data class Users(
+data class User(
     @Id
     @Column(name = "Id")
     val id: UUID,
@@ -37,7 +37,7 @@ data class Users(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Users
+        other as User
 
         if (id != other.id) return false
         if (username != other.username) return false
@@ -58,6 +58,6 @@ data class Users(
     }
 
     override fun toString(): String {
-        return "Users(id=$id, username='$username', password='$password', type='$type', logoUrl=$logoUrl)"
+        return "User(id=$id, username='$username', password='$password', type='$type', logoUrl=$logoUrl)"
     }
 }
