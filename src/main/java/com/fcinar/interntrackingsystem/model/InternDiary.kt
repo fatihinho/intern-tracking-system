@@ -22,7 +22,7 @@ data class InternDiary(
     @Column(name = "IsRejected")
     val isRejected: Boolean,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "InternDiary", optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
     @JoinColumn(name = "InternId", unique = true, nullable = false)
     val intern: Intern
 ) {

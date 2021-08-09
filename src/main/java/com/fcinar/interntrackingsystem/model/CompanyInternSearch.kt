@@ -22,7 +22,7 @@ data class CompanyInternSearch(
     @Column(name = "IsActive")
     val isActive: Boolean,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "CompanyInternSearch", optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
     @JoinColumn(name = "CompanyId", nullable = false)
     val company: Company
 ) {

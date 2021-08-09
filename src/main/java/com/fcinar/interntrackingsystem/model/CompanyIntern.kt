@@ -22,11 +22,11 @@ data class CompanyIntern(
     @Column(name = "EndDate")
     val endDate: Date,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "CompanyIntern", optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
     @JoinColumn(name = "CompanyId", nullable = false)
     val company: Company,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "CompanyIntern", optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
     @JoinColumn(name = "InternId", nullable = false)
     val intern: Intern
 ) {
