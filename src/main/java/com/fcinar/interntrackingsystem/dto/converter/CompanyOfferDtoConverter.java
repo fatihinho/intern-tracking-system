@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CompanyOfferDtoConverter {
     public CompanyOfferDto convert(@NotNull CompanyOffer from) {
-        return new CompanyOfferDto(from.getId(), from.getOfferDate(), from.isActive(),
-                from.isAccepted(), from.isRejected(), from.getCompany(), from.getIntern());
+        return new CompanyOfferDto(from.getId(), from.getOfferDate(), from.getOfferMessage(),
+                from.isActive(), from.isAccepted(), from.isRejected(), from.getCompany(), from.getIntern());
     }
 }

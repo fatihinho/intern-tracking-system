@@ -7,6 +7,7 @@ import java.util.*
 data class CompanyOfferDto(
     val id: UUID,
     val offerDate: Date,
+    val offerMessage: String?,
     val isActive: Boolean,
     val isAccepted: Boolean,
     val isRejected: Boolean,

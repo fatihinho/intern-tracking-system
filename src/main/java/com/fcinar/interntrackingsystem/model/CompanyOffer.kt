@@ -13,6 +13,9 @@ data class CompanyOffer(
     @Column(name = "OfferDate", nullable = false)
     val offerDate: Date,
 
+    @Column(name = "OfferMessage", length = 300)
+    val offerMessage: String?,
+
     @Column(name = "IsActive", nullable = false)
     val isActive: Boolean,
 
@@ -32,6 +35,7 @@ data class CompanyOffer(
 ) {
     constructor(
         offerDate: Date,
+        offerMessage: String?,
         isActive: Boolean,
         isAccepted: Boolean,
         isRejected: Boolean,
@@ -40,6 +44,7 @@ data class CompanyOffer(
     ) : this(
         id = UUID.randomUUID(),
         offerDate = offerDate,
+        offerMessage = offerMessage,
         isActive = isActive,
         isAccepted = isAccepted,
         isRejected = isRejected,
@@ -55,6 +60,7 @@ data class CompanyOffer(
 
         if (id != other.id) return false
         if (offerDate != other.offerDate) return false
+        if (offerMessage != other.offerMessage) return false
         if (isActive != other.isActive) return false
         if (isAccepted != other.isAccepted) return false
         if (isRejected != other.isRejected) return false
@@ -67,6 +73,7 @@ data class CompanyOffer(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + offerDate.hashCode()
+        result = 31 * result + (offerMessage?.hashCode() ?: 0)
         result = 31 * result + isActive.hashCode()
         result = 31 * result + isAccepted.hashCode()
         result = 31 * result + isRejected.hashCode()
@@ -76,7 +83,7 @@ data class CompanyOffer(
     }
 
     override fun toString(): String {
-        return "CompanyOffer(id=$id, offerDate=$offerDate, isActive=$isActive, " +
+        return "CompanyOffer(id=$id, offerDate=$offerDate, offerMessage=$offerMessage, isActive=$isActive, " +
                 "isAccepted=$isAccepted, isRejected=$isRejected, company=$company, intern=$intern)"
     }
 }
