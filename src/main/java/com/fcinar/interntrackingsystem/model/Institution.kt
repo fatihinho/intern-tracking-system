@@ -13,7 +13,7 @@ data class Institution(
     @Column(name = "Name", length = 30, nullable = false)
     val name: String,
 
-    @Column(name = "Email", length = 20, nullable = false)
+    @Column(name = "Email", length = 50, nullable = false)
     val email: String,
 
     @Column(name = "Address", length = 50, nullable = false)

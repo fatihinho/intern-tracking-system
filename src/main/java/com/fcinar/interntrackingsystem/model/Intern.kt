@@ -25,7 +25,7 @@ data class Intern(
     @Column(name = "Phone", length = 20)
     val phone: String?,
 
-    @Column(name = "Email", length = 20, nullable = false)
+    @Column(name = "Email", length = 50, nullable = false)
     val email: String,
 
     @Column(name = "CvUrl")

@@ -24,7 +24,7 @@ data class User(
     val type: String,
 
     @Column(name = "TypeId")
-    val typeId: UUID?,
+    var typeId: UUID?,
 
     @Column(name = "LogoUrl", length = 50)
     var logoUrl: String?
