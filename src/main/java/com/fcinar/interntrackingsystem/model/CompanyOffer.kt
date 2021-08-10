@@ -10,16 +10,16 @@ data class CompanyOffer(
     @Column(name = "Id")
     val id: UUID,
 
-    @Column(name = "OfferDate")
+    @Column(name = "OfferDate", nullable = false)
     val offerDate: Date,
 
-    @Column(name = "IsActive")
+    @Column(name = "IsActive", nullable = false)
     val isActive: Boolean,
 
-    @Column(name = "IsAccepted")
+    @Column(name = "IsAccepted", nullable = false)
     val isAccepted: Boolean,
 
-    @Column(name = "IsRejected")
+    @Column(name = "IsRejected", nullable = false)
     val isRejected: Boolean,
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)

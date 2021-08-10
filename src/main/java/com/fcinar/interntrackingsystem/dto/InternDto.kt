@@ -2,6 +2,7 @@ package com.fcinar.interntrackingsystem.dto
 
 import com.fcinar.interntrackingsystem.model.Company
 import com.fcinar.interntrackingsystem.model.Institution
+import com.fcinar.interntrackingsystem.model.User
 import java.util.*
 
 data class InternDto(
@@ -13,6 +14,7 @@ data class InternDto(
     val phone: String?,
     val email: String,
     val cvUrl: ByteArray?,
-    val company: Company,
-    val institution: Institution
+    val company: Company?,
+    val institution: Institution,
+    val user: User
 )

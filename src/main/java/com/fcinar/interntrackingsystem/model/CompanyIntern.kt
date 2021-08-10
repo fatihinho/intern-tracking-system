@@ -10,16 +10,16 @@ data class CompanyIntern(
     @Column(name = "Id")
     val id: UUID,
 
-    @Column(name = "UnitName", length = 30)
+    @Column(name = "UnitName", length = 30, nullable = false)
     val unitName: String,
 
-    @Column(name = "DayOfInternship")
+    @Column(name = "DayOfInternship", nullable = false)
     val dayOfInternship: Int,
 
-    @Column(name = "StartDate")
+    @Column(name = "StartDate", nullable = false)
     val startDate: Date,
 
-    @Column(name = "EndDate")
+    @Column(name = "EndDate", nullable = false)
     val endDate: Date,
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CompanyDtoConverter {
     public CompanyDto convert(@NotNull Company from) {
-        return new CompanyDto(from.getId(), from.getName(), from.getEmail(), from.getAddress(),
-                from.getCity(), from.getRegion(), from.getPostalCode(), from.getCountry(), from.getPhone());
+        return new CompanyDto(from.getId(), from.getName(), from.getEmail(), from.getAddress(), from.getCity(),
+                from.getRegion(), from.getPostalCode(), from.getCountry(), from.getPhone(), from.getUser());
     }
 }

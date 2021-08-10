@@ -1,5 +1,6 @@
 package com.fcinar.interntrackingsystem.dto
 
+import com.fcinar.interntrackingsystem.model.User
 import java.util.*
 
 data class CompanyDto(
@@ -11,5 +12,6 @@ data class CompanyDto(
     val region: String?,
     val postalCode: String?,
     val country: String?,
-    val phone: String?
+    val phone: String?,
+    val user: User
 )

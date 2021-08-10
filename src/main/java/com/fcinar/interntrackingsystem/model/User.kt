@@ -1,10 +1,11 @@
 package com.fcinar.interntrackingsystem.model
 
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
+
+enum class UserTypes {
+    ADMIN, INTERN, COMPANY, INSTITUTION
+}
 
 @Entity
 @Table(name = "Users")
@@ -13,23 +14,28 @@ data class User(
     @Column(name = "Id")
     val id: UUID,
 
-    @Column(name = "Username", length = 20)
+    @Column(name = "Username", length = 20, nullable = false)
     val username: String,
 
-    @Column(name = "Password", length = 20)
-    val password: String,
+    @Column(name = "Password", length = 20, nullable = false)
+    var password: String,
 
-    @Column(name = "Type", length = 10)
+    @Column(name = "Type", length = 20, nullable = false)
     val type: String,
 
+    @Column(name = "TypeId")
+    val typeId: UUID?,
+
     @Column(name = "LogoUrl", length = 50)
-    val logoUrl: String?
+    var logoUrl: String?
+
 ) {
-    constructor(username: String, password: String, type: String, logoUrl: String?) : this(
+    constructor(username: String, password: String, type: String, typeId: UUID?, logoUrl: String?) : this(
         id = UUID.randomUUID(),
         username = username,
         password = password,
         type = type,
+        typeId = typeId,
         logoUrl = logoUrl
     )
 
@@ -43,6 +49,7 @@ data class User(
         if (username != other.username) return false
         if (password != other.password) return false
         if (type != other.type) return false
+        if (typeId != other.typeId) return false
         if (logoUrl != other.logoUrl) return false
 
         return true
@@ -53,11 +60,13 @@ data class User(
         result = 31 * result + username.hashCode()
         result = 31 * result + password.hashCode()
         result = 31 * result + type.hashCode()
+        result = 31 * result + (typeId?.hashCode() ?: 0)
         result = 31 * result + (logoUrl?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String {
-        return "User(id=$id, username='$username', password='$password', type='$type', logoUrl=$logoUrl)"
+        return "User(id=$id, username='$username', password='$password', " +
+                "type='$type', typeId=$typeId, logoUrl=$logoUrl)"
     }
 }

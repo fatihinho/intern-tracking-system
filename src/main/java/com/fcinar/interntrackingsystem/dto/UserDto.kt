@@ -7,5 +7,6 @@ data class UserDto(
     val username: String,
     val password: String,
     val type: String,
+    val typeId: UUID?,
     val logoUrl: String?
 )

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class InternDtoConverter {
     public InternDto convert(@NotNull Intern from) {
         return new InternDto(from.getId(), from.getName(), from.getSurname(),
-                from.getBirthDate(), from.getIdentityNumber(), from.getPhone(),
-                from.getEmail(), from.getCvUrl(), from.getCompany(), from.getInstitution());
+                from.getBirthDate(), from.getIdentityNumber(), from.getPhone(), from.getEmail(),
+                from.getCvUrl(), from.getCompany(), from.getInstitution(), from.getUser());
     }
 }

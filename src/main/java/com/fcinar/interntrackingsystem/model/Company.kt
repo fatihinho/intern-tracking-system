@@ -1,10 +1,7 @@
 package com.fcinar.interntrackingsystem.model
 
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "Company")
@@ -13,13 +10,13 @@ data class Company(
     @Column(name = "Id")
     val id: UUID,
 
-    @Column(name = "Name", length = 30)
+    @Column(name = "Name", length = 30, nullable = false)
     val name: String,
 
-    @Column(name = "Email", length = 20)
+    @Column(name = "Email", length = 20, nullable = false)
     val email: String,
 
-    @Column(name = "Address", length = 50)
+    @Column(name = "Address", length = 50, nullable = false)
     val address: String,
 
     @Column(name = "City", length = 20)
@@ -35,17 +32,22 @@ data class Company(
     val country: String?,
 
     @Column(name = "Phone", length = 20)
-    val phone: String?
+    val phone: String?,
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @JoinColumn(name = "UserId", nullable = false)
+    val user: User
 ) {
     constructor(
         name: String,
         email: String,
         address: String,
-        city: String,
-        region: String,
-        postalCode: String,
-        country: String,
-        phone: String
+        city: String?,
+        region: String?,
+        postalCode: String?,
+        country: String?,
+        phone: String?,
+        user: User
     ) : this(
         id = UUID.randomUUID(),
         name = name,
@@ -55,7 +57,8 @@ data class Company(
         region = region,
         postalCode = postalCode,
         country = country,
-        phone = phone
+        phone = phone,
+        user = user
     )
 
     override fun equals(other: Any?): Boolean {
@@ -73,6 +76,7 @@ data class Company(
         if (postalCode != other.postalCode) return false
         if (country != other.country) return false
         if (phone != other.phone) return false
+        if (user != other.user) return false
 
         return true
     }
@@ -87,11 +91,12 @@ data class Company(
         result = 31 * result + (postalCode?.hashCode() ?: 0)
         result = 31 * result + (country?.hashCode() ?: 0)
         result = 31 * result + (phone?.hashCode() ?: 0)
+        result = 31 * result + user.hashCode()
         return result
     }
 
     override fun toString(): String {
         return "Company(id=$id, name='$name', email='$email', address='$address', city=$city, " +
-                "region=$region, postalCode=$postalCode, country=$country, phone=$phone)"
+                "region=$region, postalCode=$postalCode, country=$country, phone=$phone, user=$user)"
     }
 }

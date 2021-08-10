@@ -10,23 +10,23 @@ data class InternDiary(
     @Column(name = "Id")
     val id: UUID,
 
-    @Column(name = "Content", length = 300)
+    @Column(name = "Content", length = 300, nullable = false)
     val content: String,
 
     @Column(name = "UpdatedDate")
     val updatedDate: Date?,
 
-    @Column(name = "IsAccepted")
+    @Column(name = "IsAccepted", nullable = false)
     val isAccepted: Boolean,
 
-    @Column(name = "IsRejected")
+    @Column(name = "IsRejected", nullable = false)
     val isRejected: Boolean,
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
     @JoinColumn(name = "InternId", unique = true, nullable = false)
     val intern: Intern
 ) {
-    constructor(content: String, updatedDate: Date, isAccepted: Boolean, isRejected: Boolean, intern: Intern) : this(
+    constructor(content: String, updatedDate: Date?, isAccepted: Boolean, isRejected: Boolean, intern: Intern) : this(
         id = UUID.randomUUID(),
         content = content,
         updatedDate = updatedDate,

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InstitutionDtoConverter {
     public InstitutionDto convert(@NotNull Institution from) {
-        return new InstitutionDto(from.getId(), from.getName(), from.getEmail(), from.getAddress(),
-                from.getCity(), from.getRegion(), from.getPostalCode(), from.getCountry(), from.getPhone());
+        return new InstitutionDto(from.getId(), from.getName(), from.getEmail(), from.getAddress(), from.getCity(),
+                from.getRegion(), from.getPostalCode(), from.getCountry(), from.getPhone(), from.getUser());
     }
 }
