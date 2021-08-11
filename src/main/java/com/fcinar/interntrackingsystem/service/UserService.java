@@ -1,10 +1,12 @@
 package com.fcinar.interntrackingsystem.service;
 
 import com.fcinar.interntrackingsystem.dto.UserDto;
+import com.fcinar.interntrackingsystem.dto.UserRoleDto;
 import com.fcinar.interntrackingsystem.dto.converter.UserDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateUserRequest;
 import com.fcinar.interntrackingsystem.dto.request.UpdateUserPasswordRequest;
 import com.fcinar.interntrackingsystem.exception.UserNotFoundException;
+import com.fcinar.interntrackingsystem.model.Role;
 import com.fcinar.interntrackingsystem.model.User;
 import com.fcinar.interntrackingsystem.model.UserTypes;
 import com.fcinar.interntrackingsystem.repository.IUserRepository;
@@ -19,11 +21,17 @@ import java.util.stream.Collectors;
 public class UserService {
     private final IUserRepository userRepository;
     private final UserDtoConverter userDtoConverter;
+    private final RoleService roleService;
+    private final UserRoleService userRoleService;
 
     public UserService(IUserRepository userRepository,
-                       UserDtoConverter userDtoConverter) {
+                       UserDtoConverter userDtoConverter,
+                       RoleService roleService,
+                       UserRoleService userRoleService) {
         this.userRepository = userRepository;
         this.userDtoConverter = userDtoConverter;
+        this.roleService = roleService;
+        this.userRoleService = userRoleService;
     }
 
 
@@ -55,12 +63,17 @@ public class UserService {
 
 
     public UserDto createUser(@NotNull CreateUserRequest createUserRequest) {
+        Role role = roleService.findRoleById(createUserRequest.getRoleId());
         User user = new User(createUserRequest.getUsername(), createUserRequest.getPassword(),
-                createUserRequest.getType(), null, createUserRequest.getLogoUrl());
-        if (createUserRequest.getType().equals(UserTypes.ADMIN.toString()) ||
-                createUserRequest.getType().equals(UserTypes.INTERN.toString()) ||
-                createUserRequest.getType().equals(UserTypes.COMPANY.toString()) ||
-                createUserRequest.getType().equals(UserTypes.INSTITUTION.toString())) {
+                createUserRequest.getLogoUrl(), null, null, role);
+        UserRoleDto userRole = userRoleService.createUserRole(user, role);
+        if (createUserRequest.getRoleId() == UserTypes.ADMIN.getValue() ||
+                createUserRequest.getRoleId() == UserTypes.INTERN.getValue() ||
+                createUserRequest.getRoleId() == UserTypes.COMPANY.getValue() ||
+                createUserRequest.getRoleId() == UserTypes.INSTITUTION.getValue()) {
+            if (createUserRequest.getRoleId() == UserTypes.ADMIN.getValue()) {
+                user.setSubUserType(UserTypes.ADMIN.toString());
+            }
             return userDtoConverter.convert(userRepository.save(user));
         }
         return userDtoConverter.convert(user);
@@ -80,9 +93,9 @@ public class UserService {
 
 
     public void deleteAllUsers() {
-        userRepository.deleteByType(UserTypes.INTERN.toString());
-        userRepository.deleteByType(UserTypes.COMPANY.toString());
-        userRepository.deleteByType(UserTypes.INSTITUTION.toString());
+        userRepository.deleteByRoleId(UserTypes.INTERN.getValue());
+        userRepository.deleteByRoleId(UserTypes.COMPANY.getValue());
+        userRepository.deleteByRoleId(UserTypes.INSTITUTION.getValue());
     }
 
     public void deleteUserById(UUID id) {

@@ -40,10 +40,10 @@ public class UserController {
             @RequestBody CreateUserRequest createUserRequest) {
         try {
             UserDto user = userService.createUser(createUserRequest);
-            if (user.getType().equals(UserTypes.ADMIN.toString()) ||
-                    user.getType().equals(UserTypes.INTERN.toString()) ||
-                    user.getType().equals(UserTypes.COMPANY.toString()) ||
-                    user.getType().equals(UserTypes.INSTITUTION.toString())) {
+            if (user.getRole().getId() == UserTypes.ADMIN.getValue() ||
+                    user.getRole().getId() == UserTypes.INTERN.getValue() ||
+                    user.getRole().getId() == UserTypes.COMPANY.getValue() ||
+                    user.getRole().getId() == UserTypes.INSTITUTION.getValue()) {
                 return new ResponseEntity<>(user, HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);

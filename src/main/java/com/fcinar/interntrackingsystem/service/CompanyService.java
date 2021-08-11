@@ -54,8 +54,9 @@ public class CompanyService {
                 createCompanyRequest.getAddress(), createCompanyRequest.getCity(),
                 createCompanyRequest.getRegion(), createCompanyRequest.getPostalCode(),
                 createCompanyRequest.getCountry(), createCompanyRequest.getPhone(), user);
-        if (user.getType().equals(UserTypes.COMPANY.toString())) {
-            user.setTypeId(company.getId());
+        if (user.getRole().getId() == UserTypes.COMPANY.getValue()) {
+            user.setSubUserId(company.getId());
+            user.setSubUserType(UserTypes.COMPANY.toString());
             return companyDtoConverter.convert(companyRepository.save(company));
         } else {
             return companyDtoConverter.convert(company);

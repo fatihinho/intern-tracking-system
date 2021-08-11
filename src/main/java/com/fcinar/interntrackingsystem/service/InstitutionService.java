@@ -54,8 +54,9 @@ public class InstitutionService {
                 createInstitutionRequest.getAddress(), createInstitutionRequest.getCity(),
                 createInstitutionRequest.getRegion(), createInstitutionRequest.getPostalCode(),
                 createInstitutionRequest.getCountry(), createInstitutionRequest.getPhone(), user);
-        if (user.getType().equals(UserTypes.INSTITUTION.toString())) {
-            user.setTypeId(institution.getId());
+        if (user.getRole().getId() == UserTypes.INSTITUTION.getValue()) {
+            user.setSubUserId(institution.getId());
+            user.setSubUserType(UserTypes.INSTITUTION.toString());
             return institutionDtoConverter.convert(institutionRepository.save(institution));
         } else {
             return institutionDtoConverter.convert(institution);

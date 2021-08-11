@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDtoConverter {
     public UserDto convert(@NotNull User from) {
-        return new UserDto(from.getId(), from.getUsername(), from.getPassword(),
-                from.getType(), from.getTypeId(), from.getLogoUrl());
+        return new UserDto(from.getId(), from.getUsername(), from.getPassword(), from.getLogoUrl(),
+                from.getSubUserType(), from.getSubUserId(), from.getRole());
     }
 }

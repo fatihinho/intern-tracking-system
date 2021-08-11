@@ -48,7 +48,7 @@ public class CompanyController {
     public ResponseEntity<CompanyDto> createCompany(@RequestBody CreateCompanyRequest createCompanyRequest) {
         try {
             CompanyDto company = companyService.createCompany(createCompanyRequest);
-            if (company.getUser().getTypeId() == null) {
+            if (company.getUser().getSubUserId() == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             return new ResponseEntity<>(company, HttpStatus.CREATED);

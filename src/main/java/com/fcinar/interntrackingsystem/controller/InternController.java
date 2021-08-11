@@ -48,7 +48,7 @@ public class InternController {
     public ResponseEntity<InternDto> createIntern(@RequestBody CreateInternRequest createInternRequest) {
         try {
             InternDto intern = internService.createIntern(createInternRequest);
-            if (intern.getUser().getTypeId() == null) {
+            if (intern.getUser().getSubUserId() == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             return new ResponseEntity<>(intern, HttpStatus.CREATED);

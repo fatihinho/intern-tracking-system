@@ -49,7 +49,7 @@ public class InstitutionController {
             @RequestBody CreateInstitutionRequest createInstitutionRequest) {
         try {
             InstitutionDto institution = institutionService.createInstitution(createInstitutionRequest);
-            if (institution.getUser().getTypeId() == null) {
+            if (institution.getUser().getSubUserId() == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             return new ResponseEntity<>(institution, HttpStatus.CREATED);

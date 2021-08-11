@@ -55,8 +55,9 @@ public class InternService {
                 createInternRequest.getBirthDate(), createInternRequest.getIdentityNumber(),
                 createInternRequest.getPhone(), createInternRequest.getEmail(),
                 createInternRequest.getCvUrl(), null, institution, user);
-        if (user.getType().equals(UserTypes.INTERN.toString())) {
-            user.setTypeId(intern.getId());
+        if (user.getRole().getId() == UserTypes.INTERN.getValue()) {
+            user.setSubUserId(intern.getId());
+            user.setSubUserType(UserTypes.INTERN.toString());
             return internDtoConverter.convert(internRepository.save(intern));
         } else {
             return internDtoConverter.convert(intern);

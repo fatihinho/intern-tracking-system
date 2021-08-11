@@ -3,8 +3,8 @@ package com.fcinar.interntrackingsystem.model
 import java.util.*
 import javax.persistence.*
 
-enum class UserTypes {
-    ADMIN, INTERN, COMPANY, INSTITUTION
+enum class UserTypes(val value: Int) {
+    ADMIN(1), INTERN(2), COMPANY(3), INSTITUTION(4)
 }
 
 @Entity
@@ -20,23 +20,35 @@ data class User(
     @Column(name = "Password", length = 20, nullable = false)
     var password: String,
 
-    @Column(name = "Type", length = 20, nullable = false)
-    val type: String,
-
-    @Column(name = "TypeId")
-    var typeId: UUID?,
-
     @Column(name = "LogoUrl", length = 50)
-    var logoUrl: String?
+    var logoUrl: String?,
+
+    @Column(name = "SubUserType", length = 20)
+    var subUserType: String?,
+
+    @Column(name = "SubUserId")
+    var subUserId: UUID?,
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @JoinColumn(name = "RoleId", nullable = false)
+    val role: Role
 
 ) {
-    constructor(username: String, password: String, type: String, typeId: UUID?, logoUrl: String?) : this(
+    constructor(
+        username: String,
+        password: String,
+        logoUrl: String?,
+        subUserType: String?,
+        subUserId: UUID?,
+        role: Role
+    ) : this(
         id = UUID.randomUUID(),
         username = username,
         password = password,
-        type = type,
-        typeId = typeId,
-        logoUrl = logoUrl
+        logoUrl = logoUrl,
+        subUserType = subUserType,
+        subUserId = subUserId,
+        role = role
     )
 
     override fun equals(other: Any?): Boolean {
@@ -48,9 +60,10 @@ data class User(
         if (id != other.id) return false
         if (username != other.username) return false
         if (password != other.password) return false
-        if (type != other.type) return false
-        if (typeId != other.typeId) return false
         if (logoUrl != other.logoUrl) return false
+        if (subUserType != other.subUserType) return false
+        if (subUserId != other.subUserId) return false
+        if (role != other.role) return false
 
         return true
     }
@@ -59,14 +72,15 @@ data class User(
         var result = id.hashCode()
         result = 31 * result + username.hashCode()
         result = 31 * result + password.hashCode()
-        result = 31 * result + type.hashCode()
-        result = 31 * result + (typeId?.hashCode() ?: 0)
         result = 31 * result + (logoUrl?.hashCode() ?: 0)
+        result = 31 * result + (subUserType?.hashCode() ?: 0)
+        result = 31 * result + (subUserId?.hashCode() ?: 0)
+        result = 31 * result + role.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "User(id=$id, username='$username', password='$password', " +
-                "type='$type', typeId=$typeId, logoUrl=$logoUrl)"
+        return "User(id=$id, username='$username', password='$password', logoUrl=$logoUrl, " +
+                "subUserType=$subUserType, subUserId=$subUserId, role=$role)"
     }
 }

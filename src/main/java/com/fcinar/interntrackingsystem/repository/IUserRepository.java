@@ -13,5 +13,5 @@ public interface IUserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByUsername(String username);
 
     @Transactional
-    void deleteByType(String type);
+    void deleteByRoleId(int id);
 }
