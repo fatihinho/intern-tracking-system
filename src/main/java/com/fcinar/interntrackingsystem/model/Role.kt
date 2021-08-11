@@ -6,6 +6,7 @@ import javax.persistence.*
 @Table(name = "Role")
 data class Role(
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Id")
     val id: Int?,
 
