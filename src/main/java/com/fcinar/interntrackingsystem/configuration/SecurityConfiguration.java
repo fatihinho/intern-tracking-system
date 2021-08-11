@@ -1,38 +1,74 @@
 package com.fcinar.interntrackingsystem.configuration;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private final DataSource dataSource;
+
+    @Value("${spring.queries.users-query}")
+    private String usersQuery;
+
+    @Value("${spring.queries.roles-query}")
+    private String rolesQuery;
+
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    public SecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
 
     @Override
     protected void configure(@NotNull AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("intern").password("{noop}123").roles("INTERN")
-                .and()
-                .withUser("company").password("{noop}456").roles("COMPANY")
-                .and()
-                .withUser("institution").password("{noop}789").roles("INSTITUTION")
-                .and()
-                .withUser("admin").password("{noop}000").roles("ADMIN", "INTERN", "COMPANY", "INSTITUTION");
+        auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
+                .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(@NotNull HttpSecurity http) throws Exception {
-        http.httpBasic()
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/home/**")
+                .hasAnyAuthority("ADMIN", "INTERN", "COMPANY", "INSTITUTION")
+                .anyRequest().authenticated()
                 .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/v1/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/v1/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/v1/**").hasRole("ADMIN")
+                .csrf().disable().formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/home")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .and()
-                .csrf().disable()
-                .formLogin().disable();
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/access-denied");
+    }
+
+    @Override
+    public void configure(@NotNull WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/js/**", "/images/**");
     }
 }
