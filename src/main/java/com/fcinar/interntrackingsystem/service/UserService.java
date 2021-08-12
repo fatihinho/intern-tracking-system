@@ -45,9 +45,20 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User could not found by username: " + username));
     }
 
+    protected User findUserByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password)
+                .orElseThrow(() -> new UserNotFoundException(
+                        String.format("User could not found by username: (%s) and password", username)));
+    }
+
 
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
+        return users.stream().map(userDtoConverter::convert).collect(Collectors.toList());
+    }
+
+    public List<UserDto> getAllUsersByRoleId(Integer roleId) {
+        List<User> users = userRepository.findAllByRoleId(roleId);
         return users.stream().map(userDtoConverter::convert).collect(Collectors.toList());
     }
 
@@ -58,6 +69,11 @@ public class UserService {
 
     public UserDto getUserByUsername(String username) {
         User user = findUserByUsername(username);
+        return userDtoConverter.convert(user);
+    }
+
+    public UserDto getUserByUsernameAndPassword(String username, String password) {
+        User user = findUserByUsernameAndPassword(username, password);
         return userDtoConverter.convert(user);
     }
 
