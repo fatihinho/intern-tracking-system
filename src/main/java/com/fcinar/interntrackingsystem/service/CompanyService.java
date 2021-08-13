@@ -62,13 +62,4 @@ public class CompanyService {
             return companyDtoConverter.convert(company);
         }
     }
-
-
-    public void deleteAllCompanies() {
-        companyRepository.deleteAll();
-    }
-
-    public void deleteCompanyById(UUID id) {
-        companyRepository.deleteById(id);
-    }
 }

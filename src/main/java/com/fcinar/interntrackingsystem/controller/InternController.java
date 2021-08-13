@@ -56,25 +56,4 @@ public class InternController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
-    @DeleteMapping("/interns")
-    public ResponseEntity<HttpStatus> deleteAllInterns() {
-        try {
-            internService.deleteAllInterns();
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/interns/{id}")
-    public ResponseEntity<HttpStatus> deleteInternById(@PathVariable UUID id) {
-        try {
-            internService.deleteInternById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 }

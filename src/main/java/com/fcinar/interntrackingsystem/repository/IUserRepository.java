@@ -16,7 +16,4 @@ public interface IUserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByUsernameAndPassword(String username, String password);
 
     List<User> findAllByRoleId(Integer roleId);
-
-    @Transactional
-    void deleteByRoleId(int roleId);
 }

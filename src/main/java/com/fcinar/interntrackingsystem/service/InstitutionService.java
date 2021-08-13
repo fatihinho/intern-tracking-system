@@ -62,13 +62,4 @@ public class InstitutionService {
             return institutionDtoConverter.convert(institution);
         }
     }
-
-
-    public void deleteAllInstitutions() {
-        institutionRepository.deleteAll();
-    }
-
-    public void deleteInstitutionById(UUID id) {
-        institutionRepository.deleteById(id);
-    }
 }

@@ -57,25 +57,4 @@ public class InstitutionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
-    @DeleteMapping("/institutions")
-    public ResponseEntity<HttpStatus> deleteAllInstitutions() {
-        try {
-            institutionService.deleteAllInstitutions();
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/institutions/{id}")
-    public ResponseEntity<HttpStatus> deleteInstitutionById(@PathVariable UUID id) {
-        try {
-            institutionService.deleteInstitutionById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 }

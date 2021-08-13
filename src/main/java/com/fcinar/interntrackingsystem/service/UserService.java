@@ -106,15 +106,4 @@ public class UserService {
         }
         return userDtoConverter.convert(userRepository.save(user));
     }
-
-
-    public void deleteAllUsers() {
-        userRepository.deleteByRoleId(UserTypes.INTERN.getValue());
-        userRepository.deleteByRoleId(UserTypes.COMPANY.getValue());
-        userRepository.deleteByRoleId(UserTypes.INSTITUTION.getValue());
-    }
-
-    public void deleteUserById(UUID id) {
-        userRepository.deleteById(id);
-    }
 }

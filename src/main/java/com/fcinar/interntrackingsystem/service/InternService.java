@@ -63,13 +63,4 @@ public class InternService {
             return internDtoConverter.convert(intern);
         }
     }
-
-
-    public void deleteAllInterns() {
-        internRepository.deleteAll();
-    }
-
-    public void deleteInternById(UUID id) {
-        internRepository.deleteById(id);
-    }
 }

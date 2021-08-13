@@ -56,25 +56,4 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
-    @DeleteMapping("/companies")
-    public ResponseEntity<HttpStatus> deleteAllCompanies() {
-        try {
-            companyService.deleteAllCompanies();
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/companies/{id}")
-    public ResponseEntity<HttpStatus> deleteCompanyById(@PathVariable UUID id) {
-        try {
-            companyService.deleteCompanyById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 }
