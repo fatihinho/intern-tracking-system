@@ -3,6 +3,7 @@ package com.fcinar.interntrackingsystem.service;
 import com.fcinar.interntrackingsystem.dto.CompanyInternSearchDto;
 import com.fcinar.interntrackingsystem.dto.converter.CompanyInternSearchDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyInternSearchRequest;
+import com.fcinar.interntrackingsystem.exception.CompanyInternSearchNotFoundException;
 import com.fcinar.interntrackingsystem.model.Company;
 import com.fcinar.interntrackingsystem.model.CompanyInternSearch;
 import com.fcinar.interntrackingsystem.repository.ICompanyInternSearchRepository;
@@ -23,6 +24,19 @@ public class CompanyInternSearchService {
         this.companyInternSearchRepository = companyInternSearchRepository;
         this.companyInternSearchDtoConverter = companyInternSearchDtoConverter;
         this.companyService = companyService;
+    }
+
+
+    private CompanyInternSearch findCompanyInternSearchByCompanyId(UUID companyId) {
+        return companyInternSearchRepository.findByCompanyId(companyId)
+                .orElseThrow(() -> new CompanyInternSearchNotFoundException(
+                        "CompanyInternSearch could not found by company id: " + companyId));
+    }
+
+
+    public CompanyInternSearchDto getCompanyInternSearchByCompanyId(UUID companyId) {
+        CompanyInternSearch companyInternSearch = findCompanyInternSearchByCompanyId(companyId);
+        return companyInternSearchDtoConverter.convert(companyInternSearch);
     }
 
 
