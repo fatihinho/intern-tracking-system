@@ -34,7 +34,7 @@ data class Company(
     @Column(name = "Phone", length = 20)
     val phone: String?,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "UserId", nullable = false)
     val user: User
 ) {

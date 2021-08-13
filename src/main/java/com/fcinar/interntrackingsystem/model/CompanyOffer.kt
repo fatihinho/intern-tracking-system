@@ -25,11 +25,11 @@ data class CompanyOffer(
     @Column(name = "IsRejected", nullable = false)
     val isRejected: Boolean,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "CompanyId", nullable = false)
     val company: Company,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "InternId", nullable = false)
     val intern: Intern
 ) {

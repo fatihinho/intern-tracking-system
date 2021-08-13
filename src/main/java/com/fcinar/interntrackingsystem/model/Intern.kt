@@ -31,15 +31,15 @@ data class Intern(
     @Column(name = "CvUrl")
     val cvUrl: ByteArray?,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CompanyId")
     val company: Company?,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "InstitutionId", nullable = false)
     val institution: Institution,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "UserId", nullable = false)
     val user: User
 ) {

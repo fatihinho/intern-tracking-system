@@ -29,7 +29,7 @@ data class User(
     @Column(name = "SubUserId")
     var subUserId: UUID?,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "RoleId", nullable = false)
     val role: Role
 

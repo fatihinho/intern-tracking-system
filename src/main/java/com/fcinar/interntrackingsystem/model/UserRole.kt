@@ -10,11 +10,11 @@ data class UserRole(
     @Column(name = "id")
     val id: UUID,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "UserId", nullable = false)
     val user: User,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "RoleId", nullable = false)
     val role: Role
 ) {
