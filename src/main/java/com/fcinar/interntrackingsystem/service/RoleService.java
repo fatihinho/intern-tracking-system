@@ -14,7 +14,7 @@ public class RoleService {
     }
 
 
-    protected Role findRoleById(int id) {
+    public Role findRoleById(int id) {
         return roleRepository.findById(id)
                 .orElseThrow(() -> new RoleNotFoundException("Role could not found by id: " + id));
     }
