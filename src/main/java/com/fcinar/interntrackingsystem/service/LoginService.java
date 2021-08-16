@@ -20,7 +20,7 @@ public class LoginService {
         List<UserDto> users = userService.getAllUsersByRoleId(loginValidationRequest.getRoleType());
         UserDto user = userService.getUserByUsernameAndPassword(
                 loginValidationRequest.getUsername(), loginValidationRequest.getPassword());
-        if (users.isEmpty() || user.getId() == null) {
+        if (users.isEmpty()) {
             return false;
         }
         return users.stream().map(u -> u.getId() == user.getId())

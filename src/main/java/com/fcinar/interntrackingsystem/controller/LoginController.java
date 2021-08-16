@@ -22,7 +22,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<HttpStatus> loginValidation(@RequestBody LoginValidationRequest loginValidationRequest) {
         try {
-            if (loginService.isValid(loginValidationRequest)) {
+            if (Boolean.TRUE.equals(loginService.isValid(loginValidationRequest))) {
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

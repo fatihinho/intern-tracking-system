@@ -90,7 +90,7 @@ public class UserService {
         Role role = roleService.findRoleById(createUserRequest.getRoleId());
         User user = new User(createUserRequest.getUsername(), createUserRequest.getPassword(),
                 createUserRequest.getLogoUrl(), null, null, role);
-        UserRoleDto userRole = userRoleService.createUserRole(user, role);
+        userRoleService.createUserRole(user, role);
         if (createUserRequest.getRoleId() == UserTypes.ADMIN.getValue() ||
                 createUserRequest.getRoleId() == UserTypes.INTERN.getValue() ||
                 createUserRequest.getRoleId() == UserTypes.COMPANY.getValue() ||

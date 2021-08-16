@@ -81,10 +81,7 @@ data class Intern(
         if (identityNumber != other.identityNumber) return false
         if (phone != other.phone) return false
         if (email != other.email) return false
-        if (cvUrl != null) {
-            if (other.cvUrl == null) return false
-            if (!cvUrl.contentEquals(other.cvUrl)) return false
-        } else if (other.cvUrl != null) return false
+        if (!cvUrl.contentEquals(other.cvUrl)) return false
         if (company != other.company) return false
         if (institution != other.institution) return false
         if (user != other.user) return false
