@@ -43,7 +43,8 @@ public class InternTrackingSystemApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Date birthDate = Date.from(LocalDate.of(1998, 9, 11).atStartOfDay().toInstant(ZoneOffset.UTC));
+        Date birthDate = Date.from(LocalDate.of(1998, 9, 11)
+                .atStartOfDay().toInstant(ZoneOffset.ofHours(3)));
 
         if (roleRepository.findAll().isEmpty()) {
             roleRepository.save(new Role("ADMIN"));
