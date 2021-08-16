@@ -1,13 +1,13 @@
 package com.fcinar.interntrackingsystem.service;
 
 import com.fcinar.interntrackingsystem.dto.UserDto;
-import com.fcinar.interntrackingsystem.dto.UserRoleDto;
 import com.fcinar.interntrackingsystem.dto.converter.UserDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateUserRequest;
 import com.fcinar.interntrackingsystem.dto.request.UpdateUserPasswordRequest;
-import com.fcinar.interntrackingsystem.dto.request.UpdateUserProfileRequest;
 import com.fcinar.interntrackingsystem.exception.UserNotFoundException;
-import com.fcinar.interntrackingsystem.model.*;
+import com.fcinar.interntrackingsystem.model.Role;
+import com.fcinar.interntrackingsystem.model.User;
+import com.fcinar.interntrackingsystem.model.UserTypes;
 import com.fcinar.interntrackingsystem.repository.IUserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -22,24 +22,15 @@ public class UserService {
     private final UserDtoConverter userDtoConverter;
     private final RoleService roleService;
     private final UserRoleService userRoleService;
-    private final InternService internService;
-    private final CompanyService companyService;
-    private final InstitutionService institutionService;
 
     public UserService(IUserRepository userRepository,
                        UserDtoConverter userDtoConverter,
                        RoleService roleService,
-                       UserRoleService userRoleService,
-                       InternService internService,
-                       CompanyService companyService,
-                       InstitutionService institutionService) {
+                       UserRoleService userRoleService) {
         this.userRepository = userRepository;
         this.userDtoConverter = userDtoConverter;
         this.roleService = roleService;
         this.userRoleService = userRoleService;
-        this.internService = internService;
-        this.companyService = companyService;
-        this.institutionService = institutionService;
     }
 
 
@@ -111,70 +102,6 @@ public class UserService {
                 !updateUserPasswordRequest.getPassword().isEmpty() &&
                 !updateUserPasswordRequest.getPassword2().isEmpty()) {
             user.setPassword(updateUserPasswordRequest.getPassword());
-        }
-        return userDtoConverter.convert(userRepository.save(user));
-    }
-
-    public UserDto updateUserProfileByUsername(String username, UpdateUserProfileRequest updateUserProfileRequest) {
-        User user = findUserByUsername(username);
-        if (user.getSubUserType().equals(UserTypes.INTERN.toString())) {
-            Intern intern = internService.findInternById(user.getSubUserId());
-            String name = updateUserProfileRequest.getName() != null
-                    ? updateUserProfileRequest.getName() : intern.getName();
-            String surname = updateUserProfileRequest.getSurname() != null
-                    ? updateUserProfileRequest.getSurname() : intern.getSurname();
-            String email = updateUserProfileRequest.getEmail() != null
-                    ? updateUserProfileRequest.getEmail() : intern.getEmail();
-            String phone = updateUserProfileRequest.getPhone() != null
-                    ? updateUserProfileRequest.getPhone() : intern.getPhone();
-            String address = updateUserProfileRequest.getAddress() != null
-                    ? updateUserProfileRequest.getAddress() : "";
-            String logoUrl = updateUserProfileRequest.getLogoUrl() != null
-                    ? updateUserProfileRequest.getLogoUrl() : user.getLogoUrl();
-            intern.setName(name);
-            intern.setSurname(surname);
-            intern.setEmail(email);
-            intern.setPhone(phone);
-            user.setLogoUrl(logoUrl);
-            internService.updateIntern(intern);
-        } else if (user.getSubUserType().equals(UserTypes.COMPANY.toString())) {
-            Company company = companyService.findCompanyById(user.getSubUserId());
-            String name = updateUserProfileRequest.getName() != null
-                    ? updateUserProfileRequest.getName() : company.getName();
-            String surname = updateUserProfileRequest.getSurname() != null
-                    ? updateUserProfileRequest.getSurname() : "";
-            String email = updateUserProfileRequest.getEmail() != null
-                    ? updateUserProfileRequest.getEmail() : company.getEmail();
-            String phone = updateUserProfileRequest.getPhone() != null
-                    ? updateUserProfileRequest.getPhone() : company.getPhone();
-            String address = updateUserProfileRequest.getAddress() != null
-                    ? updateUserProfileRequest.getAddress() : company.getAddress();
-            String logoUrl = updateUserProfileRequest.getLogoUrl() != null
-                    ? updateUserProfileRequest.getLogoUrl() : user.getLogoUrl();
-            company.setName(name);
-            company.setEmail(email);
-            company.setPhone(phone);
-            user.setLogoUrl(logoUrl);
-            companyService.updateCompany(company);
-        } else if (user.getSubUserType().equals(UserTypes.INSTITUTION.toString())) {
-            Institution institution = institutionService.findInstitutionById(user.getSubUserId());
-            String name = updateUserProfileRequest.getName() != null
-                    ? updateUserProfileRequest.getName() : institution.getName();
-            String surname = updateUserProfileRequest.getSurname() != null
-                    ? updateUserProfileRequest.getSurname() : "";
-            String email = updateUserProfileRequest.getEmail() != null
-                    ? updateUserProfileRequest.getEmail() : institution.getEmail();
-            String phone = updateUserProfileRequest.getPhone() != null
-                    ? updateUserProfileRequest.getPhone() : institution.getPhone();
-            String address = updateUserProfileRequest.getAddress() != null
-                    ? updateUserProfileRequest.getAddress() : institution.getAddress();
-            String logoUrl = updateUserProfileRequest.getLogoUrl() != null
-                    ? updateUserProfileRequest.getLogoUrl() : user.getLogoUrl();
-            institution.setName(name);
-            institution.setEmail(email);
-            institution.setPhone(phone);
-            user.setLogoUrl(logoUrl);
-            institutionService.updateInstitution(institution);
         }
         return userDtoConverter.convert(userRepository.save(user));
     }

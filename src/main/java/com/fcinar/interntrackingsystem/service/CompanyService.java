@@ -3,9 +3,9 @@ package com.fcinar.interntrackingsystem.service;
 import com.fcinar.interntrackingsystem.dto.CompanyDto;
 import com.fcinar.interntrackingsystem.dto.converter.CompanyDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyRequest;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUserProfileRequest;
 import com.fcinar.interntrackingsystem.exception.CompanyNotFoundException;
 import com.fcinar.interntrackingsystem.model.Company;
-import com.fcinar.interntrackingsystem.model.Intern;
 import com.fcinar.interntrackingsystem.model.User;
 import com.fcinar.interntrackingsystem.model.UserTypes;
 import com.fcinar.interntrackingsystem.repository.ICompanyRepository;
@@ -65,7 +65,30 @@ public class CompanyService {
     }
 
 
-    protected Company updateCompany(Company company) {
-        return companyRepository.save(company);
+    public CompanyDto updateCompanyProfileByUsername(String username,
+                                                     UpdateUserProfileRequest updateUserProfileRequest) {
+        User user = userService.findUserByUsername(username);
+        Company company = findCompanyById(user.getSubUserId());
+        if (user.getSubUserType().equals(UserTypes.COMPANY.toString())) {
+            String name = updateUserProfileRequest.getName() != null
+                    ? updateUserProfileRequest.getName() : company.getName();
+            String surname = updateUserProfileRequest.getSurname() != null
+                    ? updateUserProfileRequest.getSurname() : "";
+            String email = updateUserProfileRequest.getEmail() != null
+                    ? updateUserProfileRequest.getEmail() : company.getEmail();
+            String phone = updateUserProfileRequest.getPhone() != null
+                    ? updateUserProfileRequest.getPhone() : company.getPhone();
+            String address = updateUserProfileRequest.getAddress() != null
+                    ? updateUserProfileRequest.getAddress() : company.getAddress();
+            String logoUrl = updateUserProfileRequest.getLogoUrl() != null
+                    ? updateUserProfileRequest.getLogoUrl() : user.getLogoUrl();
+            company.setName(name);
+            company.setEmail(email);
+            company.setPhone(phone);
+            user.setLogoUrl(logoUrl);
+            return companyDtoConverter.convert(companyRepository.save(company));
+        } else {
+            return companyDtoConverter.convert(company);
+        }
     }
 }

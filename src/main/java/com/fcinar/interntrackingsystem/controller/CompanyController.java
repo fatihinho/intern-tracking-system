@@ -2,6 +2,7 @@ package com.fcinar.interntrackingsystem.controller;
 
 import com.fcinar.interntrackingsystem.dto.CompanyDto;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyRequest;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUserProfileRequest;
 import com.fcinar.interntrackingsystem.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +53,19 @@ public class CompanyController {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             return new ResponseEntity<>(company, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PutMapping("/companies/{username}/profile")
+    public ResponseEntity<CompanyDto> updateCompanyProfileByUsername(
+            @PathVariable String username,
+            @RequestBody UpdateUserProfileRequest updateUserProfileRequest) {
+        try {
+            CompanyDto company = companyService.updateCompanyProfileByUsername(username, updateUserProfileRequest);
+            return new ResponseEntity<>(company, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -2,6 +2,7 @@ package com.fcinar.interntrackingsystem.controller;
 
 import com.fcinar.interntrackingsystem.dto.InternDto;
 import com.fcinar.interntrackingsystem.dto.request.CreateInternRequest;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUserProfileRequest;
 import com.fcinar.interntrackingsystem.service.InternService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +53,19 @@ public class InternController {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             return new ResponseEntity<>(intern, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PutMapping("/interns/{username}/profile")
+    public ResponseEntity<InternDto> updateInternProfileByUsername(
+            @PathVariable String username,
+            @RequestBody UpdateUserProfileRequest updateUserProfileRequest) {
+        try {
+            InternDto intern = internService.updateInternProfileByUsername(username, updateUserProfileRequest);
+            return new ResponseEntity<>(intern, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

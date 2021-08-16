@@ -2,6 +2,7 @@ package com.fcinar.interntrackingsystem.controller;
 
 import com.fcinar.interntrackingsystem.dto.InstitutionDto;
 import com.fcinar.interntrackingsystem.dto.request.CreateInstitutionRequest;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUserProfileRequest;
 import com.fcinar.interntrackingsystem.service.InstitutionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,20 @@ public class InstitutionController {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
             return new ResponseEntity<>(institution, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PutMapping("/institutions/{username}/profile")
+    public ResponseEntity<InstitutionDto> updateInstitutionProfileByUsername(
+            @PathVariable String username,
+            @RequestBody UpdateUserProfileRequest updateUserProfileRequest) {
+        try {
+            InstitutionDto institution = institutionService
+                    .updateInstitutionProfileByUsername(username, updateUserProfileRequest);
+            return new ResponseEntity<>(institution, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

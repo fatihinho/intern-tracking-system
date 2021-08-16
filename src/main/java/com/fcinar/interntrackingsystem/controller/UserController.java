@@ -3,7 +3,6 @@ package com.fcinar.interntrackingsystem.controller;
 import com.fcinar.interntrackingsystem.dto.UserDto;
 import com.fcinar.interntrackingsystem.dto.request.CreateUserRequest;
 import com.fcinar.interntrackingsystem.dto.request.UpdateUserPasswordRequest;
-import com.fcinar.interntrackingsystem.dto.request.UpdateUserProfileRequest;
 import com.fcinar.interntrackingsystem.model.UserTypes;
 import com.fcinar.interntrackingsystem.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -65,18 +64,6 @@ public class UserController {
                             updateUserPasswordRequest.getPassword2().isEmpty())) {
                 return new ResponseEntity<>(user, HttpStatus.NOT_ACCEPTABLE);
             }
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PutMapping("/users/{username}/profile")
-    public ResponseEntity<UserDto> updateUserProfileByUsername(
-            @PathVariable String username,
-            @RequestBody UpdateUserProfileRequest updateUserProfileRequest) {
-        try {
-            UserDto user = userService.updateUserProfileByUsername(username, updateUserProfileRequest);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
