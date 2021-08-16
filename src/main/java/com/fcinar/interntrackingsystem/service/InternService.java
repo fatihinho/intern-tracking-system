@@ -63,4 +63,9 @@ public class InternService {
             return internDtoConverter.convert(intern);
         }
     }
+
+
+    protected Intern updateIntern(Intern intern) {
+        return internRepository.save(intern);
+    }
 }

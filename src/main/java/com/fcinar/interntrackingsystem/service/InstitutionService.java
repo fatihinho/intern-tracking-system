@@ -4,6 +4,7 @@ import com.fcinar.interntrackingsystem.dto.InstitutionDto;
 import com.fcinar.interntrackingsystem.dto.converter.InstitutionDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateInstitutionRequest;
 import com.fcinar.interntrackingsystem.exception.InstitutionNotFoundException;
+import com.fcinar.interntrackingsystem.model.Company;
 import com.fcinar.interntrackingsystem.model.Institution;
 import com.fcinar.interntrackingsystem.model.User;
 import com.fcinar.interntrackingsystem.model.UserTypes;
@@ -61,5 +62,10 @@ public class InstitutionService {
         } else {
             return institutionDtoConverter.convert(institution);
         }
+    }
+
+
+    protected Institution updateInstitution(Institution institution) {
+        return institutionRepository.save(institution);
     }
 }

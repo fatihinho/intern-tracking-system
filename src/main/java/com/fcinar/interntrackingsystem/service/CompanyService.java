@@ -5,6 +5,7 @@ import com.fcinar.interntrackingsystem.dto.converter.CompanyDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyRequest;
 import com.fcinar.interntrackingsystem.exception.CompanyNotFoundException;
 import com.fcinar.interntrackingsystem.model.Company;
+import com.fcinar.interntrackingsystem.model.Intern;
 import com.fcinar.interntrackingsystem.model.User;
 import com.fcinar.interntrackingsystem.model.UserTypes;
 import com.fcinar.interntrackingsystem.repository.ICompanyRepository;
@@ -61,5 +62,10 @@ public class CompanyService {
         } else {
             return companyDtoConverter.convert(company);
         }
+    }
+
+
+    protected Company updateCompany(Company company) {
+        return companyRepository.save(company);
     }
 }

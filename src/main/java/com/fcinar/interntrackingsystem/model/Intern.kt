@@ -11,10 +11,10 @@ data class Intern(
     val id: UUID,
 
     @Column(name = "Name", length = 30, nullable = false)
-    val name: String,
+    var name: String,
 
     @Column(name = "Surname", length = 30, nullable = false)
-    val surname: String,
+    var surname: String,
 
     @Column(name = "BirthDate")
     val birthDate: Date?,
@@ -23,10 +23,10 @@ data class Intern(
     val identityNumber: Long,
 
     @Column(name = "Phone", length = 20)
-    val phone: String?,
+    var phone: String?,
 
     @Column(name = "Email", length = 50, nullable = false)
-    val email: String,
+    var email: String,
 
     @Column(name = "CvUrl")
     val cvUrl: ByteArray?,

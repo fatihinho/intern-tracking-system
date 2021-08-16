@@ -11,13 +11,13 @@ data class Company(
     val id: UUID,
 
     @Column(name = "Name", length = 30, nullable = false)
-    val name: String,
+    var name: String,
 
     @Column(name = "Email", length = 50, nullable = false)
-    val email: String,
+    var email: String,
 
     @Column(name = "Address", length = 50, nullable = false)
-    val address: String,
+    var address: String,
 
     @Column(name = "City", length = 20)
     val city: String?,
@@ -32,7 +32,7 @@ data class Company(
     val country: String?,
 
     @Column(name = "Phone", length = 20)
-    val phone: String?,
+    var phone: String?,
 
     @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "UserId", nullable = false)
