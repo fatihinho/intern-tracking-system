@@ -21,7 +21,7 @@ public class InternController {
 
 
     @GetMapping("/interns")
-    public ResponseEntity<List<InternDto>> getAllInters() {
+    public ResponseEntity<List<InternDto>> getAllInterns() {
         try {
             List<InternDto> interns = internService.getAllInterns();
             if (interns.isEmpty()) {
