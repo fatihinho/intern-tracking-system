@@ -61,7 +61,7 @@ function backPress() {
     window.location.href = '/login';
 }
 
-export default function InternLoginPage() {
+export default function InstitutionLoginPage() {
     const classes = useStyles();
 
     const { value: username, bind: bindUsername, reset: resetUsername } = useInput("");

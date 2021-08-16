@@ -65,7 +65,7 @@ function navigateToInstitutionLoginPage() {
 }
 
 
-export default function InternLoginPage() {
+export default function LoginPage() {
     const classes = useStyles();
 
     return (
