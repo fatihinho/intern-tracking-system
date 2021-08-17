@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,7 +19,50 @@ public class CompanyInternSearchController {
         this.companyInternSearchService = companyInternSearchService;
     }
 
-    @PostMapping("/intern-search")
+
+    @GetMapping("/intern-searches/{id}")
+    public ResponseEntity<CompanyInternSearchDto> getCompanyInternSearchById(@PathVariable UUID id) {
+        try {
+            CompanyInternSearchDto companyInternSearch = companyInternSearchService.getCompanyInternSearchById(id);
+            if (companyInternSearch.getId() == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(companyInternSearch, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/intern-searches/company/{companyId}")
+    public ResponseEntity<CompanyInternSearchDto> getCompanyInternSearchByCompanyId(@PathVariable UUID companyId) {
+        try {
+            CompanyInternSearchDto companyInternSearch = companyInternSearchService
+                    .getCompanyInternSearchByCompanyId(companyId);
+            if (companyInternSearch.getId() == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(companyInternSearch, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/intern-searches")
+    public ResponseEntity<List<CompanyInternSearchDto>> getAllCompanyInternSearches() {
+        try {
+            List<CompanyInternSearchDto> companyInternSearches = companyInternSearchService
+                    .getAllCompanyInternSearches();
+            if (companyInternSearches.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(companyInternSearches, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PostMapping("/intern-searches")
     public ResponseEntity<CompanyInternSearchDto> createCompanyInternSearch(
             @RequestBody CreateCompanyInternSearchRequest createCompanyInternSearchRequest) {
         try {
@@ -31,7 +75,7 @@ public class CompanyInternSearchController {
     }
 
 
-    @DeleteMapping("/intern-search/{companyId}")
+    @DeleteMapping("/intern-searches/{companyId}")
     public ResponseEntity<HttpStatus> deleteCompanyInternSearchByCompanyId(@PathVariable UUID companyId) {
         try {
             CompanyInternSearchDto companyInternSearch = companyInternSearchService.
