@@ -87,4 +87,24 @@ public class InternDiaryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/interns/diaries/accept/{id}")
+    public ResponseEntity<InternDiaryDto> acceptInternDiaryById(@PathVariable UUID id) {
+        try {
+            InternDiaryDto internDiary = internDiaryService.acceptInternDiaryById(id);
+            return new ResponseEntity<>(internDiary, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/interns/diaries/reject/{id}")
+    public ResponseEntity<InternDiaryDto> rejectInternDiaryById(@PathVariable UUID id) {
+        try {
+            InternDiaryDto internDiary = internDiaryService.rejectInternDiaryById(id);
+            return new ResponseEntity<>(internDiary, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

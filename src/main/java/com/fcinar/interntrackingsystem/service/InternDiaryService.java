@@ -73,15 +73,24 @@ public class InternDiaryService {
                 ? updateInternDiaryRequest.getContent() : internDiary.getContent();
         int dayOfInternShip = updateInternDiaryRequest.getDayOfInternship() != null
                 ? updateInternDiaryRequest.getDayOfInternship() : internDiary.getDayOfInternship();
-        boolean isAccepted = updateInternDiaryRequest.isAccepted() != null
-                ? updateInternDiaryRequest.isAccepted() : internDiary.isAccepted();
-        boolean isRejected = updateInternDiaryRequest.isRejected() != null
-                ? updateInternDiaryRequest.isRejected() : internDiary.isRejected();
         internDiary.setContent(content);
         internDiary.setDayOfInternship(dayOfInternShip);
         internDiary.setUpdatedDate(updateInternDiaryRequest.getUpdatedDate());
-        internDiary.setAccepted(isAccepted);
-        internDiary.setRejected(isRejected);
+        return internDiaryDtoConverter.convert(internDiaryRepository.save(internDiary));
+    }
+
+
+    public InternDiaryDto acceptInternDiaryById(UUID id) {
+        InternDiary internDiary = findInternDiaryById(id);
+        internDiary.setAccepted(true);
+        internDiary.setRejected(false);
+        return internDiaryDtoConverter.convert(internDiaryRepository.save(internDiary));
+    }
+
+    public InternDiaryDto rejectInternDiaryById(UUID id) {
+        InternDiary internDiary = findInternDiaryById(id);
+        internDiary.setRejected(true);
+        internDiary.setAccepted(false);
         return internDiaryDtoConverter.convert(internDiaryRepository.save(internDiary));
     }
 }
