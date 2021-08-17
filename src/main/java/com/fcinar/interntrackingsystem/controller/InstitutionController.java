@@ -38,6 +38,9 @@ public class InstitutionController {
     public ResponseEntity<InstitutionDto> getInstitutionById(@PathVariable UUID id) {
         try {
             InstitutionDto institution = institutionService.getInstitutionById(id);
+            if (institution.getId() == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
             return new ResponseEntity<>(institution, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

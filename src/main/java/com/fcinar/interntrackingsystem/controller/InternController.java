@@ -38,6 +38,9 @@ public class InternController {
     public ResponseEntity<InternDto> getInternById(@PathVariable UUID id) {
         try {
             InternDto intern = internService.getInternById(id);
+            if (intern.getId() == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
             return new ResponseEntity<>(intern, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

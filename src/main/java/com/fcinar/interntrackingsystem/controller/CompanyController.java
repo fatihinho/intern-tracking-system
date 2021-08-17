@@ -38,6 +38,9 @@ public class CompanyController {
     public ResponseEntity<CompanyDto> getCompanyById(@PathVariable UUID id) {
         try {
             CompanyDto company = companyService.getCompanyById(id);
+            if (company.getId() == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
             return new ResponseEntity<>(company, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
