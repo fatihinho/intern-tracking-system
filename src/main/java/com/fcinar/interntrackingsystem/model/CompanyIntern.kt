@@ -10,7 +10,7 @@ data class CompanyIntern(
     @Column(name = "Id")
     val id: UUID,
 
-    @Column(name = "UnitName", length = 30, nullable = false)
+    @Column(name = "UnitName", length = 100, nullable = false)
     val unitName: String,
 
     @Column(name = "DayOfInternship", nullable = false)
