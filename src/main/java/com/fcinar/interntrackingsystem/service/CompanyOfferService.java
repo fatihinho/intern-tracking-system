@@ -70,23 +70,31 @@ public class CompanyOfferService {
         CompanyOffer companyOffer = new CompanyOffer(
                 dateNow, createCompanyOfferRequest.getOfferMessage(),
                 true, false, false, company, intern);
-        return companyOfferDtoConverter.convert(companyOffer);
+        return companyOfferDtoConverter.convert(companyOfferRepository.save(companyOffer));
     }
 
 
     public CompanyOfferDto acceptCompanyOfferById(UUID id) {
         CompanyOffer companyOffer = findCompanyOfferById(id);
         companyOffer.setAccepted(true);
+        companyOffer.setRejected(false);
         return companyOfferDtoConverter.convert(companyOfferRepository.save(companyOffer));
     }
 
     public CompanyOfferDto rejectCompanyOfferById(UUID id) {
         CompanyOffer companyOffer = findCompanyOfferById(id);
         companyOffer.setRejected(true);
+        companyOffer.setAccepted(false);
         return companyOfferDtoConverter.convert(companyOfferRepository.save(companyOffer));
     }
 
-    public CompanyOfferDto setInactiveCompanyOfferById(UUID id) {
+    public CompanyOfferDto activateCompanyOfferById(UUID id) {
+        CompanyOffer companyOffer = findCompanyOfferById(id);
+        companyOffer.setActive(true);
+        return companyOfferDtoConverter.convert(companyOfferRepository.save(companyOffer));
+    }
+
+    public CompanyOfferDto inactivateCompanyOfferById(UUID id) {
         CompanyOffer companyOffer = findCompanyOfferById(id);
         companyOffer.setActive(false);
         return companyOfferDtoConverter.convert(companyOfferRepository.save(companyOffer));
