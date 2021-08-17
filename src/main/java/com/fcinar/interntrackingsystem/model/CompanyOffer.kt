@@ -17,13 +17,13 @@ data class CompanyOffer(
     val offerMessage: String?,
 
     @Column(name = "IsActive", nullable = false)
-    val isActive: Boolean,
+    var isActive: Boolean,
 
     @Column(name = "IsAccepted", nullable = false)
-    val isAccepted: Boolean,
+    var isAccepted: Boolean,
 
     @Column(name = "IsRejected", nullable = false)
-    val isRejected: Boolean,
+    var isRejected: Boolean,
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "CompanyId", nullable = false)
