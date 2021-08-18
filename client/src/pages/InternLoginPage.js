@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useInput } from '../hooks/useInput';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,12 +58,9 @@ function Copyright() {
     );
 }
 
-function backPress() {
-    window.location.href = '/login';
-}
-
 export default function InternLoginPage() {
     const classes = useStyles();
+    const navigate = useNavigate();
 
     const { value: username, bind: bindUsername, reset: resetUsername } = useInput("");
     const { value: password, bind: bindPassword, reset: resetPassword } = useInput("");
@@ -80,7 +78,7 @@ export default function InternLoginPage() {
         })
             .then(res => {
                 if (res.ok) {
-                    window.location.href = '/home';
+                    navigate('/app-intern', { replace: true });
                 } else {
                     window.alert("Geçersiz Öğrenci Numarası veya Şifre");
                 }
@@ -97,7 +95,7 @@ export default function InternLoginPage() {
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h3" style={{ color: '#3f51b5' }}>
-                        <Button style={{ width: '64px' }} onClick={backPress}><img width='64px' src="./img/back-button.png" alt="back-button" /></Button> STAJYER
+                        <Button style={{ width: '48px' }} onClick={() => navigate('/login', { replace: true })}><img width='48px' src="./img/back-button.png" alt="back-button" /></Button> STAJYER
                     </Typography>
                     <br></br>
                     <Avatar className={classes.avatar}>

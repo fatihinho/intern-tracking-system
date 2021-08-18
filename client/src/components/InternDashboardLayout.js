@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from './DashboardNavbar';
-import DashboardSidebar from './DashboardSidebar';
+import InternDashboardSidebar from './InternDashboardSidebar';
 
-const DashboardLayoutRoot = experimentalStyled('div')(
+
+const InternDashboardLayoutRoot = experimentalStyled('div')(
   ({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     display: 'flex',
@@ -14,7 +15,7 @@ const DashboardLayoutRoot = experimentalStyled('div')(
   })
 );
 
-const DashboardLayoutWrapper = experimentalStyled('div')(
+const InternDashboardLayoutWrapper = experimentalStyled('div')(
   ({ theme }) => ({
     display: 'flex',
     flex: '1 1 auto',
@@ -26,37 +27,37 @@ const DashboardLayoutWrapper = experimentalStyled('div')(
   })
 );
 
-const DashboardLayoutContainer = experimentalStyled('div')({
+const InternDashboardLayoutContainer = experimentalStyled('div')({
   display: 'flex',
   flex: '1 1 auto',
   overflow: 'hidden'
 });
 
-const DashboardLayoutContent = experimentalStyled('div')({
+const InternDashboardLayoutContent = experimentalStyled('div')({
   flex: '1 1 auto',
   height: '100%',
   overflow: 'auto'
 });
 
-const DashboardLayout = () => {
+const InternDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <DashboardLayoutRoot>
+    <InternDashboardLayoutRoot>
       <DashboardNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />
-      <DashboardSidebar
+      <InternDashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
       />
-      <DashboardLayoutWrapper>
-        <DashboardLayoutContainer>
-          <DashboardLayoutContent>
+      <InternDashboardLayoutWrapper>
+        <InternDashboardLayoutContainer>
+          <InternDashboardLayoutContent>
             <Outlet />
-          </DashboardLayoutContent>
-        </DashboardLayoutContainer>
-      </DashboardLayoutWrapper>
-    </DashboardLayoutRoot>
+          </InternDashboardLayoutContent>
+        </InternDashboardLayoutContainer>
+      </InternDashboardLayoutWrapper>
+    </InternDashboardLayoutRoot>
   );
 };
 
-export default DashboardLayout;
+export default InternDashboardLayout;

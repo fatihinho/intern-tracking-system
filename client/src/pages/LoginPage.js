@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, ButtonGroup, Link } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main
+        margin: theme.spacing(1)
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -52,21 +52,9 @@ function Copyright() {
     );
 }
 
-function navigateToInternLoginPage() {
-    window.location.href = '/login-intern';
-}
-
-function navigateToCompanyLoginPage() {
-    window.location.href = '/login-company';
-}
-
-function navigateToInstitutionLoginPage() {
-    window.location.href = '/login-institution';
-}
-
-
 export default function LoginPage() {
     const classes = useStyles();
+    const navigate = useNavigate();
 
     return (
         <Grid style={{ backgroundColor: '#424242' }} container component="main" className={classes.root}>
@@ -84,16 +72,16 @@ export default function LoginPage() {
                     <Typography component="h1" variant="h5">
                         Giriş Yap
                     </Typography>
-                    <ButtonGroup style={{ marginTop: '64px' }} color="large" aria-label="outlined secondary button group">
+                    <ButtonGroup style={{ marginTop: '64px' }} aria-label="outlined secondary button group">
                         <Button
                             style={{
                                 width: 'auto',
                                 margin: '8px',
                                 border: 'thick double white',
-                                background: '#f50057',
+                                background: '#3f51b5',
                                 display: 'inline'
                             }}
-                            onClick={navigateToInternLoginPage}
+                            onClick={() => navigate('/login-intern', { replace: true })}
                         ><img width='96px' src="./img/user.png" alt="intern-login" />
                             <div style={{ color: 'white' }}>STAJYER</div>
                         </Button>
@@ -102,10 +90,10 @@ export default function LoginPage() {
                                 width: 'auto',
                                 margin: '8px',
                                 border: 'thick double white',
-                                background: '#f50057',
+                                background: '#3f51b5',
                                 display: 'inline'
                             }}
-                            onClick={navigateToCompanyLoginPage}
+                            onClick={() => navigate('/login-company', { replace: true })}
                         ><img width='96px' src="./img/company.png" alt="intern-login" />
                             <div style={{ color: 'white' }}>FİRMA</div>
                         </Button>
@@ -114,10 +102,10 @@ export default function LoginPage() {
                                 width: 'auto',
                                 margin: '8px',
                                 border: 'thick double white',
-                                background: '#f50057',
+                                background: '#3f51b5',
                                 display: 'inline'
                             }}
-                            onClick={navigateToInstitutionLoginPage}
+                            onClick={() => navigate('/login-institution', { replace: true })}
                         ><img width='96px' src="./img/school.png" alt="intern-login" />
                             <div style={{ color: 'white' }}>KURUM</div>
                         </Button>

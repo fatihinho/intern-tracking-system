@@ -5,6 +5,7 @@ import {
   AppBar,
   Badge,
   Box,
+  Container,
   Hidden,
   IconButton,
   Toolbar
@@ -23,8 +24,11 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
+        <RouterLink to="#">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Logo />
+            <strong style={{ marginLeft: '12px', color: 'white', fontSize: '20px' }}>STAJ TAKİP SİSTEMİ</strong>
+          </div>
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
