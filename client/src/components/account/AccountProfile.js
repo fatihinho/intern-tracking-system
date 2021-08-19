@@ -11,12 +11,12 @@ import {
 } from '@material-ui/core';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
-  timezone: 'GTM-7'
+  avatar: '',
+  city: 'Kayseri',
+  country: 'Türkiye',
+  jobTitle: 'Stajyer',
+  name: 'Fatih Çınar',
+  timezone: 'GTM-3'
 };
 
 const AccountProfile = (props) => (
@@ -64,7 +64,7 @@ const AccountProfile = (props) => (
         fullWidth
         variant="text"
       >
-        Upload picture
+        Fotoğraf Yükle
       </Button>
     </CardActions>
   </Card>

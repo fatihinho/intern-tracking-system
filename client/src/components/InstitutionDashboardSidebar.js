@@ -11,9 +11,9 @@ import {
   Typography
 } from '@material-ui/core';
 import {
-  BarChart as BarChartIcon,
+  Home as HomeIcon,
   Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
+  Book as BookIcon,
   Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
@@ -27,7 +27,7 @@ const institutionUser = {
 const institutionItems = [
   {
     href: '/app-institution/dashboard',
-    icon: BarChartIcon,
+    icon: HomeIcon,
     title: 'Ana Sayfa'
   },
   {
@@ -37,7 +37,7 @@ const institutionItems = [
   },
   {
     href: '/app-institution/products',
-    icon: ShoppingBagIcon,
+    icon: BookIcon,
     title: 'Staj Defterleri'
   },
   {

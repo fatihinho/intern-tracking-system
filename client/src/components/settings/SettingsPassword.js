@@ -26,14 +26,14 @@ const SettingsPassword = (props) => {
     <form {...props}>
       <Card>
         <CardHeader
-          subheader="Update password"
-          title="Password"
+          subheader="Şifreyi Güncelle"
+          title="Şifre"
         />
         <Divider />
         <CardContent>
           <TextField
             fullWidth
-            label="Password"
+            label="Şifre"
             margin="normal"
             name="password"
             onChange={handleChange}
@@ -43,7 +43,7 @@ const SettingsPassword = (props) => {
           />
           <TextField
             fullWidth
-            label="Confirm password"
+            label="Şifreyi Onayla"
             margin="normal"
             name="confirm"
             onChange={handleChange}
@@ -64,7 +64,7 @@ const SettingsPassword = (props) => {
             color="primary"
             variant="contained"
           >
-            Update
+            Güncelle
           </Button>
         </Box>
       </Card>

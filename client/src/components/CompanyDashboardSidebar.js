@@ -11,10 +11,10 @@ import {
   Typography
 } from '@material-ui/core';
 import {
-  BarChart as BarChartIcon,
+  Home as HomeIcon,
   Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  UserPlus as UserPlusIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -27,17 +27,17 @@ const companyUser = {
 const companyItems = [
   {
     href: '/app-company/dashboard',
-    icon: BarChartIcon,
+    icon: HomeIcon,
     title: 'Ana Sayfa'
   },
   {
     href: '/app-company/customers',
-    icon: UsersIcon,
+    icon: UserPlusIcon,
     title: 'Stajyer Arama'
   },
   {
     href: '/app-company/products',
-    icon: ShoppingBagIcon,
+    icon: UsersIcon,
     title: 'Staj Talepleri'
   },
   {
