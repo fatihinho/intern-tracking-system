@@ -12,7 +12,7 @@ import ProductCard from '../components/product/ProductCard';
 const ProductList = () => (
   <>
     <Helmet>
-      <title>Products | Material Kit</title>
+      <title>Staj Defteri</title>
     </Helmet>
     <Box
       sx={{

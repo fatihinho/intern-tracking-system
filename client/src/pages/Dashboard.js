@@ -16,7 +16,7 @@ import LatestOrders from '../components/dashboard/LatestOrders';
 const Dashboard = () => (
   <>
     <Helmet>
-      <title>Dashboard | Material Kit</title>
+      <title>Ana Sayfa</title>
     </Helmet>
     <Box
       sx={{

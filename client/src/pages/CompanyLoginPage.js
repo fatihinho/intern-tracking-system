@@ -65,6 +65,10 @@ export default function CompanyLoginPage() {
     const { value: username, bind: bindUsername, reset: resetUsername } = useInput("");
     const { value: password, bind: bindPassword, reset: resetPassword } = useInput("");
 
+    const login = () => {
+        window.location.replace('/app-company');
+    }
+
     const handleSubmit = () => {
         resetUsername();
         resetPassword();
@@ -78,7 +82,7 @@ export default function CompanyLoginPage() {
         })
             .then(res => {
                 if (res.ok) {
-
+                    login();
                 } else {
                     window.alert("Geçersiz Sicil Numarası veya Şifre");
                 }

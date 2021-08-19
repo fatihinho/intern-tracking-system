@@ -5,7 +5,6 @@ import {
   AppBar,
   Badge,
   Box,
-  Container,
   Hidden,
   IconButton,
   Toolbar
@@ -17,6 +16,10 @@ import Logo from './Logo';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const [notifications] = useState([]);
+
+  const logout = () => {
+    window.location.replace('/login');
+  }
 
   return (
     <AppBar
@@ -41,7 +44,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={logout}>
             <InputIcon />
           </IconButton>
         </Hidden>
