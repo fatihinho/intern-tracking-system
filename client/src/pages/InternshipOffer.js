@@ -1,10 +1,9 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import CustomerListResults from '../components/customer/CustomerListResults';
-import CustomerListToolbar from '../components/customer/CustomerListToolbar';
-import customers from '../__mocks__/customers';
+import InternshipOfferListResults from '../components/internship-offer/InternshipOfferListResults';
+import companies from '../__mocks__/companies';
 
-const CustomerList = () => (
+const InternshipOffer = () => (
   <>
     <Helmet>
       <title>Staj Talebi</title>
@@ -17,13 +16,12 @@ const CustomerList = () => (
       }}
     >
       <Container maxWidth={false}>
-        <CustomerListToolbar />
         <Box sx={{ pt: 3 }}>
-          <CustomerListResults customers={customers} />
+          <InternshipOfferListResults internshipOffers={companies} />
         </Box>
       </Container>
     </Box>
   </>
 );
 
-export default CustomerList;
+export default InternshipOffer;

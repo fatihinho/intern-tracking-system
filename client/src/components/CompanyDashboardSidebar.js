@@ -26,7 +26,7 @@ const companyUser = {
 
 const companyItems = [
   {
-    href: '/app-company/dashboard',
+    href: '/app-company/home',
     icon: HomeIcon,
     title: 'Ana Sayfa'
   },

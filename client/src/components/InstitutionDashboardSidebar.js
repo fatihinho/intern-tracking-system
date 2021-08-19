@@ -26,7 +26,7 @@ const institutionUser = {
 
 const institutionItems = [
   {
-    href: '/app-institution/dashboard',
+    href: '/app-institution/home',
     icon: HomeIcon,
     title: 'Ana Sayfa'
   },

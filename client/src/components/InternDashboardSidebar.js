@@ -27,12 +27,12 @@ const internUser = {
 
 const internItems = [
   {
-    href: '/app-intern/dashboard',
+    href: '/app-intern/home',
     icon: HomeIcon,
     title: 'Ana Sayfa'
   },
   {
-    href: '/app-intern/customers',
+    href: '/app-intern/internship-offer',
     icon: UserIcon,
     title: 'Staj Talebi'
   },

@@ -4,7 +4,7 @@ import CompanyDashboardLayout from './components/CompanyDashboardLayout';
 import InstitutionDashboardLayout from './components/InstitutionDashboardLayout';
 import Account from './pages/Account';
 import CompanyLoginPage from './pages/CompanyLoginPage';
-import CustomerList from './pages/CustomerList';
+import InternshipOfferList from './pages/InternshipOffer';
 import SettingsView from './pages/Settings';
 import Dashboard from './pages/Dashboard';
 import InstitutionLoginPage from './pages/InstitutionLoginPage';
@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 import ProductList from './pages/ProductList';
 import Register from './pages/Register';
+import InternshipOfferAppliement from './pages/InternshipOfferAppliement';
 
 const routes = [
   {
@@ -20,8 +21,9 @@ const routes = [
     element: <InternDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
-      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'internship-offer', element: <InternshipOfferList /> },
+      { path: 'internship-offer/:id/appliement', element: <InternshipOfferAppliement /> },
+      { path: 'home', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
@@ -32,8 +34,8 @@ const routes = [
     element: <CompanyDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
-      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'customers', element: <InternshipOfferList /> },
+      { path: 'home', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
@@ -44,8 +46,8 @@ const routes = [
     element: <InstitutionDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'customers', element: <CustomerList /> },
-      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'customers', element: <InternshipOfferList /> },
+      { path: 'home', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
