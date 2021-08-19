@@ -1,74 +1,73 @@
 package com.fcinar.interntrackingsystem.configuration;
 
+import com.fcinar.interntrackingsystem.model.UserTypes;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.sql.DataSource;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final DataSource dataSource;
-
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
-
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
 
     @Bean
-    public PasswordEncoder bCryptPasswordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    public SecurityConfiguration(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-
-    @Override
-    protected void configure(@NotNull AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(@NotNull HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/home/**")
-                .hasAnyAuthority("ADMIN", "INTERN", "COMPANY", "INSTITUTION")
-                .anyRequest().authenticated()
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/api/**").permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
-                .csrf().disable().formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/home")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .formLogin().permitAll();
     }
 
+    @Bean
     @Override
-    public void configure(@NotNull WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/js/**", "/images/**");
+    protected UserDetailsService userDetailsService() {
+        UserDetails adminUser = User.builder()
+                .username("admin")
+                .password(passwordEncoder().encode("admin123"))
+                .roles(UserTypes.ADMIN.name())
+                .build();
+
+        UserDetails internUser = User.builder()
+                .username("intern")
+                .password(passwordEncoder().encode("intern123"))
+                .roles(UserTypes.INTERN.name())
+                .build();
+
+        UserDetails companyUser = User.builder()
+                .username("company")
+                .password(passwordEncoder().encode("company123"))
+                .roles(UserTypes.COMPANY.name())
+                .build();
+
+        UserDetails institutionUser = User.builder()
+                .username("institution")
+                .password(passwordEncoder().encode("institution123"))
+                .roles(UserTypes.INSTITUTION.name())
+                .build();
+
+        return new InMemoryUserDetailsManager(
+                adminUser,
+                internUser,
+                companyUser,
+                institutionUser
+        );
     }
 }
