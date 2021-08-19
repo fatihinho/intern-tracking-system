@@ -72,8 +72,6 @@ public class CompanyService {
         if (user.getSubUserType().equals(UserTypes.COMPANY.toString())) {
             String name = updateUserProfileRequest.getName() != null
                     ? updateUserProfileRequest.getName() : company.getName();
-            String surname = updateUserProfileRequest.getSurname() != null
-                    ? updateUserProfileRequest.getSurname() : "";
             String email = updateUserProfileRequest.getEmail() != null
                     ? updateUserProfileRequest.getEmail() : company.getEmail();
             String phone = updateUserProfileRequest.getPhone() != null
@@ -84,6 +82,7 @@ public class CompanyService {
                     ? updateUserProfileRequest.getLogoUrl() : user.getLogoUrl();
             company.setName(name);
             company.setEmail(email);
+            company.setAddress(address);
             company.setPhone(phone);
             user.setLogoUrl(logoUrl);
             return companyDtoConverter.convert(companyRepository.save(company));

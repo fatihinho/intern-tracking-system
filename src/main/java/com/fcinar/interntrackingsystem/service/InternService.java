@@ -80,8 +80,6 @@ public class InternService {
                     ? updateUserProfileRequest.getEmail() : intern.getEmail();
             String phone = updateUserProfileRequest.getPhone() != null
                     ? updateUserProfileRequest.getPhone() : intern.getPhone();
-            String address = updateUserProfileRequest.getAddress() != null
-                    ? updateUserProfileRequest.getAddress() : "";
             String logoUrl = updateUserProfileRequest.getLogoUrl() != null
                     ? updateUserProfileRequest.getLogoUrl() : user.getLogoUrl();
             intern.setName(name);

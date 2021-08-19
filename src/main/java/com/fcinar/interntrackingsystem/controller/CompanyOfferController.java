@@ -24,9 +24,6 @@ public class CompanyOfferController {
     public ResponseEntity<CompanyOfferDto> getCompanyOfferById(@PathVariable UUID id) {
         try {
             CompanyOfferDto companyOffer = companyOfferService.getCompanyOfferById(id);
-            if (companyOffer.getId() == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
             return new ResponseEntity<>(companyOffer, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -78,9 +75,6 @@ public class CompanyOfferController {
             @RequestBody CreateCompanyOfferRequest createCompanyOfferRequest) {
         try {
             CompanyOfferDto companyOffer = companyOfferService.createCompanyOffer(createCompanyOfferRequest);
-            if (companyOffer.getId() == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
             return new ResponseEntity<>(companyOffer, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

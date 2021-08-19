@@ -72,8 +72,6 @@ public class InstitutionService {
         if (user.getSubUserType().equals(UserTypes.INSTITUTION.toString())) {
             String name = updateUserProfileRequest.getName() != null
                     ? updateUserProfileRequest.getName() : institution.getName();
-            String surname = updateUserProfileRequest.getSurname() != null
-                    ? updateUserProfileRequest.getSurname() : "";
             String email = updateUserProfileRequest.getEmail() != null
                     ? updateUserProfileRequest.getEmail() : institution.getEmail();
             String phone = updateUserProfileRequest.getPhone() != null
@@ -84,6 +82,7 @@ public class InstitutionService {
                     ? updateUserProfileRequest.getLogoUrl() : user.getLogoUrl();
             institution.setName(name);
             institution.setEmail(email);
+            institution.setAddress(address);
             institution.setPhone(phone);
             user.setLogoUrl(logoUrl);
             return institutionDtoConverter.convert(institutionRepository.save(institution));

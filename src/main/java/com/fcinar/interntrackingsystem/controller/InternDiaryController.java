@@ -50,9 +50,6 @@ public class InternDiaryController {
     public ResponseEntity<InternDiaryDto> getInternDiaryById(@PathVariable UUID id) {
         try {
             InternDiaryDto internDiary = internDiaryService.getInternDiaryById(id);
-            if (internDiary.getId() == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
             return new ResponseEntity<>(internDiary, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,9 +63,6 @@ public class InternDiaryController {
             @RequestBody CreateInternDiaryRequest createInternDiaryRequest) {
         try {
             InternDiaryDto internDiary = internDiaryService.createInternDiary(internId, createInternDiaryRequest);
-            if (internDiary.getId() == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
             return new ResponseEntity<>(internDiary, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

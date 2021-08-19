@@ -24,9 +24,6 @@ public class CompanyInternSearchController {
     public ResponseEntity<CompanyInternSearchDto> getCompanyInternSearchById(@PathVariable UUID id) {
         try {
             CompanyInternSearchDto companyInternSearch = companyInternSearchService.getCompanyInternSearchById(id);
-            if (companyInternSearch.getId() == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
             return new ResponseEntity<>(companyInternSearch, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -38,9 +35,6 @@ public class CompanyInternSearchController {
         try {
             CompanyInternSearchDto companyInternSearch = companyInternSearchService
                     .getCompanyInternSearchByCompanyId(companyId);
-            if (companyInternSearch.getId() == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
             return new ResponseEntity<>(companyInternSearch, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
