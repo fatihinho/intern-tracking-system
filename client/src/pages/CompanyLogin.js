@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh'
     },
     image: {
-        backgroundImage: `url(${process.env.PUBLIC_URL + "/img/4.jfif"})`,
+        backgroundImage: `url(${process.env.PUBLIC_URL + "/img/3.jfif"})`,
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -60,7 +60,7 @@ function Copyright() {
     );
 }
 
-export default function InstitutionLoginPage() {
+export default function CompanyLogin() {
     const classes = useStyles();
     const navigate = useNavigate();
 
@@ -68,14 +68,14 @@ export default function InstitutionLoginPage() {
     const { value: password, bind: bindPassword, reset: resetPassword } = useInput("");
 
     const login = () => {
-        window.location.replace('/app-institution');
+        window.location.replace('/app-company');
     }
 
     const handleLogin = () => {
         axios.post('/api/v1/login', {
             username: username,
             password: password,
-            roleType: 4
+            roleType: 3
         })
             .then(function (response) {
                 if (response.status === 200) {
@@ -96,7 +96,7 @@ export default function InstitutionLoginPage() {
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h3" style={{ color: '#3f51b5' }}>
-                        <Button style={{ width: '48px' }} onClick={() => navigate('/login', { replace: true })}><img width='48px' src="./img/back-button.png" alt="back-button" /></Button> KURUM
+                        <Button style={{ width: '48px' }} onClick={() => navigate('/login', { replace: true })}><img width='48px' src="./img/back-button.png" alt="back-button" /></Button> FİRMA
                     </Typography>
                     <br></br>
                     <Avatar className={classes.avatar}>
@@ -112,7 +112,7 @@ export default function InstitutionLoginPage() {
                             required
                             fullWidth
                             id="username"
-                            label="Kullanıcı Adı"
+                            label="Sicil Numarası"
                             name="username"
                             autoComplete="username"
                             autoFocus

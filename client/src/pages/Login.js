@@ -1,184 +1,120 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Link,
-  TextField,
-  Typography
-} from '@material-ui/core';
-import Google from '../icons/Google';
-import { Facebook } from 'react-feather';
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, ButtonGroup, Link } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const navigate = useNavigate();
+const useStyles = makeStyles((theme) => ({
+    root: {
+        height: '100vh'
+    },
+    image: {
+        backgroundImage: `url(${process.env.PUBLIC_URL + "/img/1.jfif"})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundColor:
+            theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+    },
+    paper: {
+        margin: theme.spacing(8, 4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    avatar: {
+        margin: theme.spacing(1)
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
 
-  return (
-    <>
-      <Helmet>
-        <title>Login | Material Kit</title>
-      </Helmet>
-      <Box
-        sx={{
-          backgroundColor: 'background.default',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          justifyContent: 'center'
-        }}
-      >
-        <Container maxWidth="sm">
-          <Formik
-            initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
-            }}
-            validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
-            })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
-          >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values
-            }) => (
-              <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Sign in
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Sign in on the internal platform
-                  </Typography>
-                </Box>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      color="primary"
-                      fullWidth
-                      startIcon={<Facebook />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      fullWidth
-                      startIcon={<Google />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Box
-                  sx={{
-                    pb: 1,
-                    pt: 3
-                  }}
-                >
-                  <Typography
-                    align="center"
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    or login with email address
-                  </Typography>
-                </Box>
-                <TextField
-                  error={Boolean(touched.email && errors.email)}
-                  fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Email Address"
-                  margin="normal"
-                  name="email"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="email"
-                  value={values.email}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
-                  variant="outlined"
-                />
-                <Box sx={{ py: 2 }}>
-                  <Button
-                    color="primary"
-                    disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                  >
-                    Sign in now
-                  </Button>
-                </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don&apos;t have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/register"
-                    variant="h6"
-                  >
-                    Sign up
-                  </Link>
-                </Typography>
-              </form>
-            )}
-          </Formik>
-        </Container>
-      </Box>
-    </>
-  );
-};
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://github.com/fatihinho">
+                Fatih Çınar
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
-export default Login;
+export default function Login() {
+    const classes = useStyles();
+    const navigate = useNavigate();
+
+    return (
+        <Grid style={{ backgroundColor: '#424242' }} container component="main" className={classes.root}>
+            <CssBaseline />
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <div className={classes.paper}>
+                    <Typography component="h1" variant="h3" style={{ color: '#3f51b5' }}>
+                        <strong>STAJ TAKİP SİSTEMİ</strong>
+                    </Typography>
+                    <br />
+                    <Avatar className={classes.avatar}>
+
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Giriş Yap
+                    </Typography>
+                    <ButtonGroup style={{ marginTop: '64px' }} aria-label="outlined secondary button group">
+                        <Button
+                            style={{
+                                width: 'auto',
+                                margin: '8px',
+                                border: 'thick double white',
+                                background: '#3f51b5',
+                                display: 'inline'
+                            }}
+                            onClick={() => navigate('/login-intern', { replace: true })}
+                        ><img width='96px' src="./img/user.png" alt="intern-login" />
+                            <div style={{ color: 'white' }}>STAJYER</div>
+                        </Button>
+                        <Button
+                            style={{
+                                width: 'auto',
+                                margin: '8px',
+                                border: 'thick double white',
+                                background: '#3f51b5',
+                                display: 'inline'
+                            }}
+                            onClick={() => navigate('/login-company', { replace: true })}
+                        ><img width='96px' src="./img/company.png" alt="intern-login" />
+                            <div style={{ color: 'white' }}>FİRMA</div>
+                        </Button>
+                        <Button
+                            style={{
+                                width: 'auto',
+                                margin: '8px',
+                                border: 'thick double white',
+                                background: '#3f51b5',
+                                display: 'inline'
+                            }}
+                            onClick={() => navigate('/login-institution', { replace: true })}
+                        ><img width='96px' src="./img/school.png" alt="intern-login" />
+                            <div style={{ color: 'white' }}>KURUM</div>
+                        </Button>
+                    </ButtonGroup>
+                    <Box mt={10}>
+                        <Copyright />
+                    </Box>
+                </div>
+            </Grid>
+        </Grid>
+    );
+}

@@ -60,7 +60,7 @@ function Copyright() {
     );
 }
 
-export default function InternLoginPage() {
+export default function InternLogin() {
     const classes = useStyles();
     const navigate = useNavigate();
 
