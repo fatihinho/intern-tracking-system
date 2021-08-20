@@ -31,12 +31,12 @@ const institutionItems = [
     title: 'Ana Sayfa'
   },
   {
-    href: '/app-institution/customers',
+    href: '/app-institution/institution-internship-offers',
     icon: UsersIcon,
     title: 'Staj Talepleri'
   },
   {
-    href: '/app-institution/products',
+    href: '/app-institution/institution-intern-diaries',
     icon: BookIcon,
     title: 'Staj Defterleri'
   },
