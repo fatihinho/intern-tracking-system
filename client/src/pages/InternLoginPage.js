@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useInput } from '../hooks/useInput';
 import { useNavigate } from 'react-router-dom';
 
+const axios = require('axios').default;
+
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh'
@@ -69,24 +71,22 @@ export default function InternLoginPage() {
         window.location.replace('/app-intern');
     }
 
-    const handleSubmit = () => {
-        resetUsername();
-        resetPassword();
-        fetch('/api/v1/login', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: username, password: password, roleType: 2 })
+    const handleLogin = () => {
+        axios.post('/api/v1/login', {
+            username: username,
+            password: password,
+            roleType: 2
         })
-            .then(res => {
-                if (res.ok) {
+            .then(function (response) {
+                if (response.status === 200) {
                     login();
                 } else {
-                    window.alert("Geçersiz Öğrenci Numarası veya Şifre");
+                    window.alert('Kullanıcı Adı veya Şifre Yanlış!')
                 }
             })
+            .catch(function (error) {
+                window.alert('Kullanıcı Adı veya Şifre Yanlış!')
+            });
     }
 
 
@@ -108,7 +108,7 @@ export default function InternLoginPage() {
                     <Typography component="h1" variant="h5">
                         Giriş Yap
                     </Typography>
-                    <form className={classes.form} onSubmit={handleSubmit}>
+                    <form className={classes.form}>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -138,7 +138,7 @@ export default function InternLoginPage() {
                             label="Beni Hatırla"
                         />
                         <Button
-                            type="submit"
+                            onClick={handleLogin}
                             fullWidth
                             variant="contained"
                             color="primary"
