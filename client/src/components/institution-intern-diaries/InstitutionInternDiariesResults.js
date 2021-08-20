@@ -44,7 +44,7 @@ const InstitutionInternDiariesResults = ({ internshipOffers, ...rest }) => {
     return (
         <Card {...rest}>
             <CardHeader
-                title="Staj Talepleri"
+                title="Staj Defterleri"
             />
             <PerfectScrollbar>
                 <Box sx={{ minWidth: 1050 }}>

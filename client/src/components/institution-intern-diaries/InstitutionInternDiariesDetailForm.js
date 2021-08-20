@@ -44,7 +44,7 @@ const InstitutionInternDiariesDetailForm = (props) => {
         >
             <Card>
                 <CardHeader
-                    title="Staj Talepleri"
+                    title="Staj Defterleri"
                 />
                 <Divider />
                 <CardContent>
