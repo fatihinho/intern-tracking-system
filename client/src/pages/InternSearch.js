@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container, } from '@material-ui/core';
 import internDiaries from '../__mocks__/internDiaries';
-import InternDiaryForm from '../components/intern-diary/InternDiaryForm';
+import InternSearchForm from '../components/intern-search/InternSearchForm';
 
-const InternDiary = () => (
+const InternSearch = () => (
     <>
         <Helmet>
-            <title>Staj Defteri</title>
+            <title>Stajyer Arama</title>
         </Helmet>
         <Box
             sx={{
@@ -17,11 +17,11 @@ const InternDiary = () => (
         >
             <Container maxWidth={false}>
                 <Box sx={{ pt: 3 }}>
-                    <InternDiaryForm internDiaries={internDiaries} />
+                    <InternSearchForm internDiaries={internDiaries} />
                 </Box>
             </Container>
         </Box>
     </>
 );
 
-export default InternDiary;
+export default InternSearch;

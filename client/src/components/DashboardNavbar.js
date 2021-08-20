@@ -10,14 +10,13 @@ import {
   Toolbar
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
-  const [notifications] = useState([]);
 
   const logout = () => {
+    localStorage.clear();
     window.location.replace('/login');
   }
 

@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   Grid,
@@ -9,6 +10,20 @@ import {
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
 import { red } from '@material-ui/core/colors';
+import axios from 'axios';
+
+function test() {
+  let internOffers = [];
+  const internId = localStorage.getItem('currentUser-subUserId');
+  axios.get(`/api/v1/company-offers/intern/${internId}`)
+    .then(response => {
+      console.log(response.data)
+      internOffers.push(response.data);
+    })
+
+  console.log(internOffers);
+}
+
 
 const Budget = (props) => (
   <Card
@@ -73,6 +88,12 @@ const Budget = (props) => (
         </Typography>
       </Box>
     </CardContent>
+    <Button
+      onClick={test}
+      variant="small"
+      color="primary">
+      TEST
+    </Button>
   </Card>
 );
 

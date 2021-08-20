@@ -37,7 +37,7 @@ const internItems = [
     title: 'Staj Talebi'
   },
   {
-    href: '/app-intern/products',
+    href: '/app-intern/intern-diary',
     icon: BookIcon,
     title: 'Staj Defteri'
   },

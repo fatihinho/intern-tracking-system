@@ -13,8 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useInput } from '../hooks/useInput';
 import { useNavigate } from 'react-router-dom';
-
-const axios = require('axios').default;
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -79,6 +78,11 @@ export default function InternLogin() {
         })
             .then(function (response) {
                 if (response.status === 200) {
+                    localStorage.setItem('currentUser-id', response.data['id']);
+                    localStorage.setItem('currentUser-subUserId', response.data['subUserId']);
+                    localStorage.setItem('currentUser-subUserType', response.data['subUserType']);
+                    localStorage.setItem('currentUser-username', response.data['username']);
+                    localStorage.setItem('currentUser-password', response.data['password']);
                     login();
                 } else {
                     window.alert('Kullanıcı Adı veya Şifre Yanlış!')
@@ -87,6 +91,9 @@ export default function InternLogin() {
             .catch(function (error) {
                 window.alert('Kullanıcı Adı veya Şifre Yanlış!')
             });
+
+        resetUsername();
+        resetPassword();
     }
 
 

@@ -11,9 +11,15 @@ import InstitutionLoginPage from './pages/InstitutionLogin';
 import InternLoginPage from './pages/InternLogin';
 import LoginPage from './pages/Login';
 import NotFound from './pages/NotFound';
-import ProductList from './pages/ProductList';
 import Register from './pages/Register';
 import InternshipOfferAppliement from './pages/InternshipOfferAppliement';
+import InternDiary from './pages/InternDiary';
+import InternSearch from './pages/InternSearch';
+import CompanyInternshipOffers from './pages/CompanyInternshipOffers';
+import CompanyInternshipOffersDetail from './pages/CompanyInternshipOffersDetail';
+import InstitutionInternshipOffers from './pages/InstitutionInternshipOffers';
+import InstitutionInternDiaries from './pages/InstitutionInternDiaries';
+import InstitutionInternDiariesDetailForm from './components/institution-intern-diaries/InstitutionInternDiariesDetailForm';
 
 const routes = [
   {
@@ -23,8 +29,8 @@ const routes = [
       { path: 'account', element: <Account /> },
       { path: 'internship-offer', element: <InternshipOfferList /> },
       { path: 'internship-offer/:id/appliement', element: <InternshipOfferAppliement /> },
+      { path: 'intern-diary', element: <InternDiary /> },
       { path: 'home', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
@@ -34,9 +40,10 @@ const routes = [
     element: <CompanyDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'customers', element: <InternshipOfferList /> },
+      { path: 'intern-search', element: <InternSearch /> },
+      { path: 'company-internship-offers', element: <CompanyInternshipOffers /> },
+      { path: 'company-internship-offers/:id/detail', element: <CompanyInternshipOffersDetail /> },
       { path: 'home', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
@@ -46,9 +53,10 @@ const routes = [
     element: <InstitutionDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'customers', element: <InternshipOfferList /> },
+      { path: 'institution-internship-offers', element: <InstitutionInternshipOffers /> },
+      { path: 'institution-intern-diaries', element: <InstitutionInternDiaries /> },
+      { path: 'institution-intern-diaries/:id/detail', element: <InstitutionInternDiariesDetailForm /> },
       { path: 'home', element: <Dashboard /> },
-      { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

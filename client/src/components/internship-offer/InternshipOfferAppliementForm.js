@@ -75,11 +75,10 @@ const InternshipOfferAppliementForm = (props) => {
 							<TextField
 								fullWidth
 								disabled
-								label="Staj Süresi"
-								name="dayOfInternship"
+								label="Başlama Tarihi"
+								name="startOfDate"
 								onChange={handleChange}
-								type="number"
-								value={values.dayOfInternship}
+								value={values.startOfDate}
 								variant="outlined"
 							/>
 						</Grid>
@@ -91,10 +90,11 @@ const InternshipOfferAppliementForm = (props) => {
 							<TextField
 								fullWidth
 								disabled
-								label="Başlama Tarihi"
-								name="startOfDate"
+								label="Staj Süresi"
+								name="dayOfInternship"
 								onChange={handleChange}
-								value={values.startOfDate}
+								type="number"
+								value={values.dayOfInternship}
 								variant="outlined"
 							/>
 						</Grid>

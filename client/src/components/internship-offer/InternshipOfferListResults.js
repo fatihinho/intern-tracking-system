@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Card,
+  CardHeader,
   Table,
   TableBody,
   TableCell,
@@ -42,6 +43,9 @@ const InternshipOfferListResults = ({ internshipOffers, ...rest }) => {
 
   return (
     <Card {...rest}>
+      <CardHeader
+        title="Staj Talebi"
+      />
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
           <Table>

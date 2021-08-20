@@ -26,8 +26,10 @@ const SettingsPassword = (props) => {
     <form {...props}>
       <Card>
         <CardHeader
+          title="Ayarlar"
+        />
+        <CardHeader
           subheader="Şifreyi Güncelle"
-          title="Şifre"
         />
         <Divider />
         <CardContent>
