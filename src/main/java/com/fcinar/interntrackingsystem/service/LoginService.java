@@ -16,10 +16,15 @@ public class LoginService {
         this.userService = userService;
     }
 
+
+    public UserDto getUserByUsernameAndPassword(String username, String password) {
+        return userService.getUserByUsernameAndPassword(username, password);
+    }
+
     public Boolean isValid(@NotNull LoginValidationRequest loginValidationRequest) {
         List<UserDto> users = userService.getAllUsersByRoleId(loginValidationRequest.getRoleType());
-        UserDto user = userService.getUserByUsernameAndPassword(
-                loginValidationRequest.getUsername(), loginValidationRequest.getPassword());
+        UserDto user = getUserByUsernameAndPassword(loginValidationRequest.getUsername(),
+                loginValidationRequest.getPassword());
         if (users.isEmpty()) {
             return false;
         }
@@ -27,4 +32,5 @@ public class LoginService {
                 .findAny()
                 .orElseThrow(() -> new UserUnauthorizedException("Unauthorized User by id: " + user.getId()));
     }
+
 }

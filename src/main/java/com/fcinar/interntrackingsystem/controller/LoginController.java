@@ -1,5 +1,6 @@
 package com.fcinar.interntrackingsystem.controller;
 
+import com.fcinar.interntrackingsystem.dto.UserDto;
 import com.fcinar.interntrackingsystem.dto.request.LoginValidationRequest;
 import com.fcinar.interntrackingsystem.service.LoginService;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,12 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<HttpStatus> loginValidation(@RequestBody LoginValidationRequest loginValidationRequest) {
+    public ResponseEntity<UserDto> loginValidation(@RequestBody LoginValidationRequest loginValidationRequest) {
         try {
             if (Boolean.TRUE.equals(loginService.isValid(loginValidationRequest))) {
-                return new ResponseEntity<>(HttpStatus.OK);
+                UserDto user = loginService.getUserByUsernameAndPassword(loginValidationRequest.getUsername(),
+                        loginValidationRequest.getPassword());
+                return new ResponseEntity<>(user, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
