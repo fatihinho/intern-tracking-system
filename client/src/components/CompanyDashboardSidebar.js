@@ -31,12 +31,12 @@ const companyItems = [
     title: 'Ana Sayfa'
   },
   {
-    href: '/app-company/customers',
+    href: '/app-company/intern-search',
     icon: UserPlusIcon,
     title: 'Stajyer Arama'
   },
   {
-    href: '/app-company/products',
+    href: '/app-company/company-internship-offers',
     icon: UsersIcon,
     title: 'Staj Talepleri'
   },
