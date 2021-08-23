@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Avatar,
@@ -17,10 +16,14 @@ import {
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import moment from 'moment';
 
-const InternshipOfferListResults = ({ internshipOffers, ...rest }) => {
+const InternshipOfferListResults = ({ ...rest }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+
+  const [offers, setOffers] = useState(null);
 
   const navigate = useNavigate();
 
@@ -32,13 +35,31 @@ const InternshipOfferListResults = ({ internshipOffers, ...rest }) => {
     setPage(newPage);
   };
 
+  useEffect(() => {
+    getOffers();
+    async function getOffers() {
+      const response = await axios.get('/api/v1/intern-searches');
+      const data = await response.data;
+      setOffers(data);
+    }
+  }, [])
+
   const onClickAppliement = (index) => {
-    const id = internshipOffers[index].id;
-    const companyName = internshipOffers[index].name;
-    const startOfDate = internshipOffers[index].startOfDate;
-    const endOfDate = internshipOffers[index].endOfDate;
-    const dayOfInternship = internshipOffers[index].dayOfInternship;
-    navigate(`/app-intern/internship-offer/${id}/appliement`, { replace: false, state: { companyName: companyName, startOfDate: startOfDate, endOfDate: endOfDate, dayOfInternship: dayOfInternship } });
+    const id = offers[index].id;
+    const companyId = offers[index].company.id;
+    const companyName = offers[index].company.name;
+    const startDate = moment(offers[index].startDate).format('DD/MM/YYYY');
+    const endDate = moment(offers[index].endDate).format('DD/MM/YYYY');
+    const dayOfInternship = offers[index].dayOfInternship;
+    navigate(`/app-intern/internship-offer/${id}/appliement`, {
+      replace: false, state: {
+        companyId: companyId,
+        companyName: companyName,
+        startDate: startDate,
+        endDate: endDate,
+        dayOfInternship: dayOfInternship
+      }
+    });
   }
 
   return (
@@ -69,7 +90,7 @@ const InternshipOfferListResults = ({ internshipOffers, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {internshipOffers.slice(0, limit).map((offer, index) => (
+              {offers && offers.slice(0, limit).map((offer, index) => (
                 <TableRow
                   hover
                   key={offer.id}
@@ -82,36 +103,37 @@ const InternshipOfferListResults = ({ internshipOffers, ...rest }) => {
                       }}
                     >
                       <Avatar
-                        src={offer.avatarUrl}
+                        src={''}
                         sx={{ mr: 2 }}
                       >
-                        {getInitials(offer.name)}
+                        {getInitials(offer.company.name)}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {offer.name}
+                        {offer.company.name}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell align='center'>
-                    {offer.startOfDate}
+                    {moment(offers[index].startDate).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align='center'>
-                    {offer.endOfDate}
+                    {moment(offers[index].endDate).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align='center'>
                     {offer.dayOfInternship}
                   </TableCell>
                   <TableCell align='right'>
                     <Button
+                      disabled={false}
                       onClick={() => onClickAppliement(index)}
                       size="small"
                       color="primary"
                       variant="contained"
                     >
-                      Başvur
+                      {true ? 'Başvur' : 'Başvuruldu'}
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -122,7 +144,7 @@ const InternshipOfferListResults = ({ internshipOffers, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={internshipOffers.length}
+        count={offers && offers.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -131,10 +153,6 @@ const InternshipOfferListResults = ({ internshipOffers, ...rest }) => {
       />
     </Card>
   );
-};
-
-InternshipOfferListResults.propTypes = {
-  internshipOffers: PropTypes.array.isRequired
 };
 
 export default InternshipOfferListResults;

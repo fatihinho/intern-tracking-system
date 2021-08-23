@@ -9,14 +9,20 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const InternSearchForm = (props) => {
+    const companyId = localStorage.getItem('currentUser-subUserId');
+    const companyName = localStorage.getItem('companyName');
+
+    const [didStartSearching, setDidStartSearching] = useState(false);
+
     const [values, setValues] = useState({
-        companyName: 'Türksat A.Ş.',
-        startOfDate: '28/06/2021',
-        endOfDate: '12/08/2021',
-        dayOfInternship: '24',
+        companyName: companyName,
+        startDate: '',
+        endDate: '',
+        dayOfInternship: '',
     });
 
     const handleChange = (event) => {
@@ -25,6 +31,56 @@ const InternSearchForm = (props) => {
             [event.target.name]: event.target.value
         });
     };
+
+    const onClickStopSearch = () => {
+        axios.delete(`/api/v1/intern-searches/${companyId}`)
+            .then(response => {
+                if (response.status === 200) {
+                    window.alert('Arama Durduruldu!');
+                }
+            })
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(error => {
+                window.alert('Arama Durdurulurken Bir Sorun Oluştu!');
+            });
+    }
+
+    const onClickStartSearch = () => {
+        axios.post('/api/v1/intern-searches', {
+            dayOfInternship: values.dayOfInternship,
+            startDate: values.startDate,
+            endDate: values.endDate,
+            companyId: companyId
+        })
+            .then(response => {
+                if (response.status === 201) {
+                    window.alert('Arama Başlatıldı!');
+                }
+            })
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(error => {
+                window.alert('Arama Başlatılırken Bir Sorun Oluştu!');
+            });
+    }
+
+    useEffect(() => {
+        didStartSearching();
+        function didStartSearching() {
+            axios.get(`/api/v1/intern-searches/company/${companyId}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        setDidStartSearching(true);
+                    }
+                })
+                .catch(error => {
+                    setDidStartSearching(false);
+                })
+        }
+    })
 
     return (
         <form
@@ -64,6 +120,7 @@ const InternSearchForm = (props) => {
                         >
                             <TextField
                                 fullWidth
+                                required
                                 label="Çalışma Süresi"
                                 name="dayOfInternship"
                                 onChange={handleChange}
@@ -80,10 +137,11 @@ const InternSearchForm = (props) => {
                             <Typography variant="body2">Başlama Tarihi</Typography>
                             <TextField
                                 fullWidth
-                                name="startOfDate"
+                                required
+                                name="startDate"
                                 type="date"
                                 onChange={handleChange}
-                                value={values.startOfDate}
+                                value={values.startDate}
                                 variant="outlined"
                             />
                         </Grid>
@@ -95,10 +153,11 @@ const InternSearchForm = (props) => {
                             <Typography variant="body2">Bitirme Tarihi</Typography>
                             <TextField
                                 fullWidth
-                                name="endOfDate"
+                                required
+                                name="endDate"
                                 type="date"
                                 onChange={handleChange}
-                                value={values.endOfDate}
+                                value={values.endDate}
                                 variant="outlined"
                             />
                         </Grid>
@@ -113,12 +172,16 @@ const InternSearchForm = (props) => {
                     }}
                 >
                     <Button
+                        disabled={!didStartSearching}
+                        onClick={onClickStopSearch}
                         style={{ backgroundColor: "#F33D3D", marginRight: "8px" }}
                         variant="contained"
                     >
                         Aramayı Durdur
                     </Button>
                     <Button
+                        disabled={didStartSearching}
+                        onClick={onClickStartSearch}
                         style={{ backgroundColor: "#70D987" }}
                         variant="contained"
                     >

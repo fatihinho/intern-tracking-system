@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
 	Box,
 	Button,
@@ -10,24 +9,47 @@ import {
 	TextField,
 } from '@material-ui/core';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const InternshipOfferAppliementForm = (props) => {
+	const navigate = useNavigate();
 	const location = useLocation();
 
+	const companyId = location.state.companyId;
 	const companyName = location.state.companyName;
-	const startOfDate = location.state.startOfDate;
-	const endOfDate = location.state.endOfDate;
+	const startDate = location.state.startDate;
+	const endDate = location.state.endDate;
 	const dayOfInternship = location.state.dayOfInternship;
 
+	const internId = localStorage.getItem('currentUser-subUserId');
 
 	const [values, setValues] = useState({
 		companyName: companyName,
-		startOfDate: startOfDate,
-		endOfDate: endOfDate,
+		startDate: startDate,
+		endDate: endDate,
 		dayOfInternship: dayOfInternship,
 		content: ''
 	});
+
+	const onClickApplyOffer = () => {
+		axios.post('/api/v1/company-offers', {
+			offerMessage: values.content,
+			internId: internId,
+			companyId: companyId
+		})
+			.then(function (response) {
+				if (response.status === 201) {
+					window.alert('Başvuru Gönderildi!');
+				}
+			})
+			.then(() => {
+				navigate('/app-intern/internship-offer', { replace: true });
+			})
+			.catch(function (error) {
+				window.alert('Başvuru Gönderilirken Bir Sorun Oluştu!');
+			});
+	}
 
 	const handleChange = (event) => {
 		setValues({
@@ -76,9 +98,9 @@ const InternshipOfferAppliementForm = (props) => {
 								fullWidth
 								disabled
 								label="Başlama Tarihi"
-								name="startOfDate"
+								name="startDate"
 								onChange={handleChange}
-								value={values.startOfDate}
+								value={values.startDate}
 								variant="outlined"
 							/>
 						</Grid>
@@ -107,9 +129,9 @@ const InternshipOfferAppliementForm = (props) => {
 								fullWidth
 								disabled
 								label="Bitirme Tarihi"
-								name="endOfDate"
+								name="endDate"
 								onChange={handleChange}
-								value={values.endOfDate}
+								value={values.endDate}
 								variant="outlined"
 							/>
 						</Grid>
@@ -121,6 +143,7 @@ const InternshipOfferAppliementForm = (props) => {
 							<TextField
 								fullWidth
 								multiline
+								required
 								label="Mesajınız"
 								name="content"
 								onChange={handleChange}
@@ -139,6 +162,7 @@ const InternshipOfferAppliementForm = (props) => {
 					}}
 				>
 					<Button
+						onClick={onClickApplyOffer}
 						color="primary"
 						variant="contained"
 					>
@@ -149,10 +173,6 @@ const InternshipOfferAppliementForm = (props) => {
 		</form>
 
 	);
-};
-
-InternshipOfferAppliementForm.propTypes = {
-	internshipOffers: PropTypes.array.isRequired
 };
 
 export default InternshipOfferAppliementForm;

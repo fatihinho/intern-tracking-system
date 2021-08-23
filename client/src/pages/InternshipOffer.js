@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import InternshipOfferListResults from '../components/internship-offer/InternshipOfferListResults';
-import companies from '../__mocks__/companies';
 
 const InternshipOffer = () => (
   <>
@@ -17,7 +16,7 @@ const InternshipOffer = () => (
     >
       <Container maxWidth={false}>
         <Box sx={{ pt: 3 }}>
-          <InternshipOfferListResults internshipOffers={companies} />
+          <InternshipOfferListResults />
         </Box>
       </Container>
     </Box>
