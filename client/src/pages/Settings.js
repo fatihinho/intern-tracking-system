@@ -1,9 +1,8 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
-import SettingsNotifications from '../components/settings/SettingsNotifications';
 import SettingsPassword from '../components/settings/SettingsPassword';
 
-const SettingsView = () => (
+const Settings = () => (
   <>
     <Helmet>
       <title>Ayarlar</title>
@@ -24,4 +23,4 @@ const SettingsView = () => (
   </>
 );
 
-export default SettingsView;
+export default Settings;

@@ -155,7 +155,7 @@ InstitutionDashboardSidebar.propTypes = {
 };
 
 InstitutionDashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
+  onMobileClose: () => { console.log('onMobileClose()') },
   openMobile: false
 };
 

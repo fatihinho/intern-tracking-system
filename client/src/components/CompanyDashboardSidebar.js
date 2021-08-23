@@ -155,7 +155,7 @@ CompanyDashboardSidebar.propTypes = {
 };
 
 CompanyDashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
+  onMobileClose: () => { console.log('onMobileClose()') },
   openMobile: false
 };
 

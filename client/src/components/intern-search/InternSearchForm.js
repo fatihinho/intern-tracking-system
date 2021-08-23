@@ -10,17 +10,8 @@ import {
     Typography,
 } from '@material-ui/core';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 const InternSearchForm = (props) => {
-    const location = useLocation();
-
-    /* const companyName = location.state.companyName;
-     const startOfDate = location.state.startOfDate;
-     const endOfDate = location.state.endOfDate;
-     const dayOfInternship = location.state.dayOfInternship;*/
-
-
     const [values, setValues] = useState({
         companyName: 'Türksat A.Ş.',
         startOfDate: '28/06/2021',

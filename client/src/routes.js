@@ -5,7 +5,7 @@ import InstitutionDashboardLayout from './components/InstitutionDashboardLayout'
 import Account from './pages/Account';
 import CompanyLoginPage from './pages/CompanyLogin';
 import InternshipOfferList from './pages/InternshipOffer';
-import SettingsView from './pages/Settings';
+import Settings from './pages/Settings';
 import Dashboard from './pages/Dashboard';
 import InstitutionLoginPage from './pages/InstitutionLogin';
 import InternLoginPage from './pages/InternLogin';
@@ -31,7 +31,7 @@ const routes = [
       { path: 'internship-offer/:id/appliement', element: <InternshipOfferAppliement /> },
       { path: 'intern-diary', element: <InternDiary /> },
       { path: 'home', element: <Dashboard /> },
-      { path: 'settings', element: <SettingsView /> },
+      { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -44,7 +44,7 @@ const routes = [
       { path: 'company-internship-offers', element: <CompanyInternshipOffers /> },
       { path: 'company-internship-offers/:id/detail', element: <CompanyInternshipOffersDetail /> },
       { path: 'home', element: <Dashboard /> },
-      { path: 'settings', element: <SettingsView /> },
+      { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -57,7 +57,7 @@ const routes = [
       { path: 'institution-intern-diaries', element: <InstitutionInternDiaries /> },
       { path: 'institution-intern-diaries/:id/detail', element: <InstitutionInternDiariesDetailForm /> },
       { path: 'home', element: <Dashboard /> },
-      { path: 'settings', element: <SettingsView /> },
+      { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

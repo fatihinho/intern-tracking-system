@@ -19,20 +19,10 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import getInitials from '../../utils/getInitials';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
-    const location = useLocation();
-    /*
-        const companyName = location.state.companyName;
-        const startOfDate = location.state.startOfDate;
-        const endOfDate = location.state.endOfDate;
-        const dayOfInternship = location.state.dayOfInternship;*/
-
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
-
-    const navigate = useNavigate();
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
@@ -41,7 +31,6 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
     const handlePageChange = (event, newPage) => {
         setPage(newPage);
     };
-
 
     const [values, setValues] = useState({
         companyName: 'Türksat A.Ş.',

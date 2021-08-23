@@ -156,7 +156,7 @@ InternDashboardSidebar.propTypes = {
 };
 
 InternDashboardSidebar.defaultProps = {
-  onMobileClose: () => { },
+  onMobileClose: () => { console.log('onMobileClose()') },
   openMobile: false
 };
 
