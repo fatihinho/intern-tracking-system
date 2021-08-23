@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from './DashboardNavbar';
 import CompanyDashboardSidebar from './CompanyDashboardSidebar';
+import axios from 'axios';
 
 const CompanyDashboardLayoutRoot = experimentalStyled('div')(
   ({ theme }) => ({
@@ -40,6 +41,12 @@ const CompanyDashboardLayoutContent = experimentalStyled('div')({
 
 const CompanyDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const companyId = localStorage.getItem('currentUser-subUserId')
+  useEffect(async () => {
+    const response = await axios.get(`/api/v1/companies/${companyId}`)
+    localStorage.setItem('companyName', response.data.name);
+  }, []);
 
   return (
     <CompanyDashboardLayoutRoot>
