@@ -8,25 +8,30 @@ import {
     Grid,
     TextField,
 } from '@material-ui/core';
+import axios from 'axios';
+import moment from 'moment';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const CompanyInternshipOffersDetailForm = (props) => {
+    const navigate = useNavigate();
     const location = useLocation();
 
+    const id = location.state.id;
     const internName = location.state.internName;
-    const startOfDate = location.state.startOfDate;
-    const endOfDate = location.state.endOfDate;
+    const internSurname = location.state.internSurname;
+    const startDate = location.state.startDate;
+    const endDate = location.state.endDate;
     const offerDate = location.state.offerDate;
-    const content = location.state.content;
-
+    const offerMessage = location.state.offerMessage;
 
     const [values, setValues] = useState({
         internName: internName,
-        startOfDate: startOfDate,
-        endOfDate: endOfDate,
+        internSurname: internSurname,
+        startDate: startDate,
+        endDate: endDate,
         offerDate: offerDate,
-        content: content
+        offerMessage: offerMessage
     });
 
     const handleChange = (event) => {
@@ -35,6 +40,32 @@ const CompanyInternshipOffersDetailForm = (props) => {
             [event.target.name]: event.target.value
         });
     };
+
+    const onClickAcceptOffer = () => {
+        axios.put(`/api/v1/company-offers/accept/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    window.alert('Staj Teklifi Kabul Edildi!')
+                }
+            }).then(() => {
+                navigate('/app-company/company-internship-offers', { replace: true });
+            }).catch(error => {
+                window.alert('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
+            })
+    }
+
+    const onClickRejectOffer = () => {
+        axios.put(`/api/v1/company-offers/reject/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    window.alert('Staj Teklifi Reddedildi!')
+                }
+            }).then(() => {
+                navigate('/app-company/company-internship-offers', { replace: true });
+            }).catch(error => {
+                window.alert('Staj Teklifini Reddederken Bir Sorun Oluştu!')
+            })
+    }
 
     return (
         <form
@@ -63,7 +94,7 @@ const CompanyInternshipOffersDetailForm = (props) => {
                                 label="Öğrenci Adı"
                                 name="internName"
                                 onChange={handleChange}
-                                value={values.internName}
+                                value={`${values.internName} ${values.internSurname}`}
                                 variant="outlined"
                             />
                         </Grid>
@@ -76,9 +107,9 @@ const CompanyInternshipOffersDetailForm = (props) => {
                                 fullWidth
                                 disabled
                                 label="Başlama Tarihi"
-                                name="startOfDate"
+                                name="startDate"
                                 onChange={handleChange}
-                                value={values.startOfDate}
+                                value={moment(values.startDate).format('DD/MM/YYYY')}
                                 variant="outlined"
                             />
                         </Grid>
@@ -93,7 +124,7 @@ const CompanyInternshipOffersDetailForm = (props) => {
                                 label="Başvurma Tarihi"
                                 name="offerDate"
                                 onChange={handleChange}
-                                value={values.offerDate}
+                                value={moment(values.offerDate).format('DD/MM/YYYY')}
                                 variant="outlined"
                             />
                         </Grid>
@@ -106,9 +137,9 @@ const CompanyInternshipOffersDetailForm = (props) => {
                                 fullWidth
                                 disabled
                                 label="Bitirme Tarihi"
-                                name="endOfDate"
+                                name="endDate"
                                 onChange={handleChange}
-                                value={values.endOfDate}
+                                value={moment(values.endDate).format('DD/MM/YYYY')}
                                 variant="outlined"
                             />
                         </Grid>
@@ -122,9 +153,9 @@ const CompanyInternshipOffersDetailForm = (props) => {
                                 disabled
                                 multiline
                                 label="Mesaj"
-                                name="content"
+                                name="offerMessage"
                                 onChange={handleChange}
-                                value={values.content}
+                                value={values.offerMessage}
                                 variant="outlined"
                             />
                         </Grid>
@@ -139,12 +170,14 @@ const CompanyInternshipOffersDetailForm = (props) => {
                     }}
                 >
                     <Button
+                        onClick={onClickRejectOffer}
                         style={{ backgroundColor: "#F33D3D", marginRight: "8px" }}
                         variant="contained"
                     >
                         Reddet
                     </Button>
                     <Button
+                        onClick={onClickAcceptOffer}
                         style={{ backgroundColor: "#70D987" }}
                         variant="contained"
                     >
