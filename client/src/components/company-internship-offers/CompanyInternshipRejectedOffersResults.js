@@ -63,8 +63,8 @@ const CompanyInternshipRejectedOffersResults = ({ ...rest }) => {
                                 <TableCell align='center'>
                                     Mesaj
                                 </TableCell>
-                                <TableCell>
-
+                                <TableCell align='right'>
+                                    Durum
                                 </TableCell>
                             </TableRow>
                         </TableHead>
@@ -108,8 +108,8 @@ const CompanyInternshipRejectedOffersResults = ({ ...rest }) => {
                                             <TableCell align='right'>
                                                 <Button
                                                     disabled
+                                                    style={{ backgroundColor: "#F33D3D", color: "#FFFFFF" }}
                                                     size="small"
-                                                    color="primary"
                                                     variant="contained"
                                                 >
                                                     Reddedildi
