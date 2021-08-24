@@ -17,6 +17,9 @@ const CompanyInternshipOffersDetailForm = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const companyId = localStorage.getItem('currentUser-subUserId');
+    const internId = location.state.internId;
+
     const id = location.state.id;
     const internName = location.state.internName;
     const internSurname = location.state.internSurname;
@@ -42,14 +45,25 @@ const CompanyInternshipOffersDetailForm = (props) => {
     };
 
     const onClickAcceptOffer = () => {
-        axios.put(`/api/v1/company-offers/accept/${id}`)
+        axios.post('/api/v1/company-interns', {
+            companyId: companyId,
+            internId: internId
+        })
             .then(response => {
-                if (response.status === 200) {
-                    window.alert('Staj Teklifi Kabul Edildi!')
+                if (response.status === 201) {
+                    axios.put(`/api/v1/company-offers/accept/${id}`)
+                        .then(response => {
+                            if (response.status === 200) {
+                                window.alert('Staj Teklifi Kabul Edildi!')
+                            }
+                        }).then(() => {
+                            navigate('/app-company/company-internship-offers', { replace: true });
+                        }).catch(error => {
+                            window.alert('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
+                        })
                 }
-            }).then(() => {
-                navigate('/app-company/company-internship-offers', { replace: true });
-            }).catch(error => {
+            })
+            .catch(error => {
                 window.alert('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
             })
     }
