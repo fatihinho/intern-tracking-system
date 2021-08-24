@@ -22,6 +22,7 @@ import CompanyInternshipOffersDetail from './pages/CompanyInternshipOffersDetail
 import InstitutionInternshipOffers from './pages/InstitutionInternshipOffers';
 import InstitutionInternDiaries from './pages/InstitutionInternDiaries';
 import InstitutionInternDiariesDetailForm from './components/institution-intern-diaries/InstitutionInternDiariesDetailForm';
+import CompanyInternshipAddUnit from './pages/CompanyInternshipAddUnit';
 
 const routes = [
   {
@@ -47,6 +48,7 @@ const routes = [
       { path: 'company-internship-offers/:id/detail', element: <CompanyInternshipOffersDetail /> },
       { path: 'company-internship-offers/accepts', element: <CompanyInternshipAcceptedOffers /> },
       { path: 'company-internship-offers/rejects', element: <CompanyInternshipRejectedOffers /> },
+      { path: 'company-internship-offers/accepts/:internId/add-unit', element: <CompanyInternshipAddUnit /> },
       { path: 'home', element: <Dashboard /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
