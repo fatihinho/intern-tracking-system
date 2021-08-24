@@ -40,6 +40,7 @@ const CompanyInternshipOffersResults = ({ ...rest }) => {
 
     const onClickDetail = (index) => {
         const id = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].id;
+        const internId = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].intern.id;
         const internName = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].intern.name;
         const internSurname = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].intern.surname;
         const offerDate = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].offerDate;
@@ -47,6 +48,7 @@ const CompanyInternshipOffersResults = ({ ...rest }) => {
         navigate(`/app-company/company-internship-offers/${id}/detail`, {
             replace: false, state: {
                 id: id,
+                internId: internId,
                 internName: internName,
                 internSurname: internSurname,
                 startDate: startDate,
