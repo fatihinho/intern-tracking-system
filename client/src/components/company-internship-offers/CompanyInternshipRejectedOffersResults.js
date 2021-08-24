@@ -15,20 +15,14 @@ import {
     Typography
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
-const CompanyInternshipOffersResults = ({ ...rest }) => {
+const CompanyInternshipRejectedOffersResults = ({ ...rest }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
 
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-
     const [offers, setOffers] = useState(null);
-
-    const navigate = useNavigate();
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
@@ -38,48 +32,22 @@ const CompanyInternshipOffersResults = ({ ...rest }) => {
         setPage(newPage);
     };
 
-    const onClickDetail = (index) => {
-        const id = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].id;
-        const internName = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].intern.name;
-        const internSurname = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].intern.surname;
-        const offerDate = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].offerDate;
-        const offerMessage = offers.filter(offer => offer.active && !offer.accepted && !offer.rejected)[index].offerMessage;
-        navigate(`/app-company/company-internship-offers/${id}/detail`, {
-            replace: false, state: {
-                id: id,
-                internName: internName,
-                internSurname: internSurname,
-                startDate: startDate,
-                endDate: endDate,
-                offerDate: offerDate,
-                offerMessage: offerMessage
-            }
-        });
-    }
-
     const companyId = localStorage.getItem('currentUser-subUserId');
 
     useEffect(() => {
         getOffers();
-        getInternshipStartAndEndDate();
 
         async function getOffers() {
             const response = await axios.get(`/api/v1/company-offers/company/${companyId}`);
             const data = await response.data;
             setOffers(data);
         }
-
-        async function getInternshipStartAndEndDate() {
-            const response = await axios.get(`/api/v1/intern-searches/company/${companyId}`)
-            setStartDate(response.data.startDate);
-            setEndDate(response.data.endDate);
-        }
     }, []);
 
     return (
         <Card {...rest}>
             <CardHeader
-                title="Staj Talepleri"
+                title="Staj Talepleri - Reddedilenler"
             />
             <PerfectScrollbar>
                 <Box sx={{ minWidth: 1050 }}>
@@ -104,7 +72,7 @@ const CompanyInternshipOffersResults = ({ ...rest }) => {
                             {offers &&
                                 offers
                                     .slice(0, limit)
-                                    .filter(offer => offer.active && !offer.accepted && !offer.rejected)
+                                    .filter(offer => !offer.accepted && offer.rejected)
                                     .map((offer, index) => (
                                         <TableRow
                                             hover
@@ -139,12 +107,12 @@ const CompanyInternshipOffersResults = ({ ...rest }) => {
                                             </TableCell>
                                             <TableCell align='right'>
                                                 <Button
+                                                    disabled
                                                     size="small"
                                                     color="primary"
                                                     variant="contained"
-                                                    onClick={() => onClickDetail(index)}
                                                 >
-                                                    Detay
+                                                    Reddedildi
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
@@ -166,4 +134,4 @@ const CompanyInternshipOffersResults = ({ ...rest }) => {
     );
 };
 
-export default CompanyInternshipOffersResults;
+export default CompanyInternshipRejectedOffersResults;

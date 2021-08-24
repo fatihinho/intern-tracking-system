@@ -14,7 +14,9 @@ import {
   Home as HomeIcon,
   Settings as SettingsIcon,
   Users as UsersIcon,
-  UserPlus as UserPlusIcon
+  UserPlus as UserPlusIcon,
+  UserCheck as UserCheckIcon,
+  UserMinus as UserMinusIcons,
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -39,6 +41,16 @@ const companyItems = [
     href: '/app-company/company-internship-offers',
     icon: UsersIcon,
     title: 'Staj Talepleri'
+  },
+  {
+    href: '/app-company/company-internship-offers/accepts',
+    icon: UserCheckIcon,
+    title: 'Kabul Edilenler'
+  },
+  {
+    href: '/app-company/company-internship-offers/rejects',
+    icon: UserMinusIcons,
+    title: 'Reddedilenler'
   },
   {
     href: '/app-company/settings',

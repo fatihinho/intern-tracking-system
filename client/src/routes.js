@@ -16,6 +16,8 @@ import InternshipOfferAppliement from './pages/InternshipOfferAppliement';
 import InternDiary from './pages/InternDiary';
 import InternSearch from './pages/InternSearch';
 import CompanyInternshipOffers from './pages/CompanyInternshipOffers';
+import CompanyInternshipAcceptedOffers from './pages/CompanyInternshipAcceptedOffers';
+import CompanyInternshipRejectedOffers from './pages/CompanyInternshipRejectedOffers';
 import CompanyInternshipOffersDetail from './pages/CompanyInternshipOffersDetail';
 import InstitutionInternshipOffers from './pages/InstitutionInternshipOffers';
 import InstitutionInternDiaries from './pages/InstitutionInternDiaries';
@@ -43,6 +45,8 @@ const routes = [
       { path: 'intern-search', element: <InternSearch /> },
       { path: 'company-internship-offers', element: <CompanyInternshipOffers /> },
       { path: 'company-internship-offers/:id/detail', element: <CompanyInternshipOffersDetail /> },
+      { path: 'company-internship-offers/accepts', element: <CompanyInternshipAcceptedOffers /> },
+      { path: 'company-internship-offers/rejects', element: <CompanyInternshipRejectedOffers /> },
       { path: 'home', element: <Dashboard /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
