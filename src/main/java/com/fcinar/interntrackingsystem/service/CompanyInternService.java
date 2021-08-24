@@ -1,6 +1,7 @@
 package com.fcinar.interntrackingsystem.service;
 
 import com.fcinar.interntrackingsystem.dto.CompanyInternDto;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUnitNameRequest;
 import com.fcinar.interntrackingsystem.dto.converter.CompanyInternDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyInternRequest;
 import com.fcinar.interntrackingsystem.exception.CompanyInternNotFoundException;
@@ -42,9 +43,20 @@ public class CompanyInternService {
                 .orElseThrow(() -> new CompanyInternNotFoundException("CompanyIntern could not found by id: " + id));
     }
 
+    private CompanyIntern findCompanyInternByCompanyIdAndInternId(UUID companyId, UUID internId) {
+        return companyInternRepository.findByCompanyIdAndInternId(companyId, internId)
+                .orElseThrow(() -> new CompanyInternNotFoundException("CompanyIntern could not found by " +
+                        "company id: " + companyId + " and intern id: " + internId));
+    }
+
 
     public CompanyInternDto getCompanyInternById(UUID id) {
         CompanyIntern companyIntern = findCompanyInternById(id);
+        return companyInternDtoConverter.convert(companyIntern);
+    }
+
+    public CompanyInternDto getCompanyInternByCompanyIdAndInternId(UUID companyId, UUID internId) {
+        CompanyIntern companyIntern = findCompanyInternByCompanyIdAndInternId(companyId, internId);
         return companyInternDtoConverter.convert(companyIntern);
     }
 
@@ -69,9 +81,15 @@ public class CompanyInternService {
         Company company = companyService.findCompanyById(createCompanyInternRequest.getCompanyId());
         CompanyInternSearch companyInternSearch = companyInternSearchService
                 .findCompanyInternSearchByCompanyId(company.getId());
-        CompanyIntern companyIntern = new CompanyIntern(createCompanyInternRequest.getUnitName(),
-                companyInternSearch.getDayOfInternship(), companyInternSearch.getStartDate(),
-                companyInternSearch.getEndDate(), company, intern);
+        CompanyIntern companyIntern = new CompanyIntern(null, companyInternSearch.getDayOfInternship(),
+                companyInternSearch.getStartDate(), companyInternSearch.getEndDate(), company, intern);
+        return companyInternDtoConverter.convert(companyInternRepository.save(companyIntern));
+    }
+
+
+    public CompanyInternDto addUnitToIntern(@NotNull UpdateUnitNameRequest updateUnitNameRequest) {
+        CompanyIntern companyIntern = findCompanyInternById(updateUnitNameRequest.getId());
+        companyIntern.setUnitName(updateUnitNameRequest.getUnitName());
         return companyInternDtoConverter.convert(companyInternRepository.save(companyIntern));
     }
 }

@@ -6,7 +6,7 @@ import java.util.*
 
 data class CompanyInternDto(
     val id: UUID,
-    val unitName: String,
+    val unitName: String?,
     val dayOfInternship: Int,
     val startDate: Date,
     val endDate: Date,

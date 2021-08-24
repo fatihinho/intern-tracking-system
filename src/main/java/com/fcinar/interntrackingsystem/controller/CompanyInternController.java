@@ -1,6 +1,7 @@
 package com.fcinar.interntrackingsystem.controller;
 
 import com.fcinar.interntrackingsystem.dto.CompanyInternDto;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUnitNameRequest;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyInternRequest;
 import com.fcinar.interntrackingsystem.service.CompanyInternService;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,18 @@ public class CompanyInternController {
     public ResponseEntity<CompanyInternDto> getCompanyInternById(@PathVariable UUID id) {
         try {
             CompanyInternDto companyIntern = companyInternService.getCompanyInternById(id);
+            return new ResponseEntity<>(companyIntern, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/company-interns/{companyId}/{internId}")
+    public ResponseEntity<CompanyInternDto> getCompanyInternByCompanyIdAndInternId(@PathVariable UUID companyId,
+                                                                                   @PathVariable UUID internId) {
+        try {
+            CompanyInternDto companyIntern = companyInternService
+                    .getCompanyInternByCompanyIdAndInternId(companyId, internId);
             return new ResponseEntity<>(companyIntern, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -75,6 +88,18 @@ public class CompanyInternController {
         try {
             CompanyInternDto companyIntern = companyInternService.createCompanyIntern(createCompanyInternRequest);
             return new ResponseEntity<>(companyIntern, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @PutMapping("/company-interns/add-unit")
+    public ResponseEntity<CompanyInternDto> addUnitToIntern(
+            @RequestBody UpdateUnitNameRequest updateUnitNameRequest) {
+        try {
+            CompanyInternDto companyIntern = companyInternService.addUnitToIntern(updateUnitNameRequest);
+            return new ResponseEntity<>(companyIntern, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

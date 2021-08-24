@@ -10,8 +10,8 @@ data class CompanyIntern(
     @Column(name = "Id")
     val id: UUID,
 
-    @Column(name = "UnitName", length = 100, nullable = false)
-    val unitName: String,
+    @Column(name = "UnitName", length = 100)
+    var unitName: String?,
 
     @Column(name = "DayOfInternship", nullable = false)
     val dayOfInternship: Int,
@@ -31,7 +31,7 @@ data class CompanyIntern(
     val intern: Intern
 ) {
     constructor(
-        unitName: String,
+        unitName: String?,
         dayOfInternship: Int,
         startDate: Date,
         endDate: Date,
@@ -66,7 +66,7 @@ data class CompanyIntern(
 
     override fun hashCode(): Int {
         var result = id.hashCode()
-        result = 31 * result + unitName.hashCode()
+        result = 31 * result + (unitName?.hashCode() ?: 0)
         result = 31 * result + dayOfInternship
         result = 31 * result + startDate.hashCode()
         result = 31 * result + endDate.hashCode()
@@ -76,7 +76,7 @@ data class CompanyIntern(
     }
 
     override fun toString(): String {
-        return "CompanyIntern(id=$id, unitName='$unitName', dayOfInternship=$dayOfInternship, " +
+        return "CompanyIntern(id=$id, unitName=$unitName, dayOfInternship=$dayOfInternship, " +
                 "startDate=$startDate, endDate=$endDate, company=$company, intern=$intern)"
     }
 }
