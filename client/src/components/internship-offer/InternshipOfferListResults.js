@@ -24,6 +24,7 @@ const InternshipOfferListResults = ({ ...rest }) => {
   const [page, setPage] = useState(0);
 
   const [offers, setOffers] = useState(null);
+  const [appliedOffers, setAppliedOffers] = useState(null);
 
   const navigate = useNavigate();
 
@@ -35,12 +36,22 @@ const InternshipOfferListResults = ({ ...rest }) => {
     setPage(newPage);
   };
 
+  const internId = localStorage.getItem('currentUser-subUserId');
+
   useEffect(() => {
     getOffers();
+    getAppliedOffers();
+
     async function getOffers() {
       const response = await axios.get('/api/v1/intern-searches');
       const data = await response.data;
       setOffers(data);
+    }
+
+    async function getAppliedOffers() {
+      const response = await axios.get(`/api/v1/company-offers/intern/${internId}`);
+      const data = await response.data;
+      setAppliedOffers(data);
     }
   }, [])
 
@@ -127,13 +138,13 @@ const InternshipOfferListResults = ({ ...rest }) => {
                   </TableCell>
                   <TableCell align='right'>
                     <Button
-                      disabled={false}
+                      disabled={appliedOffers && appliedOffers[index].company.id === offer.company.id}
                       onClick={() => onClickAppliement(index)}
                       size="small"
                       color="primary"
                       variant="contained"
                     >
-                      {true ? 'Başvur' : 'Başvuruldu'}
+                      {appliedOffers && appliedOffers[index].company.id === offer.company.id ? 'Başvuruldu' : 'Başvur'}
                     </Button>
                   </TableCell>
                 </TableRow>
