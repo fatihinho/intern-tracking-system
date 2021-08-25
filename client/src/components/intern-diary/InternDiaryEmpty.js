@@ -1,10 +1,20 @@
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    Divider
+} from '@material-ui/core';
 
 const InternDiaryEmpty = () => {
 
     return (
-        <div>
+        <Card>
+            <CardHeader
+                title="Henüz Bir Firmada Stajyer Değilsiniz!"
+            />
+            <Divider />
 
-        </div>
+        </Card>
 
     );
 };
