@@ -37,7 +37,6 @@ public class CompanyInternService {
         this.internService = internService;
     }
 
-
     private CompanyIntern findCompanyInternById(UUID id) {
         return companyInternRepository.findById(id)
                 .orElseThrow(() -> new CompanyInternNotFoundException("CompanyIntern could not found by id: " + id));
@@ -48,7 +47,6 @@ public class CompanyInternService {
                 .orElseThrow(() -> new CompanyInternNotFoundException("CompanyIntern could not found by " +
                         "company id: " + companyId + " and intern id: " + internId));
     }
-
 
     public CompanyInternDto getCompanyInternById(UUID id) {
         CompanyIntern companyIntern = findCompanyInternById(id);
@@ -75,6 +73,10 @@ public class CompanyInternService {
         return companyInterns.stream().map(companyInternDtoConverter::convert).collect(Collectors.toList());
     }
 
+    public List<CompanyInternDto> getAllCompanyInternsHasUnitByCompanyId(UUID companyId) {
+        List<CompanyIntern> companyInterns = companyInternRepository.findAllByCompanyIdAndUnitNameNotNull(companyId);
+        return companyInterns.stream().map(companyInternDtoConverter::convert).collect(Collectors.toList());
+    }
 
     public CompanyInternDto createCompanyIntern(@NotNull CreateCompanyInternRequest createCompanyInternRequest) {
         Intern intern = internService.findInternById(createCompanyInternRequest.getInternId());
@@ -85,7 +87,6 @@ public class CompanyInternService {
                 companyInternSearch.getStartDate(), companyInternSearch.getEndDate(), company, intern);
         return companyInternDtoConverter.convert(companyInternRepository.save(companyIntern));
     }
-
 
     public CompanyInternDto addUnitToIntern(@NotNull UpdateUnitNameRequest updateUnitNameRequest) {
         CompanyIntern companyIntern = findCompanyInternById(updateUnitNameRequest.getId());

@@ -26,6 +26,8 @@ const CompanyInternshipAcceptedOffersResults = ({ ...rest }) => {
     const [page, setPage] = useState(0);
 
     const [offers, setOffers] = useState(null);
+    const [hasUnitInterns, setHasUnitInterns] = useState(null);
+    const [hasUnitInternsIds, setHasUnitInternsIds] = useState(null);
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
@@ -45,18 +47,26 @@ const CompanyInternshipAcceptedOffersResults = ({ ...rest }) => {
 
     useEffect(() => {
         getOffers();
+        getInternsHasUnit();
 
         async function getOffers() {
             const response = await axios.get(`/api/v1/company-offers/company/${companyId}`);
-            const data = await response.data;
-            setOffers(data);
+            if (response.status === 200) {
+                const data = await response.data;
+                setOffers(data);
+            }
         }
 
-        /* TODO: Birim Ekle konrolünü daha sonra yap
-        async function hasInternAnyUnit() {
-            const response = await axios.get(`/api/v1/company-interns/unit-control/${companyId}/${internId}`);
+        async function getInternsHasUnit() {
+            const response = await axios.get(`/api/v1/company-interns/has-unit/${companyId}`);
+            if (response.status === 200) {
+                const data = await response.data;
+                const ids = [];
+                data.forEach(d => ids.push(d.intern.id))
+                setHasUnitInterns(data);
+                setHasUnitInternsIds(ids);
+            }
         }
-        */
     }, []);
 
     return (
@@ -82,8 +92,8 @@ const CompanyInternshipAcceptedOffersResults = ({ ...rest }) => {
                                     <TableCell align='center'>
                                         Durum
                                     </TableCell>
-                                    <TableCell>
-
+                                    <TableCell align='center'>
+                                        Birim
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -134,14 +144,15 @@ const CompanyInternshipAcceptedOffersResults = ({ ...rest }) => {
                                                         Kabul Edildi
                                                     </Button>
                                                 </TableCell>
-                                                <TableCell align='right'>
+                                                <TableCell align='center'>
                                                     <Button
+                                                        disabled={hasUnitInternsIds && hasUnitInternsIds.some(id => id === offer.intern.id)}
                                                         onClick={() => onClickAddUnit(index)}
                                                         color="primary"
                                                         size="small"
                                                         variant="contained"
                                                     >
-                                                        Birim Ekle
+                                                        {hasUnitInternsIds && hasUnitInterns && hasUnitInternsIds.some(id => id === offer.intern.id) ? `${hasUnitInterns[index].unitName}` : 'Birim Ekle'}
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>

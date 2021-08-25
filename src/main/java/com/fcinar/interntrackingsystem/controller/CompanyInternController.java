@@ -81,6 +81,20 @@ public class CompanyInternController {
         }
     }
 
+    @GetMapping("/company-interns/has-unit/{companyId}")
+    public ResponseEntity<List<CompanyInternDto>> getAllCompanyInternsHasUnitByCompanyId(
+            @PathVariable UUID companyId) {
+        try {
+            List<CompanyInternDto> companyInterns = companyInternService
+                    .getAllCompanyInternsHasUnitByCompanyId(companyId);
+            if (companyInterns.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(companyInterns, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping("/company-interns")
     public ResponseEntity<CompanyInternDto> createCompanyIntern(

@@ -67,14 +67,18 @@ const CompanyInternshipOffersResults = ({ ...rest }) => {
 
         async function getOffers() {
             const response = await axios.get(`/api/v1/company-offers/company/${companyId}`);
-            const data = await response.data;
-            setOffers(data);
+            if (response.status === 200) {
+                const data = await response.data;
+                setOffers(data);
+            }
         }
 
         async function getInternshipStartAndEndDate() {
-            const response = await axios.get(`/api/v1/intern-searches/company/${companyId}`)
-            setStartDate(response.data.startDate);
-            setEndDate(response.data.endDate);
+            const response = await axios.get(`/api/v1/intern-searches/company/${companyId}`);
+            if (response.status === 200) {
+                setStartDate(response.data.startDate);
+                setEndDate(response.data.endDate);
+            }
         }
     }, []);
 

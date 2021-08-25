@@ -15,4 +15,6 @@ public interface ICompanyInternRepository extends JpaRepository<CompanyIntern, U
     List<CompanyIntern> findAllByCompanyId(UUID companyId);
 
     List<CompanyIntern> findAllByInternId(UUID internId);
+
+    List<CompanyIntern> findAllByCompanyIdAndUnitNameNotNull(UUID companyId);
 }

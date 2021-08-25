@@ -44,14 +44,18 @@ const InternshipOfferListResults = ({ ...rest }) => {
 
     async function getOffers() {
       const response = await axios.get('/api/v1/intern-searches');
-      const data = await response.data;
-      setOffers(data);
+      if (response.status === 200) {
+        const data = await response.data;
+        setOffers(data);
+      }
     }
 
     async function getAppliedOffers() {
       const response = await axios.get(`/api/v1/company-offers/intern/${internId}`);
-      const data = await response.data;
-      setAppliedOffers(data);
+      if (response.status === 200) {
+        const data = await response.data;
+        setAppliedOffers(data);
+      }
     }
   }, [])
 
