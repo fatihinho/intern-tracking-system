@@ -105,7 +105,9 @@ const InternDiaryForm = ({ props, ...rest }) => {
 
     const onClickUpdate = () => {
         if (clickedRowId !== null) {
-            if (values.content.length > 0 && values.dayOfInternship.length > 0) {
+            console.log(values.content.length)
+            console.log(values.dayOfInternship.toString().length)
+            if (values.content.length > 0 && values.dayOfInternship.toString().length > 0) {
                 axios.put(`/api/v1/interns/diaries/${clickedRowId}`, {
                     content: values.content,
                     dayOfInternship: values.dayOfInternship,
