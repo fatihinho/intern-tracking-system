@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InternDiaryDtoConverter {
     public InternDiaryDto convert(@NotNull InternDiary from) {
-        return new InternDiaryDto(from.getId(), from.getContent(),
+        return new InternDiaryDto(from.getId(), from.getContent(), from.getDayOfInternship(),
                 from.getUpdatedDate(), from.isAccepted(), from.isRejected(), from.getIntern());
     }
 }

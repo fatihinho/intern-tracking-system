@@ -25,8 +25,8 @@ data class InternDiary(
     @Column(name = "IsRejected", nullable = false)
     var isRejected: Boolean,
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "InternId", unique = true, nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "InternId", nullable = false)
     val intern: Intern
 ) {
     constructor(

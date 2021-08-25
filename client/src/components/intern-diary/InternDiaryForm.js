@@ -18,11 +18,21 @@ import {
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import getInitials from '../../utils/getInitials';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
+const InternDiaryForm = ({ props, ...rest }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
+
+    const [dayOfInternshipError, setDayOfInternshipError] = useState(false);
+    const [contentError, setContentError] = useState(false);
+
+    const [internDiaries, setInternDiaries] = useState();
+
+    const companyName = localStorage.getItem('internDiary-companyName');
+    const startDate = localStorage.getItem('internDiary-startDate');
+    const endDate = localStorage.getItem('internDiary-endDate');
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
@@ -33,10 +43,10 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
     };
 
     const [values, setValues] = useState({
-        companyName: 'Türksat A.Ş.',
-        startOfDate: '28/06/2021',
-        endOfDate: '12/08/2021',
-        dayOfInternship: 'dayOfInternship',
+        companyName: companyName,
+        startDate: startDate,
+        endDate: endDate,
+        dayOfInternship: '',
         content: ''
     });
 
@@ -46,6 +56,53 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
             [event.target.name]: event.target.value
         });
     };
+
+    const internId = localStorage.getItem('currentUser-subUserId');
+
+    const onClickSave = () => {
+        if (values.content.length > 0 && values.dayOfInternship.length > 0) {
+            axios.post(`/api/v1/interns/${internId}/diaries`, {
+                content: values.content,
+                dayOfInternship: values.dayOfInternship,
+            })
+                .then(response => {
+                    if (response.status === 201) {
+                        window.alert('Staj Defteri Kaydedildi!');
+                    }
+                })
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    window.alert('Staj Defteri Kaydedilirken Bir Sorun Oluştu!');
+                });
+        } else {
+            if (values.content.length <= 0) {
+                setContentError(true);
+                setTimeout(() => {
+                    setContentError(false);
+                }, 1500);
+            }
+            if (values.dayOfInternship.length <= 0) {
+                setDayOfInternshipError(true);
+                setTimeout(() => {
+                    setDayOfInternshipError(false);
+                }, 1500);
+            }
+        }
+    }
+
+    useEffect(() => {
+        getInternDiaries();
+
+        async function getInternDiaries() {
+            const response = await axios.get(`/api/v1/interns/${internId}/diaries`);
+            if (response.status === 200) {
+                const data = response.data;
+                setInternDiaries(data);
+            }
+        }
+    }, []);
 
     return (
         <div>
@@ -90,7 +147,7 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                                     label="Başlama Tarihi"
                                     name="startOfDate"
                                     onChange={handleChange}
-                                    value={values.startOfDate}
+                                    value={values.startDate}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -101,12 +158,14 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                             >
                                 <TextField
                                     fullWidth
+                                    required
                                     label="Staj Günü"
                                     name="dayOfInternship"
                                     onChange={handleChange}
                                     type="number"
                                     value={values.dayOfInternship}
                                     variant="outlined"
+                                    error={dayOfInternshipError}
                                 />
                             </Grid>
                             <Grid
@@ -120,7 +179,7 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                                     label="Bitirme Tarihi"
                                     name="endOfDate"
                                     onChange={handleChange}
-                                    value={values.endOfDate}
+                                    value={values.endDate}
                                     variant="outlined"
                                 />
                             </Grid>
@@ -132,11 +191,13 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                                 <TextField
                                     fullWidth
                                     multiline
+                                    required
                                     label="Yapılan İşler"
                                     name="content"
                                     onChange={handleChange}
                                     value={values.content}
                                     variant="outlined"
+                                    error={contentError}
                                 />
                             </Grid>
                         </Grid>
@@ -156,6 +217,7 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                             Sil
                         </Button>
                         <Button
+                            onClick={onClickSave}
                             style={{ backgroundColor: "#70D987" }}
                             variant="contained"
                         >
@@ -189,10 +251,10 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {internDiaries.slice(0, limit).map((offer, index) => (
+                                {internDiaries && internDiaries.slice(0, limit).map((diary) => (
                                     <TableRow
                                         hover
-                                        key={offer.id}
+                                        key={diary.id}
                                     >
                                         <TableCell align='left'>
                                             <Box
@@ -202,30 +264,30 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                                                 }}
                                             >
                                                 <Avatar
-                                                    src={offer.avatarUrl}
+                                                    src={''}
                                                     sx={{ mr: 2 }}
                                                 >
-                                                    {getInitials(offer.name)}
+                                                    {getInitials(companyName)}
                                                 </Avatar>
                                                 <Typography
                                                     color="textPrimary"
                                                     variant="body1"
                                                 >
-                                                    {offer.name}
+                                                    {companyName}
                                                 </Typography>
                                             </Box>
                                         </TableCell>
                                         <TableCell align='center'>
-                                            {offer.startOfDate}
+                                            {startDate}
                                         </TableCell>
                                         <TableCell align='center'>
-                                            {offer.endOfDate}
+                                            {endDate}
                                         </TableCell>
                                         <TableCell align='center'>
-                                            {offer.dayOfInternship}
+                                            {diary.dayOfInternship}
                                         </TableCell>
                                         <TableCell align='right'>
-                                            {offer.content}
+                                            {diary.content}
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -235,7 +297,7 @@ const InternDiaryForm = ({ internDiaries, props, ...rest }) => {
                 </PerfectScrollbar>
                 <TablePagination
                     component="div"
-                    count={internDiaries.length}
+                    count={internDiaries && internDiaries.length}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleLimitChange}
                     page={page}

@@ -3,6 +3,9 @@ import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from './DashboardNavbar';
 import InternDashboardSidebar from './InternDashboardSidebar';
+import { useEffect } from 'react';
+import axios from 'axios';
+import moment from 'moment';
 
 
 const InternDashboardLayoutRoot = experimentalStyled('div')(
@@ -41,6 +44,31 @@ const InternDashboardLayoutContent = experimentalStyled('div')({
 
 const InternDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+
+  const internId = localStorage.getItem('currentUser-subUserId');
+
+  useEffect(() => {
+    initInternDiaryForm();
+
+    async function initInternDiaryForm() {
+      const response = await axios.get(`/api/v1/company-interns/intern/${internId}`);
+      if (response.status === 200) {
+        const companyIntern = response.data[0];
+        const companyId = companyIntern.company.id;
+
+        const response2 = await axios.get(`/api/v1/companies/${companyId}`);
+        if (response2.status === 200) {
+          const companyName = response2.data.name;
+          localStorage.setItem('internDiary-companyName', companyName);
+
+          const startDate = moment(companyIntern.startDate).format("DD/MM/YYYY");
+          const endDate = moment(companyIntern.endDate).format("DD/MM/YYYY");
+          localStorage.setItem('internDiary-startDate', startDate);
+          localStorage.setItem('internDiary-endDate', endDate);
+        }
+      }
+    }
+  }, []);
 
   return (
     <InternDashboardLayoutRoot>
