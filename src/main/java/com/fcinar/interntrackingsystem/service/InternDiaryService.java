@@ -11,6 +11,9 @@ import com.fcinar.interntrackingsystem.repository.IInternDiaryRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -68,6 +71,7 @@ public class InternDiaryService {
 
     public InternDiaryDto updateInternDiaryById(UUID id,
                                                 @NotNull UpdateInternDiaryRequest updateInternDiaryRequest) {
+        Date dateNow = Date.from(LocalDate.now().atStartOfDay().toInstant(ZoneOffset.ofHours(3)));
         InternDiary internDiary = findInternDiaryById(id);
         String content = updateInternDiaryRequest.getContent() != null
                 ? updateInternDiaryRequest.getContent() : internDiary.getContent();
@@ -75,7 +79,7 @@ public class InternDiaryService {
                 ? updateInternDiaryRequest.getDayOfInternship() : internDiary.getDayOfInternship();
         internDiary.setContent(content);
         internDiary.setDayOfInternship(dayOfInternShip);
-        internDiary.setUpdatedDate(updateInternDiaryRequest.getUpdatedDate());
+        internDiary.setUpdatedDate(dateNow);
         return internDiaryDtoConverter.convert(internDiaryRepository.save(internDiary));
     }
 

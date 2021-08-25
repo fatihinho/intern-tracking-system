@@ -28,6 +28,8 @@ const InternDiaryForm = ({ props, ...rest }) => {
     const [dayOfInternshipError, setDayOfInternshipError] = useState(false);
     const [contentError, setContentError] = useState(false);
 
+    const [clickedRowId, setClickedRowId] = useState(null);
+
     const [internDiaries, setInternDiaries] = useState();
 
     const companyName = localStorage.getItem('internDiary-companyName');
@@ -56,6 +58,15 @@ const InternDiaryForm = ({ props, ...rest }) => {
             [event.target.name]: event.target.value
         });
     };
+
+    const onClickRow = (id) => {
+        setClickedRowId(id);
+        values.content = internDiaries.find(e => e.id === id).content;
+        values.dayOfInternship = internDiaries.find(e => e.id === id).dayOfInternship;
+        if (clickedRowId === id) {
+            setClickedRowId(null);
+        }
+    }
 
     const internId = localStorage.getItem('currentUser-subUserId');
 
@@ -89,6 +100,43 @@ const InternDiaryForm = ({ props, ...rest }) => {
                     setDayOfInternshipError(false);
                 }, 1500);
             }
+        }
+    }
+
+    const onClickUpdate = () => {
+        if (clickedRowId !== null) {
+            if (values.content.length > 0 && values.dayOfInternship.length > 0) {
+                axios.put(`/api/v1/interns/diaries/${clickedRowId}`, {
+                    content: values.content,
+                    dayOfInternship: values.dayOfInternship,
+                })
+                    .then(response => {
+                        if (response.status === 200) {
+                            window.alert('Staj Defteri Güncellendi!');
+                        }
+                    })
+                    .then(() => {
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        window.alert('Staj Defteri Güncellenirken Bir Sorun Oluştu!');
+                    });
+            } else {
+                if (values.content.length <= 0) {
+                    setContentError(true);
+                    setTimeout(() => {
+                        setContentError(false);
+                    }, 1500);
+                }
+                if (values.dayOfInternship.length <= 0) {
+                    setDayOfInternshipError(true);
+                    setTimeout(() => {
+                        setDayOfInternshipError(false);
+                    }, 1500);
+                }
+            }
+        } else {
+            window.alert('Lütfen Staj Defteri Seçiniz!');
         }
     }
 
@@ -145,7 +193,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
                                     fullWidth
                                     disabled
                                     label="Başlama Tarihi"
-                                    name="startOfDate"
+                                    name="startDate"
                                     onChange={handleChange}
                                     value={values.startDate}
                                     variant="outlined"
@@ -177,7 +225,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
                                     fullWidth
                                     disabled
                                     label="Bitirme Tarihi"
-                                    name="endOfDate"
+                                    name="endDate"
                                     onChange={handleChange}
                                     value={values.endDate}
                                     variant="outlined"
@@ -211,10 +259,11 @@ const InternDiaryForm = ({ props, ...rest }) => {
                         }}
                     >
                         <Button
-                            style={{ backgroundColor: "#F33D3D", marginRight: "8px" }}
+                            onClick={onClickUpdate}
+                            style={{ backgroundColor: "#FF7A2F", marginRight: "8px" }}
                             variant="contained"
                         >
-                            Sil
+                            Güncelle
                         </Button>
                         <Button
                             onClick={onClickSave}
@@ -254,6 +303,8 @@ const InternDiaryForm = ({ props, ...rest }) => {
                                 {internDiaries && internDiaries.slice(0, limit).map((diary) => (
                                     <TableRow
                                         hover
+                                        onClick={() => onClickRow(diary.id)}
+                                        style={{ backgroundColor: clickedRowId === diary.id ? 'gray' : '' }}
                                         key={diary.id}
                                     >
                                         <TableCell align='left'>

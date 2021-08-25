@@ -4,6 +4,5 @@ import java.util.*
 
 data class UpdateInternDiaryRequest(
     val content: String?,
-    val dayOfInternship: Int?,
-    val updatedDate: Date
+    val dayOfInternship: Int?
 )
