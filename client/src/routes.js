@@ -11,13 +11,16 @@ import InstitutionLoginPage from './pages/InstitutionLogin';
 import InternLoginPage from './pages/InternLogin';
 import LoginPage from './pages/Login';
 import NotFound from './pages/NotFound';
-import Register from './pages/Register';
 import InternshipOfferAppliement from './pages/InternshipOfferAppliement';
 import InternDiary from './pages/InternDiary';
+import InstitutionInternAcceptedDiaries from './pages/InstitutionInternAcceptedDiaries';
+import InstitutionInternRejectedDiaries from './pages/InstitutionInternRejectedDiaries';
 import InternSearch from './pages/InternSearch';
 import CompanyInternshipOffers from './pages/CompanyInternshipOffers';
 import CompanyInternshipAcceptedOffers from './pages/CompanyInternshipAcceptedOffers';
 import CompanyInternshipRejectedOffers from './pages/CompanyInternshipRejectedOffers';
+import InstitutionInternshipAcceptedOffers from './pages/InstitutionInternshipAcceptedOffers';
+import InstitutionInternshipRejectedOffers from './pages/InstitutionInternshipRejectedOffers';
 import CompanyInternshipOffersDetail from './pages/CompanyInternshipOffersDetail';
 import InstitutionInternshipOffers from './pages/InstitutionInternshipOffers';
 import InstitutionInternDiaries from './pages/InstitutionInternDiaries';
@@ -61,7 +64,11 @@ const routes = [
       { path: 'account', element: <Account /> },
       { path: 'institution-internship-offers', element: <InstitutionInternshipOffers /> },
       { path: 'institution-intern-diaries', element: <InstitutionInternDiaries /> },
+      { path: 'institution-intern-diaries/accepts', element: <InstitutionInternAcceptedDiaries /> },
+      { path: 'institution-intern-diaries/rejects', element: <InstitutionInternRejectedDiaries /> },
       { path: 'institution-intern-diaries/:id/detail', element: <InstitutionInternDiariesDetailForm /> },
+      { path: 'institution-internship-offers/accepts', element: <InstitutionInternshipAcceptedOffers /> },
+      { path: 'institution-internship-offers/rejects', element: <InstitutionInternshipRejectedOffers /> },
       { path: 'home', element: <Dashboard /> },
       { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
@@ -74,7 +81,6 @@ const routes = [
       { path: 'login-intern', element: <InternLoginPage /> },
       { path: 'login-company', element: <CompanyLoginPage /> },
       { path: 'login-institution', element: <InstitutionLoginPage /> },
-      { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
       { path: '/', element: <Navigate to="/login" /> },
       { path: '*', element: <Navigate to="/404" /> }
