@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,11 +55,19 @@ public class CompanyOfferService {
         return companyOffers.stream().map(companyOfferDtoConverter::convert).collect(Collectors.toList());
     }
 
+    public List<CompanyOfferDto> getAllCompanyOffersByInstitutionId(UUID institutionId) {
+        List<Intern> interns = internService.findInternByInstitutionId(institutionId);
+        List<UUID> internIds = new ArrayList<>();
+        interns.forEach(intern -> internIds.add(intern.getId()));
+        List<CompanyOffer> companyOffers = new ArrayList<>();
+        internIds.forEach(internId -> companyOffers.addAll(companyOfferRepository.findAllByInternId(internId)));
+        return companyOffers.stream().map(companyOfferDtoConverter::convert).collect(Collectors.toList());
+    }
+
     public List<CompanyOfferDto> getAllCompanyOffers() {
         List<CompanyOffer> companyOffers = companyOfferRepository.findAll();
         return companyOffers.stream().map(companyOfferDtoConverter::convert).collect(Collectors.toList());
     }
-
 
     public CompanyOfferDto createCompanyOffer(@NotNull CreateCompanyOfferRequest createCompanyOfferRequest) {
         Date dateNow = Date.from(LocalDate.now().atStartOfDay().toInstant(ZoneOffset.ofHours(3)));
@@ -72,7 +78,6 @@ public class CompanyOfferService {
                 true, false, false, company, intern);
         return companyOfferDtoConverter.convert(companyOfferRepository.save(companyOffer));
     }
-
 
     public CompanyOfferDto acceptCompanyOfferById(UUID id) {
         CompanyOffer companyOffer = findCompanyOfferById(id);
