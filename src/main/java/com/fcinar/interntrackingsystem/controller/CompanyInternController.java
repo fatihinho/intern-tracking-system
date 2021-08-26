@@ -1,6 +1,7 @@
 package com.fcinar.interntrackingsystem.controller;
 
 import com.fcinar.interntrackingsystem.dto.CompanyInternDto;
+import com.fcinar.interntrackingsystem.dto.InternDiaryDto;
 import com.fcinar.interntrackingsystem.dto.request.UpdateUnitNameRequest;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyInternRequest;
 import com.fcinar.interntrackingsystem.service.CompanyInternService;
@@ -106,7 +107,6 @@ public class CompanyInternController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     @PutMapping("/company-interns/add-unit")
     public ResponseEntity<CompanyInternDto> addUnitToIntern(
