@@ -100,6 +100,7 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
                         <TableBody>
                             {offers &&
                                 offers
+                                    .sort((a, b) => a.offerDate - b.offerDate)
                                     .slice(0, limit)
                                     .filter(offer => offer.active)
                                     .map((offer) => (

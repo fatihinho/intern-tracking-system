@@ -70,6 +70,7 @@ const InstitutionInternRejectedDiariesResults = ({ ...rest }) => {
                         <TableBody>
                             {diaries &&
                                 diaries
+                                    .sort((a, b) => a.dayOfInternship - b.dayOfInternship)
                                     .slice(0, limit)
                                     .filter(diary => !diary.accepted && diary.rejected)
                                     .map((diary) => (

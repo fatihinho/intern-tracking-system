@@ -105,54 +105,58 @@ const InternshipOfferListResults = ({ ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {offers && offers.slice(0, limit).map((offer, index) => (
-                <TableRow
-                  hover
-                  key={offer.id}
-                >
-                  <TableCell align='left'>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
+              {offers &&
+                offers
+                  .sort((a, b) => a.startDate - b.startDate)
+                  .slice(0, limit)
+                  .map((offer, index) => (
+                    <TableRow
+                      hover
+                      key={offer.id}
                     >
-                      <Avatar
-                        src={''}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials(offer.company.name)}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {offer.company.name}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell align='center'>
-                    {moment(offers[index].startDate).format('DD/MM/YYYY')}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {moment(offers[index].endDate).format('DD/MM/YYYY')}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {offer.dayOfInternship}
-                  </TableCell>
-                  <TableCell align='right'>
-                    <Button
-                      disabled={appliedOffers && appliedOffers[index].company.id === offer.company.id}
-                      onClick={() => onClickAppliement(index)}
-                      size="small"
-                      color="primary"
-                      variant="contained"
-                    >
-                      {appliedOffers && appliedOffers[index].company.id === offer.company.id ? 'Başvuruldu' : 'Başvur'}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      <TableCell align='left'>
+                        <Box
+                          sx={{
+                            alignItems: 'center',
+                            display: 'flex'
+                          }}
+                        >
+                          <Avatar
+                            src={''}
+                            sx={{ mr: 2 }}
+                          >
+                            {getInitials(offer.company.name)}
+                          </Avatar>
+                          <Typography
+                            color="textPrimary"
+                            variant="body1"
+                          >
+                            {offer.company.name}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell align='center'>
+                        {moment(offers[index].startDate).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell align='center'>
+                        {moment(offers[index].endDate).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell align='center'>
+                        {offer.dayOfInternship}
+                      </TableCell>
+                      <TableCell align='right'>
+                        <Button
+                          disabled={appliedOffers && appliedOffers[index].company.id === offer.company.id}
+                          onClick={() => onClickAppliement(index)}
+                          size="small"
+                          color="primary"
+                          variant="contained"
+                        >
+                          {appliedOffers && appliedOffers[index].company.id === offer.company.id ? 'Başvuruldu' : 'Başvur'}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
         </Box>

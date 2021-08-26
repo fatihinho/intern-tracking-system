@@ -95,50 +95,54 @@ const InstitutionInternDiariesResults = ({ ...rest }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {diaries && diaries.slice(0, limit).map((diary, index) => (
-                                <TableRow
-                                    hover
-                                    key={diary.id}
-                                >
-                                    <TableCell align='left'>
-                                        <Box
-                                            sx={{
-                                                alignItems: 'center',
-                                                display: 'flex'
-                                            }}
+                            {diaries &&
+                                diaries
+                                    .sort((a, b) => a.dayOfInternship - b.dayOfInternship)
+                                    .slice(0, limit)
+                                    .map((diary, index) => (
+                                        <TableRow
+                                            hover
+                                            key={diary.id}
                                         >
-                                            <Avatar
-                                                src={''}
-                                                sx={{ mr: 2 }}
-                                            >
-                                                {getInitials(`${diary.intern.name} ${diary.intern.surname}`)}
-                                            </Avatar>
-                                            <Typography
-                                                color="textPrimary"
-                                                variant="body1"
-                                            >
-                                                {`${diary.intern.name} ${diary.intern.surname}`}
-                                            </Typography>
-                                        </Box>
-                                    </TableCell>
-                                    <TableCell align='center'>
-                                        {diary.dayOfInternship}
-                                    </TableCell>
-                                    <TableCell align='center'>
-                                        {diary.content}
-                                    </TableCell>
-                                    <TableCell align='right'>
-                                        <Button
-                                            size="small"
-                                            color="primary"
-                                            variant="contained"
-                                            onClick={() => onClickDetail(index)}
-                                        >
-                                            Detay
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                            <TableCell align='left'>
+                                                <Box
+                                                    sx={{
+                                                        alignItems: 'center',
+                                                        display: 'flex'
+                                                    }}
+                                                >
+                                                    <Avatar
+                                                        src={''}
+                                                        sx={{ mr: 2 }}
+                                                    >
+                                                        {getInitials(`${diary.intern.name} ${diary.intern.surname}`)}
+                                                    </Avatar>
+                                                    <Typography
+                                                        color="textPrimary"
+                                                        variant="body1"
+                                                    >
+                                                        {`${diary.intern.name} ${diary.intern.surname}`}
+                                                    </Typography>
+                                                </Box>
+                                            </TableCell>
+                                            <TableCell align='center'>
+                                                {diary.dayOfInternship}
+                                            </TableCell>
+                                            <TableCell align='center'>
+                                                {diary.content}
+                                            </TableCell>
+                                            <TableCell align='right'>
+                                                <Button
+                                                    size="small"
+                                                    color="primary"
+                                                    variant="contained"
+                                                    onClick={() => onClickDetail(index)}
+                                                >
+                                                    Detay
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                         </TableBody>
                     </Table>
                 </Box>
