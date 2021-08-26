@@ -101,7 +101,7 @@ const CompanyInternshipAcceptedOffersResults = ({ ...rest }) => {
                                 {offers &&
                                     offers
                                         .slice(0, limit)
-                                        .filter(offer => offer.accepted && !offer.rejected)
+                                        .filter(offer => offer.active && offer.accepted && !offer.rejected)
                                         .map((offer, index) => (
                                             <TableRow
                                                 hover
