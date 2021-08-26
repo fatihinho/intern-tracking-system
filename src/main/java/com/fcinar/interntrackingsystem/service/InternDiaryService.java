@@ -1,10 +1,12 @@
 package com.fcinar.interntrackingsystem.service;
 
+import com.fcinar.interntrackingsystem.dto.CompanyOfferDto;
 import com.fcinar.interntrackingsystem.dto.InternDiaryDto;
 import com.fcinar.interntrackingsystem.dto.converter.InternDiaryDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateInternDiaryRequest;
 import com.fcinar.interntrackingsystem.dto.request.UpdateInternDiaryRequest;
 import com.fcinar.interntrackingsystem.exception.InternDiaryNotFoundException;
+import com.fcinar.interntrackingsystem.model.CompanyOffer;
 import com.fcinar.interntrackingsystem.model.Intern;
 import com.fcinar.interntrackingsystem.model.InternDiary;
 import com.fcinar.interntrackingsystem.repository.IInternDiaryRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -45,6 +48,15 @@ public class InternDiaryService {
 
     public List<InternDiaryDto> getAllInternDiaries() {
         List<InternDiary> internDiaries = internDiaryRepository.findAll();
+        return internDiaries.stream().map(internDiaryDtoConverter::convert).collect(Collectors.toList());
+    }
+
+    public List<InternDiaryDto> getAllInternDiariesByInstitutionId(UUID institutionId) {
+        List<Intern> interns = internService.findInternByInstitutionId(institutionId);
+        List<UUID> internIds = new ArrayList<>();
+        interns.forEach(intern -> internIds.add(intern.getId()));
+        List<InternDiary> internDiaries = new ArrayList<>();
+        internIds.forEach(internId -> internDiaries.addAll(internDiaryRepository.findAllByInternId(internId)));
         return internDiaries.stream().map(internDiaryDtoConverter::convert).collect(Collectors.toList());
     }
 
