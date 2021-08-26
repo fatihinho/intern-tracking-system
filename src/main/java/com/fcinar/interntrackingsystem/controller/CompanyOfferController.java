@@ -56,6 +56,21 @@ public class CompanyOfferController {
         }
     }
 
+    @GetMapping("/company-offers/institution/{institutionId}")
+    public ResponseEntity<List<CompanyOfferDto>> getAllCompanyOffersByInstitutionId(
+            @PathVariable UUID institutionId) {
+        try {
+            List<CompanyOfferDto> companyOffers = companyOfferService
+                    .getAllCompanyOffersByInstitutionId(institutionId);
+            if (companyOffers.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(companyOffers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/company-offers")
     public ResponseEntity<List<CompanyOfferDto>> getAllCompanyOffers() {
         try {
