@@ -82,7 +82,7 @@ const settings = [
   }
 ];
 
-const InstitutionDashboardSidebar = ({ onMobileClose, openMobile }) => {
+const InstitutionDashboardSidebar = ({ onMobileClose, openMobile, name }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const InstitutionDashboardSidebar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           component={RouterLink}
-          src={institutionUser.avatar}
+          src={''}
           sx={{
             cursor: 'pointer',
             width: 64,
@@ -121,13 +121,13 @@ const InstitutionDashboardSidebar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {institutionUser.name}
+          {name}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {institutionUser.jobTitle}
+          Kurum
         </Typography>
       </Box>
       <Divider />
