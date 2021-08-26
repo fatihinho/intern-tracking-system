@@ -288,13 +288,10 @@ const InternDiaryForm = ({ props, ...rest }) => {
                                         Firma Adı
                                     </TableCell>
                                     <TableCell align='center'>
-                                        Başlama Tarihi
-                                    </TableCell>
-                                    <TableCell align='center'>
-                                        Bitirme Tarihi
-                                    </TableCell>
-                                    <TableCell align='center'>
                                         Staj Günü
+                                    </TableCell>
+                                    <TableCell align='center'>
+                                        Durum
                                     </TableCell>
                                     <TableCell align='right'>
                                         Çalışmalar
@@ -302,48 +299,56 @@ const InternDiaryForm = ({ props, ...rest }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {internDiaries && internDiaries.slice(0, limit).map((diary) => (
-                                    <TableRow
-                                        hover
-                                        onClick={() => onClickRow(diary.id)}
-                                        style={{ backgroundColor: clickedRowId === diary.id ? 'gray' : '' }}
-                                        key={diary.id}
-                                    >
-                                        <TableCell align='left'>
-                                            <Box
-                                                sx={{
-                                                    alignItems: 'center',
-                                                    display: 'flex'
-                                                }}
+                                {internDiaries &&
+                                    internDiaries
+                                        .sort((a, b) => a.dayOfInternship - b.dayOfInternship)
+                                        .slice(0, limit)
+                                        .map((diary) => (
+                                            <TableRow
+                                                hover
+                                                onClick={() => onClickRow(diary.id)}
+                                                style={{ backgroundColor: clickedRowId === diary.id ? 'gray' : '' }}
+                                                key={diary.id}
                                             >
-                                                <Avatar
-                                                    src={''}
-                                                    sx={{ mr: 2 }}
-                                                >
-                                                    {getInitials(companyName)}
-                                                </Avatar>
-                                                <Typography
-                                                    color="textPrimary"
-                                                    variant="body1"
-                                                >
-                                                    {companyName}
-                                                </Typography>
-                                            </Box>
-                                        </TableCell>
-                                        <TableCell align='center'>
-                                            {startDate}
-                                        </TableCell>
-                                        <TableCell align='center'>
-                                            {endDate}
-                                        </TableCell>
-                                        <TableCell align='center'>
-                                            {diary.dayOfInternship}
-                                        </TableCell>
-                                        <TableCell align='right'>
-                                            {diary.content}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                                <TableCell align='left'>
+                                                    <Box
+                                                        sx={{
+                                                            alignItems: 'center',
+                                                            display: 'flex'
+                                                        }}
+                                                    >
+                                                        <Avatar
+                                                            src={''}
+                                                            sx={{ mr: 2 }}
+                                                        >
+                                                            {getInitials(companyName)}
+                                                        </Avatar>
+                                                        <Typography
+                                                            color="textPrimary"
+                                                            variant="body1"
+                                                        >
+                                                            {companyName}
+                                                        </Typography>
+                                                    </Box>
+                                                </TableCell>
+                                                <TableCell align='center'>
+                                                    {diary.dayOfInternship}
+                                                </TableCell>
+                                                <TableCell align='center'>
+                                                    <Button
+                                                        disabled
+                                                        style={{ backgroundColor: (diary.accepted || diary.rejected) ? ((diary.accepted && !diary.rejected) ? "#70D987" : "#F33D3D") : "primary", color: "#FFFFFF" }}
+                                                        size="small"
+                                                        variant="contained"
+                                                    >
+                                                        {(diary.accepted || diary.rejected) ? ((diary.accepted && !diary.rejected) ? 'Kabul Edildi' : 'Reddedildi') : 'incelenmedi'}
+                                                    </Button>
+                                                </TableCell>
+                                                <TableCell align='right'>
+                                                    {diary.content}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
                             </TableBody>
                         </Table>
                     </Box>
