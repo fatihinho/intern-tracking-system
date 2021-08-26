@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -18,11 +18,6 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 
-const internUser = {
-  avatar: '',
-  jobTitle: 'Stajyer',
-  name: 'Fatih Çınar'
-};
 
 const home = [
   {
@@ -53,7 +48,7 @@ const settings = [
   }
 ];
 
-const InternDashboardSidebar = ({ onMobileClose, openMobile }) => {
+const InternDashboardSidebar = ({ onMobileClose, openMobile, name, surname }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -80,7 +75,7 @@ const InternDashboardSidebar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           component={RouterLink}
-          src={internUser.avatar}
+          src={''}
           sx={{
             cursor: 'pointer',
             width: 64,
@@ -92,13 +87,13 @@ const InternDashboardSidebar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {internUser.name}
+          {name} {surname}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {internUser.jobTitle}
+          Stajyer
         </Typography>
       </Box>
       <Divider />

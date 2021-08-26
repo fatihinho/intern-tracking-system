@@ -42,10 +42,25 @@ const CompanyDashboardLayoutContent = experimentalStyled('div')({
 const CompanyDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
+  const [name, setName] = useState();
+
   const companyId = localStorage.getItem('currentUser-subUserId')
   useEffect(async () => {
     const response = await axios.get(`/api/v1/companies/${companyId}`)
     localStorage.setItem('companyName', response.data.name);
+
+    initSubUser();
+    async function initSubUser() {
+      const response = await axios.get(`/api/v1/companies/${companyId}`);
+      if (response.status === 200) {
+        const data = response.data;
+        setName(data.name);
+        localStorage.setItem('currentUser-subUserName', data.name);
+        localStorage.setItem('currentUser-subUserAddress', data.address);
+        localStorage.setItem('currentUser-subUserEmail', data.email);
+        localStorage.setItem('currentUser-subUserPhone', data.phone);
+      }
+    }
   }, []);
 
   return (
@@ -54,6 +69,7 @@ const CompanyDashboardLayout = () => {
       <CompanyDashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
+        name={name}
       />
       <CompanyDashboardLayoutWrapper>
         <CompanyDashboardLayoutContainer>

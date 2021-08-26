@@ -2,7 +2,9 @@ import { Navigate } from 'react-router-dom';
 import InternDashboardLayout from './components/InternDashboardLayout';
 import CompanyDashboardLayout from './components/CompanyDashboardLayout';
 import InstitutionDashboardLayout from './components/InstitutionDashboardLayout';
-import Account from './pages/Account';
+import InternAccount from './pages/InternAccount';
+import CompanyAccount from './pages/CompanyAccount';
+import InstitutionAccount from './pages/InstitutionAccount';
 import CompanyLoginPage from './pages/CompanyLogin';
 import InternshipOfferList from './pages/InternshipOffer';
 import Settings from './pages/Settings';
@@ -32,7 +34,7 @@ const routes = [
     path: 'app-intern',
     element: <InternDashboardLayout />,
     children: [
-      { path: 'account', element: <Account /> },
+      { path: 'account', element: <InternAccount /> },
       { path: 'internship-offer', element: <InternshipOfferList /> },
       { path: 'internship-offer/:id/appliement', element: <InternshipOfferAppliement /> },
       { path: 'intern-diary', element: <InternDiary /> },
@@ -45,7 +47,7 @@ const routes = [
     path: 'app-company',
     element: <CompanyDashboardLayout />,
     children: [
-      { path: 'account', element: <Account /> },
+      { path: 'account', element: <CompanyAccount /> },
       { path: 'intern-search', element: <InternSearch /> },
       { path: 'company-internship-offers', element: <CompanyInternshipOffers /> },
       { path: 'company-internship-offers/:id/detail', element: <CompanyInternshipOffersDetail /> },
@@ -61,7 +63,7 @@ const routes = [
     path: 'app-institution',
     element: <InstitutionDashboardLayout />,
     children: [
-      { path: 'account', element: <Account /> },
+      { path: 'account', element: <InstitutionAccount /> },
       { path: 'institution-internship-offers', element: <InstitutionInternshipOffers /> },
       { path: 'institution-intern-diaries', element: <InstitutionInternDiaries /> },
       { path: 'institution-intern-diaries/accepts', element: <InstitutionInternAcceptedDiaries /> },

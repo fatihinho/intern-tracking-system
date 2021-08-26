@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from './DashboardNavbar';
 import InstitutionDashboardSidebar from './InstitutionDashboardSidebar';
+import axios from 'axios';
 
 const InstitutionDashboardLayoutRoot = experimentalStyled('div')(
   ({ theme }) => ({
@@ -41,12 +42,32 @@ const InstitutionDashboardLayoutContent = experimentalStyled('div')({
 const InstitutionDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
+  const [name, setName] = useState();
+
+  const institutionId = localStorage.getItem('currentUser-subUserId')
+
+  useEffect(async () => {
+    initSubUser();
+    async function initSubUser() {
+      const response = await axios.get(`/api/v1/institutions/${institutionId}`);
+      if (response.status === 200) {
+        const data = response.data;
+        setName(data.name);
+        localStorage.setItem('currentUser-subUserName', data.name);
+        localStorage.setItem('currentUser-subUserAddress', data.address);
+        localStorage.setItem('currentUser-subUserEmail', data.email);
+        localStorage.setItem('currentUser-subUserPhone', data.phone);
+      }
+    }
+  }, []);
+
   return (
     <InstitutionDashboardLayoutRoot>
       <DashboardNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />
       <InstitutionDashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
+        name={name}
       />
       <InstitutionDashboardLayoutWrapper>
         <InstitutionDashboardLayoutContainer>

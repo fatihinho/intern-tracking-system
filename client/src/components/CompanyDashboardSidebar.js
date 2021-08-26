@@ -69,7 +69,7 @@ const settings = [
   }
 ];
 
-const CompanyDashboardSidebar = ({ onMobileClose, openMobile }) => {
+const CompanyDashboardSidebar = ({ onMobileClose, openMobile, name }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -108,13 +108,13 @@ const CompanyDashboardSidebar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {companyUser.name}
+          {name}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {companyUser.jobTitle}
+          Firma
         </Typography>
       </Box>
       <Divider />

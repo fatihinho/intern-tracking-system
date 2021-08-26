@@ -47,8 +47,25 @@ const InternDashboardLayout = () => {
 
   const internId = localStorage.getItem('currentUser-subUserId');
 
+  const [name, setName] = useState();
+  const [surname, setSurname] = useState();
+
   useEffect(() => {
+    initSubUser();
     initInternDiaryForm();
+
+    async function initSubUser() {
+      const response = await axios.get(`/api/v1/interns/${internId}`);
+      if (response.status === 200) {
+        const data = response.data;
+        setName(data.name);
+        setSurname(data.surname);
+        localStorage.setItem('currentUser-subUserName', data.name);
+        localStorage.setItem('currentUser-subUserSurname', data.surname);
+        localStorage.setItem('currentUser-subUserEmail', data.email);
+        localStorage.setItem('currentUser-subUserPhone', data.phone);
+      }
+    }
 
     async function initInternDiaryForm() {
       const response = await axios.get(`/api/v1/company-interns/intern/${internId}`);
@@ -76,6 +93,8 @@ const InternDashboardLayout = () => {
       <InternDashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
+        name={name}
+        surname={surname}
       />
       <InternDashboardLayoutWrapper>
         <InternDashboardLayoutContainer>
