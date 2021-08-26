@@ -14,7 +14,11 @@ import {
   Home as HomeIcon,
   Settings as SettingsIcon,
   Book as BookIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
+  UserCheck as UserCheckIcon,
+  UserMinus as UserMinusIcon,
+  PlusSquare as PlusSquareIcon,
+  MinusSquare as MinusSquareIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -36,9 +40,29 @@ const institutionItems = [
     title: 'Staj Talepleri'
   },
   {
+    href: '/app-institution/institution-internship-offers/accepts',
+    icon: UserCheckIcon,
+    title: 'Talep Kabulleri'
+  },
+  {
+    href: '/app-institution/institution-internship-offers/rejects',
+    icon: UserMinusIcon,
+    title: 'Talep Retleri'
+  },
+  {
     href: '/app-institution/institution-intern-diaries',
     icon: BookIcon,
     title: 'Staj Defterleri'
+  },
+  {
+    href: '/app-institution/institution-intern-diaries/accepts',
+    icon: PlusSquareIcon,
+    title: 'Defter Kabulleri'
+  },
+  {
+    href: '/app-institution/institution-intern-diaries/rejects',
+    icon: MinusSquareIcon,
+    title: 'Defter Retleri'
   },
   {
     href: '/app-institution/settings',

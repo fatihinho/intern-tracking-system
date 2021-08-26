@@ -45,12 +45,12 @@ const companyItems = [
   {
     href: '/app-company/company-internship-offers/accepts',
     icon: UserCheckIcon,
-    title: 'Kabul Edilenler'
+    title: 'Talep Kabulleri'
   },
   {
     href: '/app-company/company-internship-offers/rejects',
     icon: UserMinusIcons,
-    title: 'Reddedilenler'
+    title: 'Talep Retleri'
   },
   {
     href: '/app-company/settings',
