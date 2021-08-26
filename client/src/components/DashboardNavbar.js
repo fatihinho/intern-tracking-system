@@ -24,12 +24,10 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="#">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo />
-            <strong style={{ marginLeft: '12px', color: 'white', fontSize: '20px' }}>STAJ TAKİP SİSTEMİ</strong>
-          </div>
-        </RouterLink>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Logo />
+          <strong style={{ marginLeft: '12px', color: 'white', fontSize: '20px' }}>STAJ TAKİP SİSTEMİ</strong>
+        </div>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
           <IconButton color="inherit" onClick={logout}>
