@@ -31,12 +31,14 @@ public class InternService {
         this.institutionService = institutionService;
     }
 
-
     protected Intern findInternById(UUID id) {
         return internRepository.findById(id)
                 .orElseThrow(() -> new InternNotFoundException("Intern could not found by id: " + id));
     }
 
+    protected List<Intern> findInternByInstitutionId(UUID institutionId) {
+        return internRepository.findAllByInstitutionId(institutionId);
+    }
 
     public List<InternDto> getAllInterns() {
         List<Intern> interns = internRepository.findAll();
@@ -47,7 +49,6 @@ public class InternService {
         Intern intern = findInternById(id);
         return internDtoConverter.convert(intern);
     }
-
 
     public InternDto createIntern(@NotNull CreateInternRequest createInternRequest) {
         User user = userService.findUserById(createInternRequest.getUserId());
