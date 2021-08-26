@@ -18,6 +18,10 @@ const InternSearchForm = (props) => {
 
     const [didStartSearching, setDidStartSearching] = useState(false);
 
+    const [dayOfInternshipError, setDayOfInternshipError] = useState(false);
+    const [startDateError, setStartDateError] = useState(false);
+    const [endDateError, setEndDateError] = useState(false);
+
     const [values, setValues] = useState({
         companyName: companyName,
         startDate: '',
@@ -48,23 +52,44 @@ const InternSearchForm = (props) => {
     }
 
     const onClickStartSearch = () => {
-        axios.post('/api/v1/intern-searches', {
-            dayOfInternship: values.dayOfInternship,
-            startDate: values.startDate,
-            endDate: values.endDate,
-            companyId: companyId
-        })
-            .then(response => {
-                if (response.status === 201) {
-                    window.alert('Arama Başlatıldı!');
-                }
+        if (values.dayOfInternship.length > 0 && values.startDate.length > 0 && values.endDate.length > 0) {
+            axios.post('/api/v1/intern-searches', {
+                dayOfInternship: values.dayOfInternship,
+                startDate: values.startDate,
+                endDate: values.endDate,
+                companyId: companyId
             })
-            .then(() => {
-                window.location.reload();
-            })
-            .catch(error => {
-                window.alert('Arama Başlatılırken Bir Sorun Oluştu!');
-            });
+                .then(response => {
+                    if (response.status === 201) {
+                        window.alert('Arama Başlatıldı!');
+                    }
+                })
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    window.alert('Arama Başlatılırken Bir Sorun Oluştu!');
+                });
+        } else {
+            if (values.dayOfInternship.length <= 0) {
+                setDayOfInternshipError(true);
+                setTimeout(() => {
+                    setDayOfInternshipError(false);
+                }, 1500);
+            }
+            if (values.startDate.length <= 0) {
+                setStartDateError(true);
+                setTimeout(() => {
+                    setStartDateError(false);
+                }, 1500);
+            }
+            if (values.endDate.length <= 0) {
+                setEndDateError(true);
+                setTimeout(() => {
+                    setEndDateError(false);
+                }, 1500);
+            }
+        }
     }
 
     useEffect(() => {
@@ -127,6 +152,7 @@ const InternSearchForm = (props) => {
                                 type="number"
                                 value={values.dayOfInternship}
                                 variant="outlined"
+                                error={dayOfInternshipError}
                             />
                         </Grid>
                         <Grid
@@ -143,6 +169,7 @@ const InternSearchForm = (props) => {
                                 onChange={handleChange}
                                 value={values.startDate}
                                 variant="outlined"
+                                error={startDateError}
                             />
                         </Grid>
                         <Grid
@@ -159,6 +186,7 @@ const InternSearchForm = (props) => {
                                 onChange={handleChange}
                                 value={values.endDate}
                                 variant="outlined"
+                                error={endDateError}
                             />
                         </Grid>
                     </Grid>

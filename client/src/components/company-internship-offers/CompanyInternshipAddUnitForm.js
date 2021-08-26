@@ -21,6 +21,8 @@ const CompanyInternshipAddUnitForm = (props) => {
 
     const [companyInternId, setCompanyInternId] = useState();
 
+    const [unitNameError, setUnitNameError] = useState(false);
+
     const [values, setValues] = useState({
         unitName: ''
     });
@@ -43,20 +45,29 @@ const CompanyInternshipAddUnitForm = (props) => {
     });
 
     const onClickAddUnit = () => {
-        axios.put('/api/v1/company-interns/add-unit', {
-            id: companyInternId,
-            unitName: values.unitName
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    window.alert('Birim Ataması Gerçekleştirildi!')
-                }
-            }).then(() => {
-                navigate('/app-company/company-internship-offers/accepts', { replace: true });
-            }).catch(error => {
-                console.log(error.getMessage());
-                window.alert('Birim Ataması Gerçekleştirilirken Bir Sorun Oluştu!')
+        if (values.unitName.length > 0) {
+            axios.put('/api/v1/company-interns/add-unit', {
+                id: companyInternId,
+                unitName: values.unitName
             })
+                .then(response => {
+                    if (response.status === 200) {
+                        window.alert('Birim Ataması Gerçekleştirildi!')
+                    }
+                }).then(() => {
+                    navigate('/app-company/company-internship-offers/accepts', { replace: true });
+                }).catch(error => {
+                    console.log(error.getMessage());
+                    window.alert('Birim Ataması Gerçekleştirilirken Bir Sorun Oluştu!')
+                })
+        } else {
+            if (values.unitName.length <= 0) {
+                setUnitNameError(true);
+                setTimeout(() => {
+                    setUnitNameError(false);
+                }, 1500);
+            }
+        }
     }
 
     return (
@@ -88,6 +99,7 @@ const CompanyInternshipAddUnitForm = (props) => {
                                 onChange={handleChange}
                                 value={values.unitName}
                                 variant="outlined"
+                                error={unitNameError}
                             />
                         </Grid>
                         <Grid

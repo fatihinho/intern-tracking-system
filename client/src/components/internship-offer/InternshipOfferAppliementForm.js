@@ -16,6 +16,8 @@ const InternshipOfferAppliementForm = (props) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
+	const [contentError, setContentError] = useState(false);
+
 	const companyId = location.state.companyId;
 	const companyName = location.state.companyName;
 	const startDate = location.state.startDate;
@@ -33,22 +35,31 @@ const InternshipOfferAppliementForm = (props) => {
 	});
 
 	const onClickApplyOffer = () => {
-		axios.post('/api/v1/company-offers', {
-			offerMessage: values.content,
-			internId: internId,
-			companyId: companyId
-		})
-			.then(function (response) {
-				if (response.status === 201) {
-					window.alert('Başvuru Gönderildi!');
-				}
+		if (values.content.length > 0) {
+			axios.post('/api/v1/company-offers', {
+				offerMessage: values.content,
+				internId: internId,
+				companyId: companyId
 			})
-			.then(() => {
-				navigate('/app-intern/internship-offer', { replace: true });
-			})
-			.catch(function (error) {
-				window.alert('Başvuru Gönderilirken Bir Sorun Oluştu!');
-			});
+				.then(function (response) {
+					if (response.status === 201) {
+						window.alert('Başvuru Gönderildi!');
+					}
+				})
+				.then(() => {
+					navigate('/app-intern/internship-offer', { replace: true });
+				})
+				.catch(function (error) {
+					window.alert('Başvuru Gönderilirken Bir Sorun Oluştu!');
+				});
+		} else {
+			if (values.content.length <= 0) {
+				setContentError(true);
+				setTimeout(() => {
+					setContentError(false);
+				}, 1500);
+			}
+		}
 	}
 
 	const handleChange = (event) => {
@@ -149,6 +160,7 @@ const InternshipOfferAppliementForm = (props) => {
 								onChange={handleChange}
 								value={values.content}
 								variant="outlined"
+								error={contentError}
 							/>
 						</Grid>
 					</Grid>
