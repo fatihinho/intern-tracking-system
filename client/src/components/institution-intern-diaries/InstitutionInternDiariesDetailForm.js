@@ -9,22 +9,26 @@ import {
     TextField,
 } from '@material-ui/core';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const InstitutionInternDiariesDetailForm = (props) => {
     const location = useLocation();
 
+    const navigate = useNavigate();
+
+    const id = location.state.id;
     const name = location.state.name;
-    const startOfDate = location.state.startOfDate;
-    const endOfDate = location.state.endOfDate;
+    const surname = location.state.surname;
     const dayOfInternship = location.state.dayOfInternship;
     const content = location.state.content;
+    const isAccepted = location.state.isAccepted;
+    const isRejected = location.state.isRejected;
 
 
     const [values, setValues] = useState({
         name: name,
-        startOfDate: startOfDate,
-        endOfDate: endOfDate,
+        surname: surname,
         dayOfInternship: dayOfInternship,
         content: content,
     });
@@ -35,6 +39,32 @@ const InstitutionInternDiariesDetailForm = (props) => {
             [event.target.name]: event.target.value
         });
     };
+
+    const onClickAcceptDiary = () => {
+        axios.put(`/api/v1/interns/diaries/accept/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    window.alert('Staj Defteri Kabul Edildi!')
+                }
+            }).then(() => {
+                navigate('/app-institution/institution-intern-diaries', { replace: true });
+            }).catch(error => {
+                window.alert('Staj Defterini Kabul Ederken Bir Sorun Oluştu!')
+            })
+    }
+
+    const onClickRejectDiary = () => {
+        axios.put(`/api/v1/interns/diaries/reject/${id}`)
+            .then(response => {
+                if (response.status === 200) {
+                    window.alert('Staj Defteri Reddedildi!')
+                }
+            }).then(() => {
+                navigate('/app-institution/institution-intern-diaries', { replace: true });
+            }).catch(error => {
+                window.alert('Staj Defterini Reddederken Bir Sorun Oluştu!')
+            })
+    }
 
     return (
         <form
@@ -63,37 +93,7 @@ const InstitutionInternDiariesDetailForm = (props) => {
                                 label="Öğrenci Adı"
                                 name="name"
                                 onChange={handleChange}
-                                value={values.name}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                disabled
-                                label="Başlama Tarihi"
-                                name="startOfDate"
-                                onChange={handleChange}
-                                value={values.startOfDate}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                disabled
-                                label="Bitirme Tarihi"
-                                name="offerDate"
-                                onChange={handleChange}
-                                value={values.endOfDate}
+                                value={`${values.name} ${values.surname}`}
                                 variant="outlined"
                             />
                         </Grid>
@@ -139,13 +139,17 @@ const InstitutionInternDiariesDetailForm = (props) => {
                     }}
                 >
                     <Button
-                        style={{ backgroundColor: "#F33D3D", marginRight: "8px" }}
+                        disabled={!isAccepted && isRejected}
+                        onClick={onClickRejectDiary}
+                        style={{ backgroundColor: !isRejected ? "#F33D3D" : "primary", marginRight: "8px" }}
                         variant="contained"
                     >
                         Reddet
                     </Button>
                     <Button
-                        style={{ backgroundColor: "#70D987" }}
+                        disabled={isAccepted && !isRejected}
+                        onClick={onClickAcceptDiary}
+                        style={{ backgroundColor: !isAccepted ? "#70D987" : "primary" }}
                         variant="contained"
                     >
                         Kabul Et

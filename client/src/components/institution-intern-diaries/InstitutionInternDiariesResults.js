@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
     Avatar,
@@ -16,9 +16,13 @@ import {
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
+import moment from 'moment';
 
-const InstitutionInternDiariesResults = ({ internshipOffers, ...rest }) => {
-    const navigate = useNavigate()
+const InstitutionInternDiariesResults = ({ internshipdiarys, ...rest }) => {
+    const navigate = useNavigate();
+
+    const [diaries, setDiaries] = useState();
 
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
@@ -27,19 +31,44 @@ const InstitutionInternDiariesResults = ({ internshipOffers, ...rest }) => {
         setLimit(event.target.value);
     };
 
-    const handlePageChange = (event, newPage) => {
+    const handlePageChange = (newPage) => {
         setPage(newPage);
     };
 
     const onClickDetail = (index) => {
-        const id = internshipOffers[index].id;
-        const name = internshipOffers[index].name;
-        const startOfDate = internshipOffers[index].startOfDate;
-        const endOfDate = internshipOffers[index].endOfDate;
-        const dayOfInternship = internshipOffers[index].dayOfInternship;
-        const content = internshipOffers[index].content;
-        navigate(`/app-institution/institution-intern-diaries/${id}/detail`, { replace: false, state: { name: name, startOfDate: startOfDate, endOfDate: endOfDate, dayOfInternship: dayOfInternship, content: content } });
+        const id = diaries[index].id;
+        const name = diaries[index].intern.name;
+        const surname = diaries[index].intern.surname;
+        const dayOfInternship = diaries[index].dayOfInternship;
+        const content = diaries[index].content;
+        const isAccepted = diaries[index].accepted;
+        const isRejected = diaries[index].rejected;
+        navigate(`/app-institution/institution-intern-diaries/${id}/detail`, {
+            replace: false, state: {
+                id: id,
+                name: name,
+                surname: surname,
+                dayOfInternship: dayOfInternship,
+                content: content,
+                isAccepted: isAccepted,
+                isRejected: isRejected
+            }
+        });
     }
+
+    const institutionId = localStorage.getItem('currentUser-subUserId');
+
+    useEffect(() => {
+        getDiaries();
+
+        async function getDiaries() {
+            const response = await axios.get(`/api/v1/interns/diaries/institution/${institutionId}`);
+            if (response.status === 200) {
+                const data = await response.data;
+                setDiaries(data);
+            }
+        }
+    }, []);
 
     return (
         <Card {...rest}>
@@ -55,12 +84,6 @@ const InstitutionInternDiariesResults = ({ internshipOffers, ...rest }) => {
                                     Öğrenci Adı
                                 </TableCell>
                                 <TableCell align='center'>
-                                    Başlama Tarihi
-                                </TableCell>
-                                <TableCell align='center'>
-                                    Bitirme Tarihi
-                                </TableCell>
-                                <TableCell align='center'>
                                     Staj Günü
                                 </TableCell>
                                 <TableCell align='center'>
@@ -72,10 +95,10 @@ const InstitutionInternDiariesResults = ({ internshipOffers, ...rest }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {internshipOffers.slice(0, limit).map((offer, index) => (
+                            {diaries && diaries.slice(0, limit).map((diary, index) => (
                                 <TableRow
                                     hover
-                                    key={offer.id}
+                                    key={diary.id}
                                 >
                                     <TableCell align='left'>
                                         <Box
@@ -85,30 +108,24 @@ const InstitutionInternDiariesResults = ({ internshipOffers, ...rest }) => {
                                             }}
                                         >
                                             <Avatar
-                                                src={offer.avatarUrl}
+                                                src={''}
                                                 sx={{ mr: 2 }}
                                             >
-                                                {getInitials(offer.name)}
+                                                {getInitials(`${diary.intern.name} ${diary.intern.surname}`)}
                                             </Avatar>
                                             <Typography
                                                 color="textPrimary"
                                                 variant="body1"
                                             >
-                                                {offer.name}
+                                                {`${diary.intern.name} ${diary.intern.surname}`}
                                             </Typography>
                                         </Box>
                                     </TableCell>
                                     <TableCell align='center'>
-                                        {offer.startOfDate}
+                                        {diary.dayOfInternship}
                                     </TableCell>
                                     <TableCell align='center'>
-                                        {offer.endOfDate}
-                                    </TableCell>
-                                    <TableCell align='center'>
-                                        {offer.dayOfInternship}
-                                    </TableCell>
-                                    <TableCell align='center'>
-                                        {offer.content}
+                                        {diary.content}
                                     </TableCell>
                                     <TableCell align='right'>
                                         <Button
@@ -128,7 +145,7 @@ const InstitutionInternDiariesResults = ({ internshipOffers, ...rest }) => {
             </PerfectScrollbar>
             <TablePagination
                 component="div"
-                count={internshipOffers.length}
+                count={diaries && diaries.length}
                 onPageChange={handlePageChange}
                 onRowsPerPageChange={handleLimitChange}
                 page={page}
