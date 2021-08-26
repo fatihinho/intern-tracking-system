@@ -7,7 +7,6 @@ import {
   Divider,
   Drawer,
   Hidden,
-  List,
   Typography
 } from '@material-ui/core';
 import {
@@ -28,17 +27,21 @@ const institutionUser = {
   name: 'Erciyes Üniversitesi'
 };
 
-const institutionItems = [
+const home = [
   {
     href: '/app-institution/home',
     icon: HomeIcon,
     title: 'Ana Sayfa'
   },
+];
+const internshipOffers = [
   {
     href: '/app-institution/institution-internship-offers',
     icon: UsersIcon,
     title: 'Staj Talepleri'
-  },
+  }
+];
+const subInternshipOffers = [
   {
     href: '/app-institution/institution-internship-offers/accepts',
     icon: UserCheckIcon,
@@ -49,11 +52,16 @@ const institutionItems = [
     icon: UserMinusIcon,
     title: 'Talep Retleri'
   },
+];
+
+const internDiaries = [
   {
     href: '/app-institution/institution-intern-diaries',
     icon: BookIcon,
     title: 'Staj Defterleri'
-  },
+  }
+];
+const subInternDiaries = [
   {
     href: '/app-institution/institution-intern-diaries/accepts',
     icon: PlusSquareIcon,
@@ -64,6 +72,9 @@ const institutionItems = [
     icon: MinusSquareIcon,
     title: 'Defter Retleri'
   },
+];
+
+const settings = [
   {
     href: '/app-institution/settings',
     icon: SettingsIcon,
@@ -121,8 +132,8 @@ const InstitutionDashboardSidebar = ({ onMobileClose, openMobile }) => {
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>
-        <List>
-          {institutionItems.map((item) => (
+        <div>
+          {home.map((item) => (
             <NavItem
               href={item.href}
               key={item.title}
@@ -130,7 +141,57 @@ const InstitutionDashboardSidebar = ({ onMobileClose, openMobile }) => {
               icon={item.icon}
             />
           ))}
-        </List>
+        </div>
+        <div>
+          {internshipOffers.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
+        <div style={{ marginLeft: '16px' }}>
+          {subInternshipOffers.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
+        <div>
+          {internDiaries.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
+        <div style={{ marginLeft: '16px' }}>
+          {subInternDiaries.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
+        <div>
+          {settings.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
     </Box>

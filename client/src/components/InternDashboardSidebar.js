@@ -7,7 +7,6 @@ import {
   Divider,
   Drawer,
   Hidden,
-  List,
   Typography
 } from '@material-ui/core';
 import {
@@ -15,7 +14,7 @@ import {
   Home as HomeIcon,
   Settings as SettingsIcon,
   Book as BookIcon,
-  User as UserIcon
+  User as UserIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -25,22 +24,28 @@ const internUser = {
   name: 'Fatih Çınar'
 };
 
-const internItems = [
+const home = [
   {
     href: '/app-intern/home',
     icon: HomeIcon,
     title: 'Ana Sayfa'
-  },
+  }
+];
+const internshipOffer = [
   {
     href: '/app-intern/internship-offer',
     icon: UserIcon,
     title: 'Staj Talebi'
-  },
+  }
+];
+const internDiary = [
   {
     href: '/app-intern/intern-diary',
     icon: BookIcon,
     title: 'Staj Defteri'
-  },
+  }
+];
+const settings = [
   {
     href: '/app-intern/settings',
     icon: SettingsIcon,
@@ -98,8 +103,8 @@ const InternDashboardSidebar = ({ onMobileClose, openMobile }) => {
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>
-        <List>
-          {internItems.map((item) => (
+        <div>
+          {home.map((item) => (
             <NavItem
               href={item.href}
               key={item.title}
@@ -107,7 +112,37 @@ const InternDashboardSidebar = ({ onMobileClose, openMobile }) => {
               icon={item.icon}
             />
           ))}
-        </List>
+        </div>
+        <div>
+          {internshipOffer.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
+        <div>
+          {internDiary.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
+        <div>
+          {settings.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+        </div>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
     </Box>
