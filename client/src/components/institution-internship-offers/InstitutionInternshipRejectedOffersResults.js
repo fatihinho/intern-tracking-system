@@ -18,12 +18,11 @@ import getInitials from '../../utils/getInitials';
 import axios from 'axios';
 import moment from 'moment';
 
-const InstitutionInternshipOffersResults = ({ ...rest }) => {
-
+const InstitutionInternshipRejectedOffersResults = ({ ...rest }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
 
-    const [offers, setOffers] = useState();
+    const [offers, setOffers] = useState(null);
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);
@@ -33,50 +32,22 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
         setPage(newPage);
     };
 
-    const onClickAcceptOffer = (id) => {
-        axios.put(`/api/v1/company-offers/accept/${id}`)
-            .then(response => {
-                if (response.status === 200) {
-                    window.alert('Staj Teklifi Kabul Edildi!')
-                }
-            }).then(() => {
-                window.location.reload();
-            }).catch(error => {
-                window.alert('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
-            })
-    }
-
-    const onClickRejectOffer = (id) => {
-        axios.put(`/api/v1/company-offers/reject/${id}`)
-            .then(response => {
-                if (response.status === 200) {
-                    window.alert('Staj Teklifi Reddedildi!')
-                }
-            }).then(() => {
-                window.location.reload();
-            })
-            .catch(error => {
-                window.alert('Staj Teklifini Reddederken Bir Sorun Oluştu!')
-            })
-    }
-
     const institutionId = localStorage.getItem('currentUser-subUserId');
 
     useEffect(() => {
         getOffers();
+
         async function getOffers() {
             const response = await axios.get(`/api/v1/company-offers/institution/${institutionId}`);
-            if (response.status === 200) {
-                const data = await response.data;
-                setOffers(data);
-            }
+            const data = await response.data;
+            setOffers(data);
         }
     }, []);
 
     return (
         <Card {...rest}>
             <CardHeader
-                title="Staj Talepleri"
+                title="Staj Talepleri - Reddedilenler"
             />
             <PerfectScrollbar>
                 <Box sx={{ minWidth: 1050 }}>
@@ -90,10 +61,10 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
                                     Başvuru Tarihi
                                 </TableCell>
                                 <TableCell align='center'>
-                                    Firma Adı
+                                    Mesaj
                                 </TableCell>
-                                <TableCell>
-
+                                <TableCell align='center'>
+                                    Durum
                                 </TableCell>
                             </TableRow>
                         </TableHead>
@@ -101,8 +72,8 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
                             {offers &&
                                 offers
                                     .slice(0, limit)
-                                    .filter(offer => offer.active)
-                                    .map((offer) => (
+                                    .filter(offer => offer.active && !offer.accepted && offer.rejected)
+                                    .map((offer, index) => (
                                         <TableRow
                                             hover
                                             key={offer.id}
@@ -131,25 +102,17 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
                                             <TableCell align='center'>
                                                 {moment(offer.offerDate).format('DD/MM/YYYY')}
                                             </TableCell>
-                                            <TableCell align='center'>
-                                                {offer.company.name}
+                                            <TableCell align='center' variant>
+                                                {offer.offerMessage}
                                             </TableCell>
-                                            <TableCell align='right'>
+                                            <TableCell align='center'>
                                                 <Button
-                                                    disabled={offer.rejected}
-                                                    onClick={() => onClickRejectOffer(offer.id)}
-                                                    style={{ backgroundColor: offer.accepted ? "#F33D3D" : "primary", marginRight: "8px" }}
+                                                    disabled
+                                                    style={{ backgroundColor: "#F33D3D", color: "#FFFFFF" }}
+                                                    size="small"
                                                     variant="contained"
                                                 >
-                                                    Reddet
-                                                </Button>
-                                                <Button
-                                                    disabled={offer.accepted}
-                                                    onClick={() => onClickAcceptOffer(offer.id)}
-                                                    style={{ backgroundColor: offer.rejected ? "#70D987" : "primary" }}
-                                                    variant="contained"
-                                                >
-                                                    Kabul Et
+                                                    Reddedildi
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
@@ -171,4 +134,4 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
     );
 };
 
-export default InstitutionInternshipOffersResults;
+export default InstitutionInternshipRejectedOffersResults;
