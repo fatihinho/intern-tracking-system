@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import moment from 'moment';
 
-const InstitutionInternDiariesResults = ({ internshipdiarys, ...rest }) => {
+const InstitutionInternDiariesResults = ({ ...rest }) => {
     const navigate = useNavigate();
 
     const [diaries, setDiaries] = useState();

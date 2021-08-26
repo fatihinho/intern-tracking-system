@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet';
 import { Box, Container, } from '@material-ui/core';
-import internDiaries from '../__mocks__/internDiaries';
 import InternSearchForm from '../components/intern-search/InternSearchForm';
 
 const InternSearch = () => (
@@ -17,7 +16,7 @@ const InternSearch = () => (
         >
             <Container maxWidth={false}>
                 <Box sx={{ pt: 3 }}>
-                    <InternSearchForm internDiaries={internDiaries} />
+                    <InternSearchForm />
                 </Box>
             </Container>
         </Box>
