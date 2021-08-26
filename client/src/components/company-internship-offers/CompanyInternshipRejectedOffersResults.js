@@ -63,7 +63,7 @@ const CompanyInternshipRejectedOffersResults = ({ ...rest }) => {
                                 <TableCell align='center'>
                                     Mesaj
                                 </TableCell>
-                                <TableCell align='right'>
+                                <TableCell align='center'>
                                     Durum
                                 </TableCell>
                             </TableRow>
@@ -72,7 +72,7 @@ const CompanyInternshipRejectedOffersResults = ({ ...rest }) => {
                             {offers &&
                                 offers
                                     .slice(0, limit)
-                                    .filter(offer => !offer.accepted && offer.rejected)
+                                    .filter(offer => offer.active && !offer.accepted && offer.rejected)
                                     .map((offer, index) => (
                                         <TableRow
                                             hover
@@ -105,7 +105,7 @@ const CompanyInternshipRejectedOffersResults = ({ ...rest }) => {
                                             <TableCell align='center' variant>
                                                 {offer.offerMessage}
                                             </TableCell>
-                                            <TableCell align='right'>
+                                            <TableCell align='center'>
                                                 <Button
                                                     disabled
                                                     style={{ backgroundColor: "#F33D3D", color: "#FFFFFF" }}
