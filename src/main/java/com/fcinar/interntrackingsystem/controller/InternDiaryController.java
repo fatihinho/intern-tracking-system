@@ -1,5 +1,6 @@
 package com.fcinar.interntrackingsystem.controller;
 
+import com.fcinar.interntrackingsystem.dto.CompanyOfferDto;
 import com.fcinar.interntrackingsystem.dto.InternDiaryDto;
 import com.fcinar.interntrackingsystem.dto.request.CreateInternDiaryRequest;
 import com.fcinar.interntrackingsystem.dto.request.UpdateInternDiaryRequest;
@@ -24,6 +25,21 @@ public class InternDiaryController {
     public ResponseEntity<List<InternDiaryDto>> getAllInternDiaries() {
         try {
             List<InternDiaryDto> internDiaries = internDiaryService.getAllInternDiaries();
+            if (internDiaries.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(internDiaries, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/interns/diaries/institution/{institutionId}")
+    public ResponseEntity<List<InternDiaryDto>> getAllInternDiariesByInstitutionId(
+            @PathVariable UUID institutionId) {
+        try {
+            List<InternDiaryDto> internDiaries = internDiaryService
+                    .getAllInternDiariesByInstitutionId(institutionId);
             if (internDiaries.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
