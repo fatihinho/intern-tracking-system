@@ -52,7 +52,7 @@ const InternSearchForm = (props) => {
     }
 
     const onClickStartSearch = () => {
-        if (values.dayOfInternship.length > 0 && values.startDate.length > 0 && values.endDate.length > 0) {
+        if (values.dayOfInternship.trim().length > 0 && values.startDate.trim().length > 0 && values.endDate.trim().length > 0) {
             axios.post('/api/v1/intern-searches', {
                 dayOfInternship: values.dayOfInternship,
                 startDate: values.startDate,
@@ -71,19 +71,19 @@ const InternSearchForm = (props) => {
                     window.alert('Arama Başlatılırken Bir Sorun Oluştu!');
                 });
         } else {
-            if (values.dayOfInternship.length <= 0) {
+            if (values.dayOfInternship.trim().length <= 0) {
                 setDayOfInternshipError(true);
                 setTimeout(() => {
                     setDayOfInternshipError(false);
                 }, 1500);
             }
-            if (values.startDate.length <= 0) {
+            if (values.startDate.trim().length <= 0) {
                 setStartDateError(true);
                 setTimeout(() => {
                     setStartDateError(false);
                 }, 1500);
             }
-            if (values.endDate.length <= 0) {
+            if (values.endDate.trim().length <= 0) {
                 setEndDateError(true);
                 setTimeout(() => {
                     setEndDateError(false);

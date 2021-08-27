@@ -35,7 +35,7 @@ const InternshipOfferAppliementForm = (props) => {
 	});
 
 	const onClickApplyOffer = () => {
-		if (values.content.length > 0) {
+		if (values.content.trim().length > 0) {
 			axios.post('/api/v1/company-offers', {
 				offerMessage: values.content,
 				internId: internId,
@@ -53,7 +53,7 @@ const InternshipOfferAppliementForm = (props) => {
 					window.alert('Başvuru Gönderilirken Bir Sorun Oluştu!');
 				});
 		} else {
-			if (values.content.length <= 0) {
+			if (values.content.trim().length <= 0) {
 				setContentError(true);
 				setTimeout(() => {
 					setContentError(false);

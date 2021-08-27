@@ -59,14 +59,15 @@ public class InternController {
     }
 
 
-    @PutMapping("/interns/{username}/profile")
-    public ResponseEntity<InternDto> updateInternProfileByUsername(
-            @PathVariable String username,
+    @PutMapping("/interns/{id}/profile")
+    public ResponseEntity<InternDto> updateInternProfileById(
+            @PathVariable UUID id,
             @RequestBody UpdateUserProfileRequest updateUserProfileRequest) {
         try {
-            InternDto intern = internService.updateInternProfileByUsername(username, updateUserProfileRequest);
+            InternDto intern = internService.updateInternProfileById(id, updateUserProfileRequest);
             return new ResponseEntity<>(intern, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

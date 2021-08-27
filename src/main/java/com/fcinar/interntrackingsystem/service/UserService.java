@@ -95,9 +95,9 @@ public class UserService {
     }
 
 
-    public UserDto updateUserPasswordByUsername(String username,
-                                                @NotNull UpdateUserPasswordRequest updateUserPasswordRequest) {
-        User user = findUserByUsername(username);
+    public UserDto updateUserPasswordById(UUID id,
+                                          @NotNull UpdateUserPasswordRequest updateUserPasswordRequest) {
+        User user = findUserById(id);
         if (updateUserPasswordRequest.getPassword().equals(updateUserPasswordRequest.getPassword2()) &&
                 !updateUserPasswordRequest.getPassword().isEmpty() &&
                 !updateUserPasswordRequest.getPassword2().isEmpty()) {

@@ -65,9 +65,9 @@ public class CompanyService {
     }
 
 
-    public CompanyDto updateCompanyProfileByUsername(String username,
-                                                     UpdateUserProfileRequest updateUserProfileRequest) {
-        User user = userService.findUserByUsername(username);
+    public CompanyDto updateCompanyProfileById(UUID id,
+                                               UpdateUserProfileRequest updateUserProfileRequest) {
+        User user = userService.findUserById(id);
         Company company = findCompanyById(user.getSubUserId());
         if (user.getSubUserType().equals(UserTypes.COMPANY.toString())) {
             String name = updateUserProfileRequest.getName() != null

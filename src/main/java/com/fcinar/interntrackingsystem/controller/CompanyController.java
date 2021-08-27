@@ -59,12 +59,12 @@ public class CompanyController {
     }
 
 
-    @PutMapping("/companies/{username}/profile")
-    public ResponseEntity<CompanyDto> updateCompanyProfileByUsername(
-            @PathVariable String username,
+    @PutMapping("/companies/{id}/profile")
+    public ResponseEntity<CompanyDto> updateCompanyProfileById(
+            @PathVariable UUID id,
             @RequestBody UpdateUserProfileRequest updateUserProfileRequest) {
         try {
-            CompanyDto company = companyService.updateCompanyProfileByUsername(username, updateUserProfileRequest);
+            CompanyDto company = companyService.updateCompanyProfileById(id, updateUserProfileRequest);
             return new ResponseEntity<>(company, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

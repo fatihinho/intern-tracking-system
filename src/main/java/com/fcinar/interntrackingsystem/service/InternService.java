@@ -68,9 +68,9 @@ public class InternService {
     }
 
 
-    public InternDto updateInternProfileByUsername(String username,
+    public InternDto updateInternProfileById(UUID id,
                                                    UpdateUserProfileRequest updateUserProfileRequest) {
-        User user = userService.findUserByUsername(username);
+        User user = userService.findUserById(id);
         Intern intern = findInternById(user.getSubUserId());
         if (user.getSubUserType().equals(UserTypes.INTERN.toString())) {
             String name = updateUserProfileRequest.getName() != null

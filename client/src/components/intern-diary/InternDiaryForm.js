@@ -65,13 +65,20 @@ const InternDiaryForm = ({ props, ...rest }) => {
         values.dayOfInternship = internDiaries.find(e => e.id === id).dayOfInternship;
         if (clickedRowId === id) {
             setClickedRowId(null);
+            setValues({
+                companyName: companyName,
+                startDate: startDate,
+                endDate: endDate,
+                dayOfInternship: '',
+                content: ''
+            });
         }
     }
 
     const internId = localStorage.getItem('currentUser-subUserId');
 
     const onClickSave = () => {
-        if (values.content.length > 0 && values.dayOfInternship.length > 0) {
+        if (values.content.trim().length > 0 && values.dayOfInternship.trim().length > 0) {
             axios.post(`/api/v1/interns/${internId}/diaries`, {
                 content: values.content,
                 dayOfInternship: values.dayOfInternship,
@@ -88,13 +95,13 @@ const InternDiaryForm = ({ props, ...rest }) => {
                     window.alert('Staj Defteri Kaydedilirken Bir Sorun Oluştu!');
                 });
         } else {
-            if (values.content.length <= 0) {
+            if (values.content.trim().length <= 0) {
                 setContentError(true);
                 setTimeout(() => {
                     setContentError(false);
                 }, 1500);
             }
-            if (values.dayOfInternship.length <= 0) {
+            if (values.dayOfInternship.trim().length <= 0) {
                 setDayOfInternshipError(true);
                 setTimeout(() => {
                     setDayOfInternshipError(false);
@@ -105,9 +112,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
 
     const onClickUpdate = () => {
         if (clickedRowId !== null) {
-            console.log(values.content.length)
-            console.log(values.dayOfInternship.toString().length)
-            if (values.content.length > 0 && values.dayOfInternship.toString().length > 0) {
+            if (values.content.trim().length > 0 && values.dayOfInternship.trim().toString().length > 0) {
                 axios.put(`/api/v1/interns/diaries/${clickedRowId}`, {
                     content: values.content,
                     dayOfInternship: values.dayOfInternship,
@@ -124,13 +129,13 @@ const InternDiaryForm = ({ props, ...rest }) => {
                         window.alert('Staj Defteri Güncellenirken Bir Sorun Oluştu!');
                     });
             } else {
-                if (values.content.length <= 0) {
+                if (values.content.trim().length <= 0) {
                     setContentError(true);
                     setTimeout(() => {
                         setContentError(false);
                     }, 1500);
                 }
-                if (values.dayOfInternship.length <= 0) {
+                if (values.dayOfInternship.trim().length <= 0) {
                     setDayOfInternshipError(true);
                     setTimeout(() => {
                         setDayOfInternshipError(false);

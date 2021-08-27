@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -53,17 +54,12 @@ public class UserController {
     }
 
 
-    @PutMapping("/users/{username}/settings")
-    public ResponseEntity<UserDto> updateUserPasswordByUsername(
-            @PathVariable String username,
+    @PutMapping("/users/{id}/settings")
+    public ResponseEntity<UserDto> updateUserPasswordById(
+            @PathVariable UUID id,
             @RequestBody UpdateUserPasswordRequest updateUserPasswordRequest) {
         try {
-            UserDto user = userService.updateUserPasswordByUsername(username, updateUserPasswordRequest);
-            if ((!updateUserPasswordRequest.getPassword().equals(updateUserPasswordRequest.getPassword2())) ||
-                    (updateUserPasswordRequest.getPassword().isEmpty() ||
-                            updateUserPasswordRequest.getPassword2().isEmpty())) {
-                return new ResponseEntity<>(user, HttpStatus.NOT_ACCEPTABLE);
-            }
+            UserDto user = userService.updateUserPasswordById(id, updateUserPasswordRequest);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

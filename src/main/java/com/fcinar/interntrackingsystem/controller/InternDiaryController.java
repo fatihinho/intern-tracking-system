@@ -1,6 +1,5 @@
 package com.fcinar.interntrackingsystem.controller;
 
-import com.fcinar.interntrackingsystem.dto.CompanyOfferDto;
 import com.fcinar.interntrackingsystem.dto.InternDiaryDto;
 import com.fcinar.interntrackingsystem.dto.request.CreateInternDiaryRequest;
 import com.fcinar.interntrackingsystem.dto.request.UpdateInternDiaryRequest;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -66,34 +66,52 @@ export default function InstitutionLogin() {
     const { value: username, bind: bindUsername, reset: resetUsername } = useInput("");
     const { value: password, bind: bindPassword, reset: resetPassword } = useInput("");
 
+    const [usernameError, setUsernameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+
     const login = () => {
         window.location.replace('/app-institution');
     }
 
     const handleLogin = () => {
-        axios.post('/api/v1/login', {
-            username: username,
-            password: password,
-            roleType: 4
-        })
-            .then(function (response) {
-                if (response.status === 200) {
-                    localStorage.setItem('currentUser-id', response.data['id']);
-                    localStorage.setItem('currentUser-subUserId', response.data['subUserId']);
-                    localStorage.setItem('currentUser-subUserType', response.data['subUserType']);
-                    localStorage.setItem('currentUser-username', response.data['username']);
-                    localStorage.setItem('currentUser-password', response.data['password']);
-                    login();
-                } else {
-                    window.alert('Kullanıcı Adı veya Şifre Yanlış!')
-                }
+        if (username.trim().length > 0 && password.trim().length > 0) {
+            axios.post('/api/v1/login', {
+                username: username,
+                password: password,
+                roleType: 4
             })
-            .catch(function (error) {
-                window.alert('Kullanıcı Adı veya Şifre Yanlış!')
-            });
+                .then(function (response) {
+                    if (response.status === 200) {
+                        localStorage.setItem('currentUser-id', response.data['id']);
+                        localStorage.setItem('currentUser-subUserId', response.data['subUserId']);
+                        localStorage.setItem('currentUser-subUserType', response.data['subUserType']);
+                        localStorage.setItem('currentUser-username', response.data['username']);
+                        localStorage.setItem('currentUser-password', response.data['password']);
+                        login();
+                    } else {
+                        window.alert('Kullanıcı Adı veya Şifre Yanlış!')
+                    }
+                })
+                .catch(function (error) {
+                    window.alert('Kullanıcı Adı veya Şifre Yanlış!')
+                });
 
-        resetUsername();
-        resetPassword();
+            resetUsername();
+            resetPassword();
+        } else {
+            if (username.trim().length <= 0) {
+                setUsernameError(true);
+                setTimeout(() => {
+                    setUsernameError(false);
+                }, 1500);
+            }
+            if (password.trim().length <= 0) {
+                setPasswordError(true);
+                setTimeout(() => {
+                    setPasswordError(false);
+                }, 1500);
+            }
+        }
     }
 
     return (
@@ -123,6 +141,7 @@ export default function InstitutionLogin() {
                             name="username"
                             autoComplete="username"
                             autoFocus
+                            error={usernameError}
                             {...bindUsername}
                         />
                         <TextField
@@ -135,6 +154,7 @@ export default function InstitutionLogin() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            error={passwordError}
                             {...bindPassword}
                         />
                         <FormControlLabel

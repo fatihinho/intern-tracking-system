@@ -9,12 +9,18 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
+import axios from 'axios';
 
 const InternAccountProfileDetails = (props) => {
+  const id = localStorage.getItem('currentUser-id');
   const name = localStorage.getItem('currentUser-subUserName');
   const surname = localStorage.getItem('currentUser-subUserSurname');
   const email = localStorage.getItem('currentUser-subUserEmail');
   const phone = localStorage.getItem('currentUser-subUserPhone');
+
+  const [nameError, setNameError] = useState(false);
+  const [surnameError, setSurnameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   const [values, setValues] = useState({
     name: name,
@@ -29,6 +35,51 @@ const InternAccountProfileDetails = (props) => {
       [event.target.name]: event.target.value
     });
   };
+
+  const onClickSave = () => {
+    if (values.name.trim().length > 0 && values.surname.trim().length > 0 && values.email.trim().length > 0) {
+      axios.put(`/api/v1/interns/${id}/profile`, {
+        name: values.name,
+        surname: values.surname,
+        email: values.email,
+        phone: values.phone
+      })
+        .then(response => {
+          if (response.status === 200) {
+            localStorage.setItem('currentUser-subUserName', values.name);
+            localStorage.setItem('currentUser-subUserSurname', values.surname);
+            localStorage.setItem('currentUser-subUserEmail', values.email);
+            localStorage.setItem('currentUser-subUserPhone', values.phone);
+            window.alert('Profil Güncellendi!');
+          }
+        })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(error => {
+          window.alert('Profil Güncellenirken Bir Sorun Oluştu');
+        });
+    } else {
+      if (values.name.trim().length <= 0) {
+        setNameError(true);
+        setTimeout(() => {
+          setNameError(false);
+        }, 1500);
+      }
+      if (values.surname.trim().length <= 0) {
+        setSurnameError(true);
+        setTimeout(() => {
+          setSurnameError(false);
+        }, 1500);
+      }
+      if (values.email.trim().length <= 0) {
+        setEmailError(true);
+        setTimeout(() => {
+          setEmailError(false);
+        }, 1500);
+      }
+    }
+  }
 
   return (
     <form
@@ -60,6 +111,7 @@ const InternAccountProfileDetails = (props) => {
                 required
                 value={values.name}
                 variant="outlined"
+                error={nameError}
               />
             </Grid>
             <Grid
@@ -75,6 +127,7 @@ const InternAccountProfileDetails = (props) => {
                 required
                 value={values.surname}
                 variant="outlined"
+                error={surnameError}
               />
             </Grid>
             <Grid
@@ -90,6 +143,7 @@ const InternAccountProfileDetails = (props) => {
                 required
                 value={values.email}
                 variant="outlined"
+                error={emailError}
               />
             </Grid>
             <Grid
@@ -118,6 +172,7 @@ const InternAccountProfileDetails = (props) => {
           }}
         >
           <Button
+            onClick={onClickSave}
             color="primary"
             variant="contained"
           >

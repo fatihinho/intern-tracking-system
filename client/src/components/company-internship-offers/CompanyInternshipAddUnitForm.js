@@ -45,7 +45,7 @@ const CompanyInternshipAddUnitForm = (props) => {
     });
 
     const onClickAddUnit = () => {
-        if (values.unitName.length > 0) {
+        if (values.unitName.trim().length > 0) {
             axios.put('/api/v1/company-interns/add-unit', {
                 id: companyInternId,
                 unitName: values.unitName
@@ -61,7 +61,7 @@ const CompanyInternshipAddUnitForm = (props) => {
                     window.alert('Birim Ataması Gerçekleştirilirken Bir Sorun Oluştu!')
                 })
         } else {
-            if (values.unitName.length <= 0) {
+            if (values.unitName.trim().length <= 0) {
                 setUnitNameError(true);
                 setTimeout(() => {
                     setUnitNameError(false);

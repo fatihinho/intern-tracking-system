@@ -65,9 +65,9 @@ public class InstitutionService {
     }
 
 
-    public InstitutionDto updateInstitutionProfileByUsername(String username,
-                                                             UpdateUserProfileRequest updateUserProfileRequest) {
-        User user = userService.findUserByUsername(username);
+    public InstitutionDto updateInstitutionProfileById(UUID id,
+                                                       UpdateUserProfileRequest updateUserProfileRequest) {
+        User user = userService.findUserById(id);
         Institution institution = findInstitutionById(user.getSubUserId());
         if (user.getSubUserType().equals(UserTypes.INSTITUTION.toString())) {
             String name = updateUserProfileRequest.getName() != null

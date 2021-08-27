@@ -60,13 +60,13 @@ public class InstitutionController {
     }
 
 
-    @PutMapping("/institutions/{username}/profile")
-    public ResponseEntity<InstitutionDto> updateInstitutionProfileByUsername(
-            @PathVariable String username,
+    @PutMapping("/institutions/{id}/profile")
+    public ResponseEntity<InstitutionDto> updateInstitutionProfileById(
+            @PathVariable UUID id,
             @RequestBody UpdateUserProfileRequest updateUserProfileRequest) {
         try {
             InstitutionDto institution = institutionService
-                    .updateInstitutionProfileByUsername(username, updateUserProfileRequest);
+                    .updateInstitutionProfileById(id, updateUserProfileRequest);
             return new ResponseEntity<>(institution, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
