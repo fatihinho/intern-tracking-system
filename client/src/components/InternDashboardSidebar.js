@@ -17,6 +17,7 @@ import {
   User as UserIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
+import axios from 'axios';
 
 
 const home = [
@@ -48,14 +49,28 @@ const settings = [
   }
 ];
 
-const InternDashboardSidebar = ({ onMobileClose, openMobile, name, surname }) => {
+const InternDashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+
+  const [subUser, setSubUser] = useState([]);
+
+  const internId = localStorage.getItem('currentUser-subUserId');
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
-  }, [location.pathname]);
+
+    initSubUser();
+
+    async function initSubUser() {
+      const response = await axios.get(`/api/v1/interns/${internId}`);
+      if (response.status === 200) {
+        const data = response.data;
+        setSubUser(data);
+      }
+    }
+  }, [location.pathname, subUser]);
 
   const content = (
     <Box
@@ -87,7 +102,7 @@ const InternDashboardSidebar = ({ onMobileClose, openMobile, name, surname }) =>
           color="textPrimary"
           variant="h5"
         >
-          {name} {surname}
+          {subUser.name} {subUser.surname}
         </Typography>
         <Typography
           color="textSecondary"

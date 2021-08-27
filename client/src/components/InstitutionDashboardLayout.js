@@ -42,8 +42,6 @@ const InstitutionDashboardLayoutContent = experimentalStyled('div')({
 const InstitutionDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
-  const [name, setName] = useState();
-
   const institutionId = localStorage.getItem('currentUser-subUserId')
 
   useEffect(async () => {
@@ -52,7 +50,6 @@ const InstitutionDashboardLayout = () => {
       const response = await axios.get(`/api/v1/institutions/${institutionId}`);
       if (response.status === 200) {
         const data = response.data;
-        setName(data.name);
         localStorage.setItem('currentUser-subUserName', data.name);
         localStorage.setItem('currentUser-subUserAddress', data.address);
         localStorage.setItem('currentUser-subUserEmail', data.email);
@@ -67,7 +64,6 @@ const InstitutionDashboardLayout = () => {
       <InstitutionDashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
-        name={name}
       />
       <InstitutionDashboardLayoutWrapper>
         <InstitutionDashboardLayoutContainer>

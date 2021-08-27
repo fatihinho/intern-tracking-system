@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -20,12 +20,7 @@ import {
   MinusSquare as MinusSquareIcon
 } from 'react-feather';
 import NavItem from './NavItem';
-
-const institutionUser = {
-  avatar: '',
-  jobTitle: 'Kurum',
-  name: 'Erciyes Üniversitesi'
-};
+import axios from 'axios';
 
 const home = [
   {
@@ -82,14 +77,28 @@ const settings = [
   }
 ];
 
-const InstitutionDashboardSidebar = ({ onMobileClose, openMobile, name }) => {
+const InstitutionDashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+
+  const [subUser, setSubUser] = useState([]);
+
+  const institutionId = localStorage.getItem('currentUser-subUserId');
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
-  }, [location.pathname]);
+
+    initSubUser();
+
+    async function initSubUser() {
+      const response = await axios.get(`/api/v1/institutions/${institutionId}`);
+      if (response.status === 200) {
+        const data = response.data;
+        setSubUser(data);
+      }
+    }
+  }, [location.pathname, subUser]);
 
   const content = (
     <Box
@@ -121,7 +130,7 @@ const InstitutionDashboardSidebar = ({ onMobileClose, openMobile, name }) => {
           color="textPrimary"
           variant="h5"
         >
-          {name}
+          {subUser.name}
         </Typography>
         <Typography
           color="textSecondary"

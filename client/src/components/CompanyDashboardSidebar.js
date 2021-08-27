@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -18,6 +18,7 @@ import {
   UserMinus as UserMinusIcons,
 } from 'react-feather';
 import NavItem from './NavItem';
+import axios from 'axios';
 
 const companyUser = {
   avatar: '',
@@ -69,14 +70,28 @@ const settings = [
   }
 ];
 
-const CompanyDashboardSidebar = ({ onMobileClose, openMobile, name }) => {
+const CompanyDashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+
+  const [subUser, setSubUser] = useState([]);
+
+  const companyId = localStorage.getItem('currentUser-subUserId');
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
-  }, [location.pathname]);
+
+    initSubUser();
+
+    async function initSubUser() {
+      const response = await axios.get(`/api/v1/companies/${companyId}`);
+      if (response.status === 200) {
+        const data = response.data;
+        setSubUser(data);
+      }
+    }
+  }, [location.pathname, subUser]);
 
   const content = (
     <Box
@@ -108,7 +123,7 @@ const CompanyDashboardSidebar = ({ onMobileClose, openMobile, name }) => {
           color="textPrimary"
           variant="h5"
         >
-          {name}
+          {subUser.name}
         </Typography>
         <Typography
           color="textSecondary"

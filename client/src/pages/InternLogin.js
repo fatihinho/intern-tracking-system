@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useInput } from '../hooks/useInput';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -90,11 +92,11 @@ export default function InternLogin() {
                         localStorage.setItem('currentUser-password', response.data['password']);
                         login();
                     } else {
-                        window.alert('Kullanıcı Adı veya Şifre Yanlış!')
+                        toast.error('Kullanıcı Adı veya Şifre Yanlış!')
                     }
                 })
                 .catch(function (error) {
-                    window.alert('Kullanıcı Adı veya Şifre Yanlış!')
+                    toast.error("Kullanıcı Adı veya Şifre Yanlış!");
                 });
 
             resetUsername();
@@ -158,10 +160,6 @@ export default function InternLogin() {
                             error={passwordError}
                             {...bindPassword}
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Beni Hatırla"
-                        />
                         <Button
                             onClick={handleLogin}
                             fullWidth
@@ -171,15 +169,6 @@ export default function InternLogin() {
                         >
                             Giriş Yap
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Şifreni mi Unuttun?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                            </Grid>
-                        </Grid>
                         <Box mt={5}>
                             <Copyright />
                         </Box>

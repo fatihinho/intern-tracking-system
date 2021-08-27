@@ -10,6 +10,7 @@ import {
   TextField
 } from '@material-ui/core';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CompanyAccountProfileDetails = (props) => {
   const id = localStorage.getItem('currentUser-id');
@@ -50,14 +51,11 @@ const CompanyAccountProfileDetails = (props) => {
             localStorage.setItem('currentUser-subUserAddress', values.address);
             localStorage.setItem('currentUser-subUserEmail', values.email);
             localStorage.setItem('currentUser-subUserPhone', values.phone);
-            window.alert('Profil Güncellendi!');
+            toast.success('Profil Güncellendi!');
           }
         })
-        .then(() => {
-          window.location.reload();
-        })
         .catch(error => {
-          window.alert('Profil Güncellenirken Bir Sorun Oluştu');
+          toast.error('Profil Güncellenirken Bir Sorun Oluştu');
         });
     } else {
       if (values.name.trim().length <= 0) {

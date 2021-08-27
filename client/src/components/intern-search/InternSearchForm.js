@@ -9,8 +9,9 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify'
 
 const InternSearchForm = (props) => {
     const companyId = localStorage.getItem('currentUser-subUserId');
@@ -40,14 +41,12 @@ const InternSearchForm = (props) => {
         axios.delete(`/api/v1/intern-searches/${companyId}`)
             .then(response => {
                 if (response.status === 200) {
-                    window.alert('Arama Durduruldu!');
+                    toast.success('Arama Durduruldu!');
+                    setDidStartSearching(false);
                 }
             })
-            .then(() => {
-                window.location.reload();
-            })
             .catch(error => {
-                window.alert('Arama Durdurulurken Bir Sorun Oluştu!');
+                toast.error('Arama Durdurulurken Bir Sorun Oluştu!');
             });
     }
 
@@ -61,14 +60,12 @@ const InternSearchForm = (props) => {
             })
                 .then(response => {
                     if (response.status === 201) {
-                        window.alert('Arama Başlatıldı!');
+                        toast.success('Arama Başlatıldı!');
+                        setDidStartSearching(true);
                     }
                 })
-                .then(() => {
-                    window.location.reload();
-                })
                 .catch(error => {
-                    window.alert('Arama Başlatılırken Bir Sorun Oluştu!');
+                    toast.error('Arama Başlatılırken Bir Sorun Oluştu!');
                 });
         } else {
             if (values.dayOfInternship.trim().length <= 0) {
@@ -91,21 +88,6 @@ const InternSearchForm = (props) => {
             }
         }
     }
-
-    useEffect(() => {
-        didStartSearching();
-        function didStartSearching() {
-            axios.get(`/api/v1/intern-searches/company/${companyId}`)
-                .then(response => {
-                    if (response.status === 200) {
-                        setDidStartSearching(true);
-                    }
-                })
-                .catch(error => {
-                    setDidStartSearching(false);
-                })
-        }
-    })
 
     return (
         <form

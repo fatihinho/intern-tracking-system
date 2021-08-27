@@ -9,6 +9,7 @@ import {
   TextField
 } from '@material-ui/core';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const SettingsPassword = (props) => {
   const id = localStorage.getItem('currentUser-id');
@@ -20,6 +21,13 @@ const SettingsPassword = (props) => {
     password: '',
     confirm: ''
   });
+
+  const resetValues = () => {
+    setValues({
+      password: '',
+      confirm: ''
+    });
+  }
 
   const handleChange = (event) => {
     setValues({
@@ -37,19 +45,16 @@ const SettingsPassword = (props) => {
         .then(response => {
           if (values.password === values.confirm) {
             if (response.status === 200) {
-              window.alert('Şifre Güncellendi!');
+              toast.success('Şifre Güncellendi!');
             }
           } else {
-            window.alert('Şifreler Aynı Değil!');
+            toast.error('Şifreler Aynı Değil!');
           }
         })
         .catch(error => {
-          window.alert('Şifre Güncellenirken Bir Sorun Oluştu');
+          toast.error('Şifre Güncellenirken Bir Sorun Oluştu');
         }).finally(() => {
-          setValues({
-            password: '',
-            confirm: ''
-          });
+          resetValues();
         });
     } else {
       if (values.password.trim().length <= 0) {

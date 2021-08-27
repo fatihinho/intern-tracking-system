@@ -20,6 +20,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import getInitials from '../../utils/getInitials';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const InternDiaryForm = ({ props, ...rest }) => {
     const [limit, setLimit] = useState(10);
@@ -52,6 +53,16 @@ const InternDiaryForm = ({ props, ...rest }) => {
         content: ''
     });
 
+    const resetValues = () => {
+        setValues({
+            companyName: companyName,
+            startDate: startDate,
+            endDate: endDate,
+            dayOfInternship: '',
+            content: ''
+        });
+    }
+
     const handleChange = (event) => {
         setValues({
             ...values,
@@ -65,13 +76,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
         values.dayOfInternship = internDiaries.find(e => e.id === id).dayOfInternship;
         if (clickedRowId === id) {
             setClickedRowId(null);
-            setValues({
-                companyName: companyName,
-                startDate: startDate,
-                endDate: endDate,
-                dayOfInternship: '',
-                content: ''
-            });
+            resetValues();
         }
     }
 
@@ -85,14 +90,12 @@ const InternDiaryForm = ({ props, ...rest }) => {
             })
                 .then(response => {
                     if (response.status === 201) {
-                        window.alert('Staj Defteri Kaydedildi!');
+                        toast.success('Staj Defteri Kaydedildi!');
+                        resetValues();
                     }
                 })
-                .then(() => {
-                    window.location.reload();
-                })
                 .catch(error => {
-                    window.alert('Staj Defteri Kaydedilirken Bir Sorun Oluştu!');
+                    toast.error('Staj Defteri Kaydedilirken Bir Sorun Oluştu!');
                 });
         } else {
             if (values.content.trim().length <= 0) {
@@ -112,21 +115,18 @@ const InternDiaryForm = ({ props, ...rest }) => {
 
     const onClickUpdate = () => {
         if (clickedRowId !== null) {
-            if (values.content.trim().length > 0 && values.dayOfInternship.trim().toString().length > 0) {
+            if (values.content.trim().length > 0 && values.dayOfInternship.toString().trim().length > 0) {
                 axios.put(`/api/v1/interns/diaries/${clickedRowId}`, {
                     content: values.content,
                     dayOfInternship: values.dayOfInternship,
                 })
                     .then(response => {
                         if (response.status === 200) {
-                            window.alert('Staj Defteri Güncellendi!');
+                            toast.success('Staj Defteri Güncellendi!');
                         }
                     })
-                    .then(() => {
-                        window.location.reload();
-                    })
                     .catch(error => {
-                        window.alert('Staj Defteri Güncellenirken Bir Sorun Oluştu!');
+                        toast.error('Staj Defteri Güncellenirken Bir Sorun Oluştu!');
                     });
             } else {
                 if (values.content.trim().length <= 0) {
@@ -143,7 +143,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
                 }
             }
         } else {
-            window.alert('Lütfen Staj Defteri Seçiniz!');
+            toast.warn('Lütfen Staj Defteri Seçiniz!');
         }
     }
 
@@ -157,7 +157,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
                 setInternDiaries(data);
             }
         }
-    }, []);
+    }, [internDiaries]);
 
     return (
         <div>
