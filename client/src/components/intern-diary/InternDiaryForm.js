@@ -155,6 +155,8 @@ const InternDiaryForm = ({ props, ...rest }) => {
             if (response.status === 200) {
                 const data = response.data;
                 setInternDiaries(data);
+            } else {
+                setInternDiaries([]);
             }
         }
     }, [internDiaries]);
