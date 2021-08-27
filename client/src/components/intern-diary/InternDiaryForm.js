@@ -83,7 +83,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
     const internId = localStorage.getItem('currentUser-subUserId');
 
     const onClickSave = () => {
-        if (values.content.trim().length > 0 && values.dayOfInternship.trim().length > 0) {
+        if (values.content.trim().length > 0 && values.dayOfInternship.toString().trim().length > 0) {
             axios.post(`/api/v1/interns/${internId}/diaries`, {
                 content: values.content,
                 dayOfInternship: values.dayOfInternship,
@@ -104,7 +104,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
                     setContentError(false);
                 }, 1500);
             }
-            if (values.dayOfInternship.trim().length <= 0) {
+            if (values.dayOfInternship.toString().trim().length <= 0) {
                 setDayOfInternshipError(true);
                 setTimeout(() => {
                     setDayOfInternshipError(false);
@@ -135,7 +135,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
                         setContentError(false);
                     }, 1500);
                 }
-                if (values.dayOfInternship.trim().length <= 0) {
+                if (values.dayOfInternship.toString().trim().length <= 0) {
                     setDayOfInternshipError(true);
                     setTimeout(() => {
                         setDayOfInternshipError(false);
