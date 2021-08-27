@@ -29,9 +29,14 @@ import InstitutionInternDiaries from './pages/InstitutionInternDiaries';
 import InstitutionInternDiariesDetailForm from './components/institution-intern-diaries/InstitutionInternDiariesDetailForm';
 import CompanyInternshipAddUnit from './pages/CompanyInternshipAddUnit';
 
+const isAnyAuth = localStorage.getItem('currentUser-subUserType') !== null;
+const isAuthIntern = localStorage.getItem('currentUser-subUserType') === 'INTERN';
+const isAuthCompany = localStorage.getItem('currentUser-subUserType') === 'COMPANY';
+const isAuthInstitution = localStorage.getItem('currentUser-subUserType') === 'INSTITUTION';
+
 const routes = [
   {
-    path: 'app-intern',
+    path: `${isAuthIntern ? "app-intern" : "#"}`,
     element: <InternDashboardLayout />,
     children: [
       { path: 'account', element: <InternAccount /> },
@@ -44,7 +49,7 @@ const routes = [
     ]
   },
   {
-    path: 'app-company',
+    path: `${isAuthCompany ? "app-company" : "#"}`,
     element: <CompanyDashboardLayout />,
     children: [
       { path: 'account', element: <CompanyAccount /> },
@@ -60,7 +65,7 @@ const routes = [
     ]
   },
   {
-    path: 'app-institution',
+    path: `${isAuthInstitution ? "app-institution" : "#"}`,
     element: <InstitutionDashboardLayout />,
     children: [
       { path: 'account', element: <InstitutionAccount /> },
@@ -79,7 +84,7 @@ const routes = [
   {
     path: '/',
     children: [
-      { path: 'login', element: <LoginPage /> },
+      { path: 'login', element: isAnyAuth ? (isAuthIntern ? <InternDashboardLayout /> : (isAuthCompany ? <CompanyDashboardLayout /> : <InstitutionDashboardLayout />)) : <LoginPage /> },
       { path: 'login-intern', element: <InternLoginPage /> },
       { path: 'login-company', element: <CompanyLoginPage /> },
       { path: 'login-institution', element: <InstitutionLoginPage /> },
