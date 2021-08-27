@@ -9,7 +9,7 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify'
 
@@ -88,6 +88,21 @@ const InternSearchForm = (props) => {
             }
         }
     }
+
+    useEffect(() => {
+        didStartSearching();
+        function didStartSearching() {
+            axios.get(`/api/v1/intern-searches/company/${companyId}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        setDidStartSearching(true);
+                    }
+                })
+                .catch(error => {
+                    setDidStartSearching(false);
+                })
+        }
+    }, [])
 
     return (
         <form
