@@ -31,7 +31,7 @@ const InternDiaryForm = ({ props, ...rest }) => {
 
     const [clickedRowId, setClickedRowId] = useState(null);
 
-    const [internDiaries, setInternDiaries] = useState();
+    const [internDiaries, setInternDiaries] = useState([]);
 
     const companyName = localStorage.getItem('internDiary-companyName');
     const startDate = localStorage.getItem('internDiary-startDate');

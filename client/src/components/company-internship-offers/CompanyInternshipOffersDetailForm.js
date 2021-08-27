@@ -12,6 +12,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const CompanyInternshipOffersDetailForm = (props) => {
     const navigate = useNavigate();
@@ -54,17 +55,17 @@ const CompanyInternshipOffersDetailForm = (props) => {
                     axios.put(`/api/v1/company-offers/accept/${id}`)
                         .then(response => {
                             if (response.status === 200) {
-                                window.alert('Staj Teklifi Kabul Edildi!')
+                                toast.success('Staj Teklifi Kabul Edildi!')
                             }
                         }).then(() => {
                             navigate('/app-company/company-internship-offers', { replace: true });
                         }).catch(error => {
-                            window.alert('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
+                            toast.error('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
                         })
                 }
             })
             .catch(error => {
-                window.alert('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
+                toast.error('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
             })
     }
 
@@ -72,12 +73,12 @@ const CompanyInternshipOffersDetailForm = (props) => {
         axios.put(`/api/v1/company-offers/reject/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    window.alert('Staj Teklifi Reddedildi!')
+                    toast.success('Staj Teklifi Reddedildi!')
                 }
             }).then(() => {
                 navigate('/app-company/company-internship-offers', { replace: true });
             }).catch(error => {
-                window.alert('Staj Teklifini Reddederken Bir Sorun Oluştu!')
+                toast.error('Staj Teklifini Reddederken Bir Sorun Oluştu!')
             })
     }
 

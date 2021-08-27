@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CompanyInternshipAddUnitForm = (props) => {
     const location = useLocation();
@@ -52,13 +53,12 @@ const CompanyInternshipAddUnitForm = (props) => {
             })
                 .then(response => {
                     if (response.status === 200) {
-                        window.alert('Birim Ataması Gerçekleştirildi!')
+                        toast.success('Birim Ataması Gerçekleştirildi!')
                     }
                 }).then(() => {
                     navigate('/app-company/company-internship-offers/accepts', { replace: true });
                 }).catch(error => {
-                    console.log(error.getMessage());
-                    window.alert('Birim Ataması Gerçekleştirilirken Bir Sorun Oluştu!')
+                    toast.error('Birim Ataması Gerçekleştirilirken Bir Sorun Oluştu!')
                 })
         } else {
             if (values.unitName.trim().length <= 0) {

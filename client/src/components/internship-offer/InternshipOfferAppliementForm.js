@@ -11,6 +11,7 @@ import {
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const InternshipOfferAppliementForm = (props) => {
 	const navigate = useNavigate();
@@ -43,14 +44,14 @@ const InternshipOfferAppliementForm = (props) => {
 			})
 				.then(function (response) {
 					if (response.status === 201) {
-						window.alert('Başvuru Gönderildi!');
+						toast.success('Başvuru Gönderildi!');
 					}
 				})
 				.then(() => {
 					navigate('/app-intern/internship-offer', { replace: true });
 				})
 				.catch(function (error) {
-					window.alert('Başvuru Gönderilirken Bir Sorun Oluştu!');
+					toast.error('Başvuru Gönderilirken Bir Sorun Oluştu!');
 				});
 		} else {
 			if (values.content.trim().length <= 0) {

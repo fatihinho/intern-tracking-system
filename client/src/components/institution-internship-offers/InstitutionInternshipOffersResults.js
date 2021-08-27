@@ -17,6 +17,7 @@ import {
 import getInitials from '../../utils/getInitials';
 import axios from 'axios';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 const InstitutionInternshipOffersResults = ({ ...rest }) => {
 
@@ -37,12 +38,10 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
         axios.put(`/api/v1/company-offers/accept/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    window.alert('Staj Teklifi Kabul Edildi!')
+                    toast.success('Staj Teklifi Kabul Edildi!')
                 }
-            }).then(() => {
-                window.location.reload();
             }).catch(error => {
-                window.alert('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
+                toast.error('Staj Teklifini Kabul Ederken Bir Sorun Oluştu!')
             })
     }
 
@@ -50,13 +49,11 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
         axios.put(`/api/v1/company-offers/reject/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    window.alert('Staj Teklifi Reddedildi!')
+                    toast.success('Staj Teklifi Reddedildi!')
                 }
-            }).then(() => {
-                window.location.reload();
             })
             .catch(error => {
-                window.alert('Staj Teklifini Reddederken Bir Sorun Oluştu!')
+                toast.error('Staj Teklifini Reddederken Bir Sorun Oluştu!')
             })
     }
 
@@ -71,7 +68,7 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
                 setOffers(data);
             }
         }
-    }, []);
+    }, [offers]);
 
     return (
         <Card {...rest}>
@@ -139,7 +136,8 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
                                                 <Button
                                                     disabled={offer.rejected}
                                                     onClick={() => onClickRejectOffer(offer.id)}
-                                                    style={{ backgroundColor: offer.accepted ? "#F33D3D" : "primary", marginRight: "8px" }}
+                                                    style={{ marginRight: "8px" }}
+                                                    color="secondary"
                                                     variant="contained"
                                                 >
                                                     Reddet
@@ -147,8 +145,8 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
                                                 <Button
                                                     disabled={offer.accepted}
                                                     onClick={() => onClickAcceptOffer(offer.id)}
-                                                    style={{ backgroundColor: offer.rejected ? "#70D987" : "primary" }}
                                                     variant="contained"
+                                                    color="primary"
                                                 >
                                                     Kabul Et
                                                 </Button>

@@ -199,7 +199,8 @@ const InternSearchForm = (props) => {
                     <Button
                         disabled={!didStartSearching}
                         onClick={onClickStopSearch}
-                        style={{ backgroundColor: didStartSearching ? "#F33D3D" : "#FFFFFF", marginRight: "8px" }}
+                        style={{ marginRight: "8px" }}
+                        color='secondary'
                         variant="contained"
                     >
                         Aramayı Durdur
@@ -207,8 +208,8 @@ const InternSearchForm = (props) => {
                     <Button
                         disabled={didStartSearching}
                         onClick={onClickStartSearch}
-                        style={{ backgroundColor: !didStartSearching ? "#70D987" : "#FFFFFF" }}
                         variant="contained"
+                        color='primary'
                     >
                         Aramayı Başlat
                     </Button>

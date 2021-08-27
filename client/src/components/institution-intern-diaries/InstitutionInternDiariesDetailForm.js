@@ -11,6 +11,7 @@ import {
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const InstitutionInternDiariesDetailForm = (props) => {
     const location = useLocation();
@@ -44,12 +45,12 @@ const InstitutionInternDiariesDetailForm = (props) => {
         axios.put(`/api/v1/interns/diaries/accept/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    window.alert('Staj Defteri Kabul Edildi!')
+                    toast.success('Staj Defteri Kabul Edildi!')
                 }
             }).then(() => {
                 navigate('/app-institution/institution-intern-diaries', { replace: true });
             }).catch(error => {
-                window.alert('Staj Defterini Kabul Ederken Bir Sorun Oluştu!')
+                toast.error('Staj Defterini Kabul Ederken Bir Sorun Oluştu!')
             })
     }
 
@@ -57,12 +58,12 @@ const InstitutionInternDiariesDetailForm = (props) => {
         axios.put(`/api/v1/interns/diaries/reject/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    window.alert('Staj Defteri Reddedildi!')
+                    toast.success('Staj Defteri Reddedildi!')
                 }
             }).then(() => {
                 navigate('/app-institution/institution-intern-diaries', { replace: true });
             }).catch(error => {
-                window.alert('Staj Defterini Reddederken Bir Sorun Oluştu!')
+                toast.error('Staj Defterini Reddederken Bir Sorun Oluştu!')
             })
     }
 
@@ -141,7 +142,8 @@ const InstitutionInternDiariesDetailForm = (props) => {
                     <Button
                         disabled={!isAccepted && isRejected}
                         onClick={onClickRejectDiary}
-                        style={{ backgroundColor: !isRejected ? "#F33D3D" : "primary", marginRight: "8px" }}
+                        style={{ marginRight: "8px" }}
+                        color='secondary'
                         variant="contained"
                     >
                         Reddet
@@ -149,8 +151,8 @@ const InstitutionInternDiariesDetailForm = (props) => {
                     <Button
                         disabled={isAccepted && !isRejected}
                         onClick={onClickAcceptDiary}
-                        style={{ backgroundColor: !isAccepted ? "#70D987" : "primary" }}
                         variant="contained"
+                        color='primary'
                     >
                         Kabul Et
                     </Button>
