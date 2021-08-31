@@ -14,6 +14,14 @@ import { useEffect, useState } from 'react';
 
 const InstitutionAccountProfile = ({ props }) => {
   const [subUser, setSubUser] = useState([]);
+  const [file, setFile] = useState(null);
+
+  const handleUploadImage = function loadFile(event) {
+    if (event.target.files.length > 0) {
+      const file = URL.createObjectURL(event.target.files[0]);
+      setFile(file);
+    }
+  };
 
   const institutionId = localStorage.getItem('currentUser-subUserId');
 
@@ -40,7 +48,7 @@ const InstitutionAccountProfile = ({ props }) => {
           }}
         >
           <Avatar
-            src={''}
+            src={file}
             sx={{
               height: 100,
               width: 100
@@ -62,15 +70,23 @@ const InstitutionAccountProfile = ({ props }) => {
         </Box>
       </CardContent>
       <Divider />
-      <CardActions>
+      <input
+        accept="image/*"
+        style={{ display: 'none' }}
+        id="raised-button-file"
+        multiple
+        type="file"
+        onChange={handleUploadImage}
+      />
+      <label htmlFor="raised-button-file">
         <Button
           color="primary"
           fullWidth
-          variant="text"
+          component="span"
         >
           Fotoğraf Yükle
         </Button>
-      </CardActions>
+      </label>
     </Card>
   );
 }
