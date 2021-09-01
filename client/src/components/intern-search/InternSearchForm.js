@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 
 const InternSearchForm = (props) => {
     const companyId = localStorage.getItem('currentUser-subUserId');
-    const companyName = localStorage.getItem('companyName');
+    const companyName = localStorage.getItem('currentUser-subUserName');
 
     const [didStartSearching, setDidStartSearching] = useState(false);
 
