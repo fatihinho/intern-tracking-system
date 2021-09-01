@@ -1,12 +1,10 @@
 package com.fcinar.interntrackingsystem.service;
 
-import com.fcinar.interntrackingsystem.dto.CompanyOfferDto;
 import com.fcinar.interntrackingsystem.dto.InternDiaryDto;
 import com.fcinar.interntrackingsystem.dto.converter.InternDiaryDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateInternDiaryRequest;
 import com.fcinar.interntrackingsystem.dto.request.UpdateInternDiaryRequest;
 import com.fcinar.interntrackingsystem.exception.InternDiaryNotFoundException;
-import com.fcinar.interntrackingsystem.model.CompanyOffer;
 import com.fcinar.interntrackingsystem.model.Intern;
 import com.fcinar.interntrackingsystem.model.InternDiary;
 import com.fcinar.interntrackingsystem.repository.IInternDiaryRepository;

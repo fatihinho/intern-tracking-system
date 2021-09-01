@@ -1,9 +1,8 @@
 package com.fcinar.interntrackingsystem.controller;
 
 import com.fcinar.interntrackingsystem.dto.CompanyInternDto;
-import com.fcinar.interntrackingsystem.dto.InternDiaryDto;
-import com.fcinar.interntrackingsystem.dto.request.UpdateUnitNameRequest;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyInternRequest;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUnitNameRequest;
 import com.fcinar.interntrackingsystem.service.CompanyInternService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

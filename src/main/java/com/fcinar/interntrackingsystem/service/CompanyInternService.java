@@ -1,17 +1,18 @@
 package com.fcinar.interntrackingsystem.service;
 
 import com.fcinar.interntrackingsystem.dto.CompanyInternDto;
-import com.fcinar.interntrackingsystem.dto.InternDiaryDto;
-import com.fcinar.interntrackingsystem.dto.request.UpdateUnitNameRequest;
 import com.fcinar.interntrackingsystem.dto.converter.CompanyInternDtoConverter;
 import com.fcinar.interntrackingsystem.dto.request.CreateCompanyInternRequest;
+import com.fcinar.interntrackingsystem.dto.request.UpdateUnitNameRequest;
 import com.fcinar.interntrackingsystem.exception.CompanyInternNotFoundException;
-import com.fcinar.interntrackingsystem.model.*;
+import com.fcinar.interntrackingsystem.model.Company;
+import com.fcinar.interntrackingsystem.model.CompanyIntern;
+import com.fcinar.interntrackingsystem.model.CompanyInternSearch;
+import com.fcinar.interntrackingsystem.model.Intern;
 import com.fcinar.interntrackingsystem.repository.ICompanyInternRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;

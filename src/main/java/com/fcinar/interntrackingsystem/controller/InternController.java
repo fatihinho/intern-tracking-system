@@ -67,7 +67,6 @@ public class InternController {
             InternDto intern = internService.updateInternProfileById(id, updateUserProfileRequest);
             return new ResponseEntity<>(intern, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
