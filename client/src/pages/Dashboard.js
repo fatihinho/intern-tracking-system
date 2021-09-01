@@ -4,8 +4,7 @@ import {
   Card,
   CardHeader,
   Container,
-  Divider,
-  Grid
+  Divider
 } from '@material-ui/core';
 
 const Dashboard = () => (

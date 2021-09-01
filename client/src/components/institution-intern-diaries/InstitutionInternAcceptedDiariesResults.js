@@ -16,11 +16,8 @@ import {
 } from '@material-ui/core';
 import getInitials from '../../utils/getInitials';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
 
 const InstitutionInternAcceptedDiariesResults = ({ ...rest }) => {
-    const navigate = useNavigate();
-
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
 

@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Card,
-  CardActions,
   CardContent,
   Divider,
   Typography
@@ -18,8 +17,7 @@ const InstitutionAccountProfile = ({ props }) => {
 
   const handleUploadImage = function loadFile(event) {
     if (event.target.files.length > 0) {
-      const file = URL.createObjectURL(event.target.files[0]);
-      setFile(file);
+      setFile(URL.createObjectURL(event.target.files[0]));
     }
   };
 

@@ -17,12 +17,11 @@ import {
 import getInitials from '../../utils/getInitials';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-import moment from 'moment';
 
 const InstitutionInternDiariesResults = ({ ...rest }) => {
     const navigate = useNavigate();
 
-    const [diaries, setDiaries] = useState();
+    const [diaries, setDiaries] = useState([]);
 
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);

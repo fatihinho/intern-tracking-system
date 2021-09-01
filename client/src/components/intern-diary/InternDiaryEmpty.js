@@ -1,6 +1,5 @@
 import {
     Card,
-    CardContent,
     CardHeader,
     Divider
 } from '@material-ui/core';

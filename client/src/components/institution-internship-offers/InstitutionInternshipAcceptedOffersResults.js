@@ -17,17 +17,12 @@ import {
 import getInitials from '../../utils/getInitials';
 import axios from 'axios';
 import moment from 'moment';
-import { useNavigate } from 'react-router';
 
 const InstitutionInternshipAcceptedOffersResults = ({ ...rest }) => {
-    const navigate = useNavigate();
-
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
 
     const [offers, setOffers] = useState(null);
-    const [hasUnitInterns, setHasUnitInterns] = useState(null);
-    const [hasUnitInternsIds, setHasUnitInternsIds] = useState(null);
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);

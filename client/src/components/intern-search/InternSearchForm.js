@@ -90,8 +90,8 @@ const InternSearchForm = (props) => {
     }
 
     useEffect(() => {
-        didStartSearching();
-        function didStartSearching() {
+        getDidStartSearching();
+        function getDidStartSearching() {
             axios.get(`/api/v1/intern-searches/company/${companyId}`)
                 .then(response => {
                     if (response.status === 200) {

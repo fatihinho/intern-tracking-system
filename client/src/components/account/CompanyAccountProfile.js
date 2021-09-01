@@ -8,7 +8,7 @@ import {
   Divider,
   Typography
 } from '@material-ui/core';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const CompanyAccountProfile = ({ props }) => {
@@ -17,8 +17,7 @@ const CompanyAccountProfile = ({ props }) => {
 
   const handleUploadImage = function loadFile(event) {
     if (event.target.files.length > 0) {
-      const file = URL.createObjectURL(event.target.files[0]);
-      setFile(file);
+      setFile(URL.createObjectURL(event.target.files[0]));
     }
   };
 

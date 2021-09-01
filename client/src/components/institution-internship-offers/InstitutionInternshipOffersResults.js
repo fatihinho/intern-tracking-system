@@ -24,7 +24,7 @@ const InstitutionInternshipOffersResults = ({ ...rest }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(0);
 
-    const [offers, setOffers] = useState();
+    const [offers, setOffers] = useState([]);
 
     const handleLimitChange = (event) => {
         setLimit(event.target.value);

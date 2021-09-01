@@ -44,9 +44,6 @@ const CompanyDashboardLayout = () => {
 
   const companyId = localStorage.getItem('currentUser-subUserId')
   useEffect(async () => {
-    const response = await axios.get(`/api/v1/companies/${companyId}`)
-    localStorage.setItem('companyName', response.data.name);
-
     initSubUser();
     async function initSubUser() {
       const response = await axios.get(`/api/v1/companies/${companyId}`);
